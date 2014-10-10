@@ -1,0 +1,1 @@
+Hello %username%, following your email alert request, we inform you that the auction n°%auction_id% start. You can now place bids.

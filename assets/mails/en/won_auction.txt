@@ -1,0 +1,1 @@
+Hello %username%, you won the auction n°%auction_id%. Now you just pay the price of the auction to receive the product by clicking on the following link: %site_url%/auction/pay/%auction_id%

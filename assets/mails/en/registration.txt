@@ -1,0 +1,1 @@
+Hello %username%, your registration on %site_name% has been considered. To confirm your registration and activate your account please copy the following link into your browser: %site_url%/user/activate/%key%

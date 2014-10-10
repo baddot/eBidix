@@ -1,0 +1,1 @@
+Hello %username%, you asked to change your email. To confirm the change and activate your account please click on the link below: %site_url%/user/activate?key=%key%

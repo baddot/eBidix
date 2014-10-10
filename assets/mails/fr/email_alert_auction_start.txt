@@ -1,0 +1,1 @@
+Bonjour %username%, suite à votre demande d’alerte email, nous vous informons du passage en phase "Enchères en cours" de l'enchère n°%auction_id%. Vous pouvez dès à présent placer des offres.

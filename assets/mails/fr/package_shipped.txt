@@ -1,0 +1,1 @@
+Bonjour %username%, nous vous informons que votre colis a bien été expédié. En vous souhaitant une bonne réception. PS: N'oubliez pas de laisser une évaluation sur le site en cliquant sur le lien suivant: %site_url%/testimonial/add/%auction_id%

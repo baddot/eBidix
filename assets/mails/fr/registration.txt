@@ -1,0 +1,1 @@
+Bonjour %username%, votre inscription sur %site_name% a bien été prise en compte. Pour valider votre inscription et activer votre compte veuillez recopier le lien suivant dans votre navigateur: %site_url%/user/activate/%key%

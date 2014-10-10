@@ -1,0 +1,2 @@
+1405795692
+a:3:{s:7:"Product";a:2:{s:2:"id";s:2:"15";s:5:"price";s:6:"499.00";}s:7:"LastBid";a:1:{s:8:"username";s:0:"";}s:7:"Auction";a:13:{s:2:"id";s:2:"83";s:10:"product_id";s:2:"15";s:10:"start_time";s:19:"2014-03-15 12:17:06";s:8:"end_time";s:19:"2014-03-15 12:17:06";s:4:"type";s:1:"2";s:5:"price";s:4:"0.00";s:9:"peak_only";s:1:"1";s:9:"winner_id";s:1:"0";s:6:"closed";s:1:"0";s:9:"status_id";s:1:"1";s:11:"fixed_price";s:4:"0.00";s:9:"closes_on";s:15:"15/03, 12:17:06";s:7:"element";s:10:"auction_83";}}

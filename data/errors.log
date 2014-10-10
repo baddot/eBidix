@@ -1,0 +1,8 @@
+03-07-2014 07:12:04 | Unable to load template file 'admin/setting/payments.tpl'
+13-08-2014 16:31:46 | PDO ERROR: SQLSTATE[28000] [1045] Access denied for user 'ebidix'@'localhost' (using password: YES)
+13-08-2014 16:31:47 | PDO ERROR: SQLSTATE[28000] [1045] Access denied for user 'ebidix'@'localhost' (using password: YES)
+13-08-2014 16:36:41 | Unable to load template file 'home.tpl'
+26-09-2014 10:45:19 | PDO ERROR: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2)
+26-09-2014 10:45:19 | PDO ERROR: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2)
+26-09-2014 10:45:23 | PDO ERROR: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2)
+26-09-2014 10:45:23 | PDO ERROR: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2)

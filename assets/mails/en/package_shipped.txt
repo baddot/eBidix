@@ -1,0 +1,1 @@
+Hello %username%, we inform you that your package has been shipped. Wishing you a good reception. Do not forget to leave feedback on the site by clicking on the following link: %site_url%/testimonial/add/%auction_id%

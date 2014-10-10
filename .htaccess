@@ -1,0 +1,10 @@
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ([^.]+)$ index.php?url=$1 [QSA,L]
+RewriteRule ^app/.*$ /? [R=301]
+RewriteRule ^config/.*$ /? [R=301]
+RewriteRule ^data/.*$ /? [R=301]
+ErrorDocument 404 /index.php?url=/errors/page404
