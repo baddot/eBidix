@@ -160,8 +160,7 @@ Class tools
 		$txtContent = (file_exists($template_dir . $template . '.txt')) ? strip_tags(html_entity_decode(file_get_contents($template_dir . $template . '.txt'), null, 'utf-8')) : 'error';
 		
 		// set settings
-		//$serverName = $_SERVER['SERVER_NAME'];
-		$serverName = 'ebidix.com';
+		$serverName = $_SERVER['SERVER_NAME'];
 		$siteURL = "http://" . $serverName;
 		preg_match("/<title>(.*?)<\/title>/", $htmlContent, $matches);
 		$subject = (isset($matches[1])) ? $matches[1] : 'message';
