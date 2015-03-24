@@ -2,7 +2,7 @@
 
 class userController extends appController 
 {	
-	public $models = array('user', 'bid', 'category', 'source', 'country');
+	public $models = array('user', 'bid', 'address', 'category', 'source', 'country');
 	public $libs = array('facebook');
 	
 	function index() {
@@ -88,6 +88,7 @@ class userController extends appController
 			
 			$this->smarty->assign(array(
 				'data' => $this->user->getById($userID),
+				'address' => $this->address->getByUserId($userID),
 				'countries' => $this->country->getAll(),
 				'categories' => $this->category->getAll()
 			));

@@ -10,9 +10,9 @@
 				<li><input type="email" name="email" value="{$data.email}" placeholder="{$lang.Email}" required></li>
 				<li><input type="text" name="birthday" value="{$data.birthday}" placeholder="{$lang.Date_of_birth}" onfocus="(this.type='date')"></li>
 				<li><input type="tel" name="phone" value="{$data.phone}" placeholder="{$lang.Phone}"></li>
-				<li><input type="text" name="address" value="{$data.address}" placeholder="{$lang.Address}"></li>
-				<li><input type="text" name="postcode" value="{$data.postcode}" placeholder="{$lang.Postcode}"></li>
-				<li><input type="text" name="city" value="{$data.city}" placeholder="{$lang.City}"></li>
+				<li><input type="text" name="address" value="{$address.address}" placeholder="{$lang.Address}"></li>
+				<li><input type="text" name="postcode" value="{$address.postcode}" placeholder="{$lang.Postcode}"></li>
+				<li><input type="text" name="city" value="{$address.city}" placeholder="{$lang.City}"></li>
 				<li>
 					{$lang.Country} :
 					<select name="country">

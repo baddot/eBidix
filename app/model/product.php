@@ -15,7 +15,7 @@ Class product
 		return Database::getInstance()->select('fetchAll', array('products p', 'categories c'), $columns, $conditions);
 	}
 	
-	public function search($value) {
+	public function search($conditions) {
 		"WHERE c.id=p.category_id AND p.name LIKE '%".$_GET['search_name']."%";
 		Database::getInstance()->select('fetchAll', 'products', $conditions);
 	}
