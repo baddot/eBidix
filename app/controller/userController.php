@@ -534,6 +534,7 @@ class userController extends appController
 	
 	function login() {
 		if (isset($_SESSION['user_id'])) tools::redirect('/account');
+		echo tools::generateHash("aze123");
 		
 		if (!empty($_POST)) {
 			$data = tools::filter($_POST);
@@ -547,8 +548,8 @@ class userController extends appController
 					tools::setFlash($this->l('Account not active'), 'error');
 					tools::redirect('/user/login');
 				} else {
-					// php > 5.5 -> if (password_verify($data['password'], $sql['ppasswd'])) {
-					if (crypt($data['password'], $user['ppasswd']) == $user['ppasswd']) {
+					// php >= 5.6 -> if (hash_equals($user['ppasswd'], crypt($data['password'], $user['ppasswd']))) {
+					if (password_verify($data['password'], $user['ppasswd'])) {
 						$_SESSION['user_id'] = $user['id'];
 						$_SESSION['username'] = $data['username'];
 						if($user['admin'] == 1) $_SESSION['admin'] = true;
@@ -569,7 +570,7 @@ class userController extends appController
 						}
 					} else {
 						tools::setFlash($this->l('Wrong password'), 'error');
-						tools::redirect('/user/login');
+						//tools::redirect('/user/login');
 					}
 				}
 			}
