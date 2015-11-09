@@ -534,7 +534,6 @@ class userController extends appController
 	
 	function login() {
 		if (isset($_SESSION['user_id'])) tools::redirect('/account');
-		echo tools::generateHash("aze123");
 		
 		if (!empty($_POST)) {
 			$data = tools::filter($_POST);
