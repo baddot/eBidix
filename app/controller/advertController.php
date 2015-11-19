@@ -1,6 +1,6 @@
 <?php
 
-class adController extends appController 
+class advertController extends appController
 {
 	public $models = array('advert');
 	
@@ -18,7 +18,7 @@ class adController extends appController
 			tools::redirect('/admin/advert');
 		}
 		
-		$this->smarty->assign('adverts' => $this->advert->getAll());
+		$this->smarty->assign(array('adverts' => $this->advert->getAll()));
 		$this->smarty->display('admin/content/adverts.tpl');
 	}
 	
@@ -36,7 +36,7 @@ class adController extends appController
 			tools::redirect('/admin/advert');
 		}
 		
-		$this->smarty->assign('advert' => $this->advert->getByID($id));
+		$this->smarty->assign(array('advert' => $this->advert->getByID($id)));
 		$this->smarty->display('admin/content/edit_advert.tpl');
 	}
 	

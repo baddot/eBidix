@@ -10,7 +10,7 @@ class settingController extends appController
 	
 	function admin_edit($id) {
 		if(!empty($_POST)) {
-			$data = $this->tools->filter($_POST);
+			$data = tools::filter($_POST);
 			if($data['name'] == 'auction_peak_start' || $data['name'] == 'auction_peak_end'){
 				$data['value'] = $data['hours'].':'.$data['minutes'];
 			} elseif($data['name'] == 'bid_value') {
@@ -39,9 +39,9 @@ class settingController extends appController
 					$filename = _DIR_ .'/data/auction_peak_end';
 					if(file_exists($filename)) unlink($filename);
 				}
-					
-				$this->tools->setFlash($this->l('Request processed'), 'success');
-				$this->tools->redirect('/admin/setting');
+
+				tools::setFlash($this->l('Request processed'), 'success');
+				tools::redirect('/admin/setting');
 			}
 		}
 		

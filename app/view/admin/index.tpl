@@ -26,9 +26,9 @@
 							<p>
 								<b>{$lang.Fast_links}</b>
 								<ul class="fast_links">
-									<li><a href="/admin/products/add">{$lang.Add_new_product}</a></li>
-									<li><a href="/admin/users/add">{$lang.Add_new_user}</a></li>
-									<li><a href="/admin/products">{$lang.Start_new_auction}</a></li>
+									<li><a href="/admin/product/add">{$lang.Add_product}</a></li>
+									<li><a href="/admin/user/add">{$lang.Add_user}</a></li>
+									<li><a href="/admin/product">{$lang.Start_new_auction}</a></li>
 									<li><a href="http://www.google.com/analytics/" target="_blank">{$lang.Usage_stats}</a></li>
 								</ul>
 							</p>

@@ -1,6 +1,6 @@
 <?php
 
-class statController extends appController 
+class statsController extends appController
 {	
 	function admin_accounting() {
 		if(isset($_POST['actions'])) {
@@ -40,7 +40,7 @@ class statController extends appController
 		
 		// getting auctions data
 		$auctionsData = $this->exec_all("SELECT id, product_id, price, winner_id, status_id, buy_id, payment 
-									     FROM ". _DB_PREFIX_ ."auctions
+									     FROM ". DB_PREFIX ."auctions
 									     WHERE closed=1 AND payment != '' ".$conditions."");
 		
 		if($auctionsData) {
@@ -49,15 +49,15 @@ class statController extends appController
 				$stats[$i]['type']            = (empty($auction['buy_id'])) ? 1 : 2;
 				$stats[$i]['price']           = $auction['price'];
 				$stats[$i]['winner_id']       = $auction['winner_id'];
-				$winner = $this->exec_one("SELECT username FROM ". _DB_PREFIX_ ."users WHERE id=".$auction['winner_id']."");
+				$winner = $this->exec_one("SELECT username FROM ". DB_PREFIX ."users WHERE id=".$auction['winner_id']."");
 				$stats[$i]['winner_username'] = $winner['username'];
-				$spentCredits = $this->exec_one("SELECT SUM(b.debit) as debit FROM ". _DB_PREFIX_ ."bids b, ". _DB_PREFIX_ ."users u WHERE b.auction_id=".$auction['id']." AND u.id=b.user_id AND u.autobidder=0");
+				$spentCredits = $this->exec_one("SELECT SUM(b.debit) as debit FROM ". DB_PREFIX ."bids b, ". DB_PREFIX ."users u WHERE b.auction_id=".$auction['id']." AND u.id=b.user_id AND u.autobidder=0");
 				$stats[$i]['spent_credits']   = number_format($spentCredits['debit'] / $this->settings['app']['bid_value'], 2, '.', '');
 				$paymentExplode = explode('#', $auction['payment']);
 				$stats[$i]['date']            = $paymentExplode[1];
-				$payment = $this->exec_one("SELECT name, fixed_fees, variable_fees FROM ". _DB_PREFIX_ ."payments WHERE id=".$paymentExplode[0]."");
+				$payment = $this->exec_one("SELECT name, fixed_fees, variable_fees FROM ". DB_PREFIX ."payments WHERE id=".$paymentExplode[0]."");
 				$stats[$i]['payment']         = $payment['name'];
-				$product = $this->exec_one("SELECT delivery_cost ". _DB_PREFIX_ ."products WHERE id=".$auction['product_id']."");
+				$product = $this->exec_one("SELECT delivery_cost ". DB_PREFIX ."products WHERE id=".$auction['product_id']."");
 				$stats[$i]['fees']            = number_format($payment['fixed_fees'] + (($auction['price'] + $product['delivery_cost']) * $payment['variable_fees'] / 100), 2, '.', '');
 				$stats[$i]['outgoings']       = $stats[$i]['fees'];
 				$stats[$i]['earnings']        = number_format($auction['price'] + $stats[$i]['spent_credits'] - $stats[$i]['outgoings'], 2, '.', '');
@@ -67,7 +67,7 @@ class statController extends appController
 		
 		// getting products buys
 		$productsBuysData = $this->exec_all("SELECT b.created, b.auction_id, b.product_id, p.name, p.price 
-											 FROM ". _DB_PREFIX_ ."products_buys b, ". _DB_PREFIX_ ."products p 
+											 FROM ". DB_PREFIX ."products_buys b, ". DB_PREFIX ."products p 
 											 WHERE p.id=b.product_id ".$conditions."");
 		if($productsBuysData) {
 			foreach($productsBuysData as $productBuy) {
@@ -85,16 +85,16 @@ class statController extends appController
 			}
 		}
 		
-		$this->smarty->assign('stats' => $stats);
+		$this->smarty->assign(array('stats' => $stats));
 		
 		if(isset($_GET['export'])) $this->smarty->display('admin/dashboard/export.tpl');
 		else $this->smarty->display('admin/dashboard/accounting.tpl');
 	}
 	
 	function admin_connexions() {
-		$connexions = $this->exec_all("SELECT c.created, c.user_id, u.username FROM ". _DB_PREFIX_ ."connexions c, ". _DB_PREFIX_ ."users u WHERE u.id=c.user_id ORDER BY c.created DESC");
+		$connexions = $this->exec_all("SELECT c.created, c.user_id, u.username FROM ". DB_PREFIX ."connexions c, ". DB_PREFIX ."users u WHERE u.id=c.user_id ORDER BY c.created DESC");
 		
-		$this->smarty->assign('connexions' => $connexions);
+		$this->smarty->assign(array('connexions' => $connexions));
 		$this->smarty->display('admin/dashboard/connexions.tpl');
 	}
 }

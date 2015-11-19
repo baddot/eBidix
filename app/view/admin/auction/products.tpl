@@ -97,7 +97,7 @@
 							</p>
 							<p>
 								<label>{$lang.Stock_number} :</label><br/> 
-								<input type="text" name="stock_number" class="inputtext medium" value="0" />
+								<input type="text" name="stock_number" class="inputtext medium" value="1" />
 							</p>
 							<p>
 								<button name="submit" class="button green"><span>{$lang.Add}</span></button> <br /><br />{$lang.fields_required}

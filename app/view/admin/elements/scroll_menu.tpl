@@ -9,9 +9,9 @@
 									<ul class="menu-items">
 										<li><a href="/admin"><img src="/assets/admin/images/function-icons/home_48.png" alt="" /><span>{$lang.Home}</span></a></li>
 										<li><a href="/admin/dashboard/messages"><img src="/assets/admin/images/function-icons/mail_48.png" alt="" /><span>{$lang.Messages}</span></a></li>
-										<li><a href="/admin/stat/accounting"><img src="/assets/admin/images/function-icons/accounting_48.png" alt="" /><span>{$lang.Accounting}</span></a></li>
-										<li><a href="/admin/dashboard/upload"><img src="/assets/admin/images/function-icons/box_upload_48.png" alt="" /><span>{$lang.Upload}</span></a></li>
-										<li><a href="/admin/dashboard/logs"><img src="/assets/admin/images/function-icons/paper_pencil_48.png" alt="" /><span>{$lang.Logs}</span></a></li>
+										<li><a href="/admin/stats/accounting"><img src="/assets/admin/images/function-icons/accounting_48.png" alt="" /><span>{$lang.Accounting}</span></a></li>
+										{*<li><a href="/admin/dashboard/upload"><img src="/assets/admin/images/function-icons/box_upload_48.png" alt="" /><span>{$lang.Upload}</span></a></li>*}
+										{*<li><a href="/admin/dashboard/logs"><img src="/assets/admin/images/function-icons/paper_pencil_48.png" alt="" /><span>{$lang.Logs}</span></a></li>*}
 									</ul>
 								</div>
 
@@ -32,7 +32,7 @@
 										<li><a href="/admin/user"><img src="/assets/admin/images/function-icons/users_48.png" alt="" /><span>{$lang.Users}</span></a></li>
 										<li><a href="/admin/user/blacklist"><img src="/assets/admin/images/function-icons/blacklist_48.png" alt="" /><span>{$lang.Blacklist}</span></a></li>
 										<li><a href="/admin/user/referrals"><img src="/assets/admin/images/function-icons/referrals_48.png" alt="" /><span>{$lang.Referrals}</span></a></li>
-										<li><a href="/admin/stat/connexions"><img src="/assets/admin/images/function-icons/connexions_48.png" alt="" /><span>{$lang.Connexions}</span></a></li>
+										<li><a href="/admin/stats/connexions"><img src="/assets/admin/images/function-icons/connexions_48.png" alt="" /><span>{$lang.Connexions}</span></a></li>
 									</ul>
 								</div>
 								
@@ -42,7 +42,7 @@
 										<li><a href="/admin/advert"><img src="/assets/admin/images/function-icons/adverts_48.png" alt="" /><span>{$lang.Adverts}</span></a></li>
 										<li><a href="/admin/poll"><img src="/assets/admin/images/function-icons/chart_48.png" alt="" /><span>{$lang.Polls}</span></a></li>
 										<li><a href="/admin/testimonial"><img src="/assets/admin/images/function-icons/comment_48.png" alt="" /><span>{$lang.Testimonials}</span></a></li>
-										<li><a href="/admin/email"><img src="/assets/admin/images/function-icons/emails_48.png" alt="" /><span>{$lang.Emails}</span></a></li>
+										{*<li><a href="/admin/email"><img src="/assets/admin/images/function-icons/emails_48.png" alt="" /><span>{$lang.Emails}</span></a></li>*}
 										<li><a href="/admin/newsletter"><img src="/assets/admin/images/function-icons/mail_48.png" alt="" /><span>{$lang.Newsletters}</span></a></li>
 									</ul>
 								</div>

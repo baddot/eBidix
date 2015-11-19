@@ -10,7 +10,7 @@ class pollController extends appController
 				} else {
 					$user_id = $_SESSION['user_id'];
 					$post_data = tools::filter($_POST);
-					$sql_request = $this->exec("INSERT INTO ". _DB_PREFIX_ ."polls_stats (poll_id, 
+					$sql_request = $this->exec("INSERT INTO ". DB_PREFIX ."polls_stats (poll_id, 
 																						  user_id, 
 																						  response) 
 												VALUES('".$id."', 
@@ -30,7 +30,7 @@ class pollController extends appController
 		if(!empty($_POST)) {	
 			
 			$post_data = tools::filter($_POST);
-			$sql_request = $this->exec("INSERT INTO ". _DB_PREFIX_ ."polls (question, 
+			$sql_request = $this->exec("INSERT INTO ". DB_PREFIX ."polls (question, 
 																			response_1, 
 																			response_2, 
 																			response_3, 
@@ -45,30 +45,30 @@ class pollController extends appController
 											   '".$post_data['active']."', 
 											   '".date("Y-m-d H:i:s")."')");
 
-			$poll = $this->exec_one("SELECT id FROM ". _DB_PREFIX_ ."polls WHERE question='".$post_data['question']."'");
-			$this->exec("INSERT INTO ". _DB_PREFIX_ ."polls_stats (poll_id) VALUES('".$poll['id']."')");
+			$poll = $this->exec_one("SELECT id FROM ". DB_PREFIX ."polls WHERE question='".$post_data['question']."'");
+			$this->exec("INSERT INTO ". DB_PREFIX ."polls_stats (poll_id) VALUES('".$poll['id']."')");
 			tools::setFlash($this->l('Request processed'), 'success');
 			tools::redirect('/admin/poll');
 		}
 		
-		$polls = $this->exec_all("SELECT * FROM ". _DB_PREFIX_ ."polls");
+		$polls = $this->exec_all("SELECT * FROM ". DB_PREFIX ."polls");
 		$this->smarty->assign('polls', $polls);
 		$this->smarty->display('admin/content/polls.tpl');
 	}
 	
 	function admin_stats($id) {
-		$poll = $this->exec_one("SELECT * FROM ". _DB_PREFIX_ ."polls WHERE id=".$id."");
-		$response_1_nb = $this->exec_one("SELECT count(id) as number FROM ". _DB_PREFIX_ ."polls_stats WHERE poll_id=".$id." AND response=1");
-		$response_2_nb = $this->exec_one("SELECT count(id) as number FROM ". _DB_PREFIX_ ."polls_stats WHERE poll_id=".$id." AND response=2");
-		$response_3_nb = $this->exec_one("SELECT count(id) as number FROM ". _DB_PREFIX_ ."polls_stats WHERE poll_id=".$id." AND response=3");
-		$response_4_nb = $this->exec_one("SELECT count(id) as number FROM ". _DB_PREFIX_ ."polls_stats WHERE poll_id=".$id." AND response=4");
+		$poll = $this->exec_one("SELECT * FROM ". DB_PREFIX ."polls WHERE id=".$id."");
+		$response_1_nb = $this->exec_one("SELECT count(id) as number FROM ". DB_PREFIX ."polls_stats WHERE poll_id=".$id." AND response=1");
+		$response_2_nb = $this->exec_one("SELECT count(id) as number FROM ". DB_PREFIX ."polls_stats WHERE poll_id=".$id." AND response=2");
+		$response_3_nb = $this->exec_one("SELECT count(id) as number FROM ". DB_PREFIX ."polls_stats WHERE poll_id=".$id." AND response=3");
+		$response_4_nb = $this->exec_one("SELECT count(id) as number FROM ". DB_PREFIX ."polls_stats WHERE poll_id=".$id." AND response=4");
 		$poll_stats = $this->exec_all("SELECT s.id, 
 											  s.poll_id, 
 											  s.user_id, 
 											  s.response, 
 											  u.username,
 											  s.created
-									   FROM ". _DB_PREFIX_ ."polls_stats s, ". _DB_PREFIX_ ."users u 
+									   FROM ". DB_PREFIX ."polls_stats s, ". DB_PREFIX ."users u 
 									   WHERE s.poll_id=".$id." AND u.id=s.user_id");
 		$this->smarty->assign(array(
 			'poll'          => $poll,
@@ -84,7 +84,7 @@ class pollController extends appController
 	function admin_edit($id) {
 		if(!empty($_POST)) {
 			$post_data = tools::filter($_POST);
-			$sql_request = $this->exec("UPDATE ". _DB_PREFIX_ ."polls SET question='".$post_data['question']."', 
+			$sql_request = $this->exec("UPDATE ". DB_PREFIX ."polls SET question='".$post_data['question']."', 
 																		  response_1='".$post_data['response_1']."', 
 																		  response_2='".$post_data['response_2']."', 
 																		  response_3='".$post_data['response_3']."', 
@@ -96,13 +96,13 @@ class pollController extends appController
 			tools::redirect('/admin/poll');
 		}
 		
-		$poll = $this->exec_one("SELECT * FROM ". _DB_PREFIX_ ."polls WHERE id=".$id."");
+		$poll = $this->exec_one("SELECT * FROM ". DB_PREFIX ."polls WHERE id=".$id."");
 		$this->smarty->assign('poll', $poll);
 		$this->smarty->display('admin/content/edit_poll.tpl');
 	}
 	
 	function admin_delete($id) {
-		$this->exec("DELETE FROM ". _DB_PREFIX_ ."polls WHERE id=".$id."");
+		$this->exec("DELETE FROM ". DB_PREFIX ."polls WHERE id=".$id."");
 		tools::setFlash($this->l('Request processed'), 'success');
 		tools::redirect('/admin/poll');
 	}

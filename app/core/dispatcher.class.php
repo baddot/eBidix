@@ -4,7 +4,7 @@
  *******************************************************************************
  *      Author:     BWeb Media
  *      Email:      contact@bwebmedia.com
- *      Website:    http://www.bwebmedia.com
+ *      Website:    https://www.bwebmedia.com
  *
  *      File:       dispatcher.class.php
  *      Version:    1.2

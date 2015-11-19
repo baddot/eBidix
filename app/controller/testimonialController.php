@@ -37,7 +37,7 @@ class testimonialController extends appController
 						}
 					} else $image_link = null;
 					
-					$sql_request = $this->exec("INSERT INTO ". _DB_PREFIX_ ."testimonials (user_id, auction_id, text, image, note, active, created)
+					$sql_request = $this->exec("INSERT INTO ". DB_PREFIX ."testimonials (user_id, auction_id, text, image, note, active, created)
 												VALUES('".$user_id."',
 													   '".$this->safe($id)."',
 													   '".$this->safe($post_data['text'])."', 
@@ -50,14 +50,14 @@ class testimonialController extends appController
 				}
 				
 				// check if the user won the auction
-				$auction = $this->exec_one("SELECT winner_id FROM ". _DB_PREFIX_ ."auctions WHERE id= ".$this->safe($id)."");	
+				$auction = $this->exec_one("SELECT winner_id FROM ". DB_PREFIX ."auctions WHERE id= ".$this->safe($id)."");	
 				if($user_id != $auction['winner_id']) {
 					tools::setFlash(ERROR_WINNER , 'error');
 					tools::redirect('/account');
 				}
 				
 				// check if the user already leaved a comment
-				$testimonial = $this->exec_one("SELECT id FROM ". _DB_PREFIX_ ."testimonials WHERE user_id=".$user_id." AND auction_id=".$this->safe($id)."");
+				$testimonial = $this->exec_one("SELECT id FROM ". DB_PREFIX ."testimonials WHERE user_id=".$user_id." AND auction_id=".$this->safe($id)."");
 				if(!empty($testimonial)) {
 					tools::setFlash(ALREADY_LEAVE_COMMENT , 'error');
 					tools::redirect('/account');
@@ -80,9 +80,9 @@ class testimonialController extends appController
 			
 			// data add
 			$post_data = tools::filter($_POST);
-			$auction = $this->exec_one("SELECT winner_id FROM ". _DB_PREFIX_ ."auctions WHERE id=".$post_data['auction_id']."");
+			$auction = $this->exec_one("SELECT winner_id FROM ". DB_PREFIX ."auctions WHERE id=".$post_data['auction_id']."");
 			
-			$sql_request = $this->exec("INSERT INTO ". _DB_PREFIX_ ."testimonials (user_id, 
+			$sql_request = $this->exec("INSERT INTO ". DB_PREFIX ."testimonials (user_id, 
 																				   auction_id, 
 																				   text, 
 																				   image, 
@@ -101,15 +101,15 @@ class testimonialController extends appController
 			tools::redirect('/admin/testimonial');
 		}
 		
-		$auctions = $this->exec_all("SELECT a.id FROM ". _DB_PREFIX_ ."auctions a, ". _DB_PREFIX_ ."users u WHERE a.closed=1 AND a.winner_id=u.id AND u.autobidder=1 ORDER by a.id DESC");
-		$testimonials_data = $this->exec_all("SELECT * FROM ". _DB_PREFIX_ ."testimonials");
+		$auctions = $this->exec_all("SELECT a.id FROM ". DB_PREFIX ."auctions a, ". DB_PREFIX ."users u WHERE a.closed=1 AND a.winner_id=u.id AND u.autobidder=1 ORDER by a.id DESC");
+		$testimonials_data = $this->exec_all("SELECT * FROM ". DB_PREFIX ."testimonials");
 		$testimonials = array();
 		$i=0;
 		foreach($testimonials_data as $testimonial) {
 			$testimonials[$i]['id'] = $testimonial['id'];
 			$testimonials[$i]['user_id'] = $testimonial['user_id'];
 			$testimonials[$i]['auction_id'] = $testimonial['auction_id'];
-			$user = $this->exec_one("SELECT id, username FROM ". _DB_PREFIX_ ."users WHERE id=".$testimonial['user_id']."");
+			$user = $this->exec_one("SELECT id, username FROM ". DB_PREFIX ."users WHERE id=".$testimonial['user_id']."");
 			$testimonials[$i]['username'] = $user['username'];
 			$testimonials[$i]['text'] = substr($testimonial['text'], 0, 20);
 			$testimonials[$i]['note'] = $testimonial['note'];
@@ -127,13 +127,13 @@ class testimonialController extends appController
 	}
 	
 	function admin_preview($id) {
-		$testimonial = $this->exec_one("SELECT t.image, t.text, u.username FROM ". _DB_PREFIX_ ."testimonials t, ". _DB_PREFIX_ ."users u WHERE t.id=".$id." AND u.id=t.user_id");
+		$testimonial = $this->exec_one("SELECT t.image, t.text, u.username FROM ". DB_PREFIX ."testimonials t, ". DB_PREFIX ."users u WHERE t.id=".$id." AND u.id=t.user_id");
 		$this->smarty->assign('testimonial', $testimonial);
 		$this->smarty->display('admin/content/preview_testimonial.tpl');
 	}
 	
 	function admin_validate($id) {
-		$this->exec("UPDATE ". _DB_PREFIX_ ."testimonials SET validate='1' WHERE id=".$id."");
+		$this->exec("UPDATE ". DB_PREFIX ."testimonials SET validate='1' WHERE id=".$id."");
 		tools::setFlash($this->l('Request processed'), 'success');
 		tools::redirect('/admin/testimonials');
 	}
@@ -159,10 +159,10 @@ class testimonialController extends appController
 			$month = $months[date("m")];
 			$year = date("Y");
 			$week_text = "du ".$firstDay." au ".$lastDay." ".$month." ".$year."";
-			$already_week_winner = $this->exec_one("SELECT id FROM ". _DB_PREFIX_ ."testimonials WHERE week = '".$week_text."'");
+			$already_week_winner = $this->exec_one("SELECT id FROM ". DB_PREFIX ."testimonials WHERE week = '".$week_text."'");
 			
 			if(empty($already_week_winner['id'])) {
-				$this->exec("UPDATE ". _DB_PREFIX_ ."testimonials SET show_home=1, week='".$week_text."' WHERE id=".$id."");
+				$this->exec("UPDATE ". DB_PREFIX ."testimonials SET show_home=1, week='".$week_text."' WHERE id=".$id."");
 				tools::setFlash($this->l('Request processed'), 'success');
 				tools::redirect('/admin/testimonial');
 			} else {
@@ -173,7 +173,7 @@ class testimonialController extends appController
 	}
 	
 	function admin_withdraw($id) {
-		$this->exec("UPDATE ". _DB_PREFIX_ ."testimonials SET show_home=0 WHERE id=".$this->safe($id)."");
+		$this->exec("UPDATE ". DB_PREFIX ."testimonials SET show_home=0 WHERE id=".$this->safe($id)."");
 		tools::setFlash($this->l('Request processed'), 'success');
 		tools::redirect('/admin/testimonial');
 	}
@@ -184,11 +184,11 @@ class testimonialController extends appController
 			// image upload
 			if(isset($_FILES['image'])) $image = tools::upload($_FILES['image']);
 			else $image = null;
-			if(!empty($image)) $this->exec("UPDATE ". _DB_PREFIX_ ."testimonials SET image='".$image."' WHERE id=".$id."");
+			if(!empty($image)) $this->exec("UPDATE ". DB_PREFIX ."testimonials SET image='".$image."' WHERE id=".$id."");
 			
 			// data edit
 			$post_data = tools::filter($_POST);
-			$sql_request = $this->exec("UPDATE ". _DB_PREFIX_ ."testimonials SET text='".$post_data['text']."',  
+			$sql_request = $this->exec("UPDATE ". DB_PREFIX ."testimonials SET text='".$post_data['text']."',  
 																				 active='".$post_data['active']."' 
 										WHERE id=".$id."");
 			if($sql_request) {
@@ -197,13 +197,13 @@ class testimonialController extends appController
 			}
 		}
 		
-		$testimonial = $this->exec_one("SELECT * FROM ". _DB_PREFIX_ ."testimonials WHERE id=".$id."");
+		$testimonial = $this->exec_one("SELECT * FROM ". DB_PREFIX ."testimonials WHERE id=".$id."");
 		$this->smarty->assign('testimonial', $testimonial);
 		$this->smarty->display('admin/content/edit_testimonial.tpl');
 	}
 	
 	function admin_delete($id) {
-		$this->exec("DELETE FROM ". _DB_PREFIX_ ."testimonials WHERE id=".$id."");
+		$this->exec("DELETE FROM ". DB_PREFIX ."testimonials WHERE id=".$id."");
 		tools::setFlash($this->l('Request processed'), 'success');
 		tools::redirect('/admin/testimonial');
 	}

@@ -14,7 +14,7 @@ Class user
 		return Database::getInstance()->insert('referrals', $values);
 	}
 	
-	public function logAccess($values) {
+	public function logAccess() {
 		return Database::getInstance()->insert('connections', array('user_id' => $_SESSION['user_id'], 'ip' => $_SERVER['REMOTE_ADDR']));
 	}
 	

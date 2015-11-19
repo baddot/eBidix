@@ -3,11 +3,11 @@
 /*******************************************************************************
  *      Author:     BWeb Media
  *      Email:      contact@bwebmedia.com
- *      Website:    http://www.bwebmedia.com
+ *      Website:    https://www.bwebmedia.com
  *
  *      File:       index.php
- *      Version:    1.1
- *      Copyright:  (c) 2014 - BWeb Media 
+ *      Version:    1.2
+ *      Copyright:  (c) 2009+ - BWeb Media
  *      
  ******************************************************************************/
 

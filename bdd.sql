@@ -755,7 +755,7 @@ CREATE TABLE IF NOT EXISTS `eb_testimonials` (
 CREATE TABLE IF NOT EXISTS `eb_users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(40) NOT NULL,
-  `ppasswd` varchar(40) NOT NULL,
+  `ppasswd` varchar(100) NOT NULL,
   `firstname` varchar(255) NOT NULL,
   `lastname` varchar(255) NOT NULL,
   `phone` varchar(80) NOT NULL,
@@ -783,8 +783,8 @@ CREATE TABLE IF NOT EXISTS `eb_users` (
 --
 
 INSERT INTO `eb_users` (`id`, `username`, `ppasswd`, `firstname`, `lastname`, `phone`, `mobile`, `birthday`, `gender_id`, `email`, `active`, `validation_key`, `newsletter`, `partners`, `admin`, `autobidder`, `source_id`, `desired_category_id`, `ip`, `blacklist`, `created`, `last_access`) VALUES
-(1, 'admin', '4014b828c2c83a5e036b60973f6b3d5e', 'Test', 'Test', '', '', '0000-00-00', 0, 'contact@bwebmedia.com', 1, '', 0, 0, 1, 0, 0, 0, '82.123.95.236', 0, '2013-07-22 19:26:39', '2014-03-15 11:39:13'),
-(2, 'usertest', '00eef83727db25d9d95a639ebe646768', 'usertest', 'usertest', '', '', '0000-00-00', 1, 'test@mail.com', 1, '', 0, 0, 1, 0, 1, 16, '', 0, '2013-07-22 19:33:10', '2014-02-12 20:50:26');
+(1, 'admin', '$2y$10$6p6j1745I4jxRiAoaDburOKLHKIPKDOKE7rrSUL9Uzk.iwXVUc/4G', 'Test', 'Test', '', '', '0000-00-00', 0, 'contact@bwebmedia.com', 1, '', 0, 0, 1, 0, 0, 0, '82.123.95.236', 0, '2013-07-22 19:26:39', '2014-03-15 11:39:13'),
+(2, 'usertest', '$2y$10$cTTYQYHuH589H5rH6cXg5.qlQhi0C7XAMQNHPFGXhqQAb5MjUAxy6', 'usertest', 'usertest', '', '', '0000-00-00', 1, 'test@mail.com', 1, '', 0, 0, 1, 0, 1, 16, '', 0, '2013-07-22 19:33:10', '2014-02-12 20:50:26');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

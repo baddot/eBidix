@@ -26,6 +26,7 @@
 											{if $setting.name == 'contact_email'}{$lang.Contact_email}
 											{elseif $setting.name == 'auction_peak_start'}{$lang.Auction_peak_start}
 											{elseif $setting.name == 'auction_peak_end'}{$lang.Auction_peak_end}
+											{elseif $setting.name == 'free_register_credits'}{$lang.Free_register_credits}
 											{elseif $setting.name == 'free_referral_register_credits'}{$lang.Free_referral_credits}
 											{elseif $setting.name == 'free_referral_buy_credits'}{$lang.Free_ref_buy_credits}
 											{elseif $setting.name == 'free_signup_credits'}{$lang.Free_signup_credits}
