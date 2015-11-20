@@ -19,7 +19,7 @@
 									<li>{$lang.This_month} : <a href="/admin/auctions/bids?type=package&sort_by=this_month">{$data.monthly_income}&euro;</a></li>
 									<li>{$lang.Last_month} : <a href="/admin/auctions/bids?type=package&sort_by=last_month">{$data.last_month_income}&euro;</a></li>
 									<li>{$lang.This_year} : <a href="/admin/auctions/bids?type=package&sort_by=this_year">{$data.yearly_income}&euro;</a></li>
-									<li style="margin-top:10px;">{$lang.Registered_users} : <a href="/admin/users">{$data.registered_users}</a></li>
+									<li style="margin-top:10px;">{$lang.Registered_users} : <a href="/admin/user">{$data.registered_users}</a></li>
 									<li>{$lang.Online_users} : <a href="/admin/dashboard/online_users">{$data.online_users}</a></li>
 								</ul>
 							</p>

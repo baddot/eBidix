@@ -36,7 +36,7 @@
 										<td>{$product.price}&euro;</td>
 										<td>{$product.delivery_cost}&euro;</td>
 										<td>{$product.stock_number}</td>
-										<td class="small"><a class="action" href="#"></a><div class="opmenu"><ul><li><a href="/admin/auction/add/{$product.id}">{$lang.Add_auction}</a></li><li><a href="/admin/product/edit/{$product.id}">{$lang.Edit}</a></li><li><a href="/admin/product/images/{$product.id}">{$lang.Images}</a></li><li style="color:#717171;"><a href="/admin/products/delete/{$product.id}">{$lang.Delete}</a></li></ul><div class="clear"></div><div class="foot"></div></div></td>
+										<td class="small"><a class="action" href="#"></a><div class="opmenu"><ul><li><a href="/admin/auction/add/{$product.id}">{$lang.Add_auction}</a></li><li><a href="/admin/product/edit/{$product.id}">{$lang.Edit}</a></li><li><a href="/admin/product/images/{$product.id}">{$lang.Images}</a></li><li style="color:#717171;"><a href="/admin/product/delete/{$product.id}">{$lang.Delete}</a></li></ul><div class="clear"></div><div class="foot"></div></div></td>
 									</tr>
 								{foreachelse}
 									<tr><td>{$lang.No_products}</td></tr>

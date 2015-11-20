@@ -35,7 +35,7 @@
 										<td><a href="/admin/user?email_alerts={$auction.id}">{$auction.email_alerts}</a></td>
 										<td><a href="/admin/user?autobids={$auction.id}">{$auction.autobids}</a></td>
 										{*<td>{$auction.hits}</td>*}
-										<td class="small"><a class="action" href="#"></a><div class="opmenu"><ul>{*<li><a href="/admin/auctions/edit/{$auction.id}">{$lang.Edit}</a></li>*}<li><a href="/admin/auctions/start/{$auction.id}">{$lang.Start}</a></li><li><a href="/admin/auction/delete/{$auction.id}">{$lang.Delete}</a></li></ul><div class="clear"></div><div class="foot"></div></div></td>
+										<td class="small"><a class="action" href="#"></a><div class="opmenu"><ul>{*<li><a href="/admin/auction/edit/{$auction.id}">{$lang.Edit}</a></li>*}<li><a href="/admin/auction/start/{$auction.id}">{$lang.Start}</a></li><li><a href="/admin/auction/delete/{$auction.id}">{$lang.Delete}</a></li></ul><div class="clear"></div><div class="foot"></div></div></td>
 									</tr>
 								{/foreach}
 							</tbody>

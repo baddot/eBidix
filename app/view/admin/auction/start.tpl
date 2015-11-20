@@ -1,7 +1,7 @@
 {include file='admin/elements/header.tpl'}
 
 	<div class="container_12">
-		<div class="crumb">&raquo <a href="/admin/auctions/soon">{$lang.Soon_auctions}</a> &raquo {$lang.Start}</div>
+		<div class="crumb">&raquo <a href="/admin/auction/soon">{$lang.Soon_auctions}</a> &raquo {$lang.Start}</div>
 
 		<div class="grid_12">
 			<div class="sb-box">
@@ -11,7 +11,7 @@
 					</div>
 					
 					<div class="bcont">
-						<form method="post" action="/admin/auctions/start/{$auction.id}">
+						<form method="post" action="/admin/auction/start/{$auction.id}">
 							<p>
 								<table cellpadding="0" cellspacing="0">
 									<tr>
