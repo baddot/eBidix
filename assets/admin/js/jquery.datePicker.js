@@ -794,7 +794,7 @@
 								$('<h2></h2>'),
 								$('<div class="dp-nav-prev"></div>')
 									.append(
-										$('<a class="dp-nav-prev-month" href="#" title="' + $.dpText.TEXT_PREV_MONTH + '"><img style="border:0px;" src="/themes/default/admin/images/previous.png" alt="" /></a>')
+										$('<a class="dp-nav-prev-month" href="#" title="' + $.dpText.TEXT_PREV_MONTH + '"><img style="border:0px;" src="/assets/admin/images/previous.png" alt="" /></a>')
 											.bind(
 												'click',
 												function()
@@ -805,7 +805,7 @@
 									),
 								$('<div class="dp-nav-next"></div>')
 									.append(
-										$('<a class="dp-nav-next-month" href="#" title="' + $.dpText.TEXT_NEXT_MONTH + '"><img style="border:0px;" src="/themes/default/admin/images/next.png" alt="" /></a>')
+										$('<a class="dp-nav-next-month" href="#" title="' + $.dpText.TEXT_NEXT_MONTH + '"><img style="border:0px;" src="/assets/admin/images/next.png" alt="" /></a>')
 											.bind(
 												'click',
 												function()
