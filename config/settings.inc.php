@@ -51,7 +51,6 @@ $settings = array(
 		'increments' => 'dynamic', // single, dynamic
 		'waiting_time' => 10,
 		'closed_limit' => 100,
-		
 		'podium' => array(
 			'active' => true,
 			'refund' => 'amount', // amount, percent

@@ -21,7 +21,7 @@
 								<select name="auction_type" id="auction_type">
 									<option value="1">{$lang.Classic_auction}</option>
 									<option value="2" selected="selected">{$lang.Cent_auction}</option>
-									{if $settings.app.increments == 'dynamic'}<option value="3">{$lang.Clic_auction}</option>{/if}
+									{if $settings.auction.increments == 'dynamic'}<option value="3">{$lang.Clic_auction}</option>{/if}
 									<option value="4">{$lang.Fixed_price_auction}</option>
 									<option value="5">{$lang.Beginner_auction}</option>
 									<option value="6">{$lang.Vip_auction}</option>
@@ -43,7 +43,7 @@
 								<input type="text" name="auction_start_price" class="inputtext small" value="0.00" />
 							</p>
 							
-							{if $settings.app.increments == 'single'}
+							{if $settings.auction.increments == 'single'}
 								<p id="increments">
 									<label>{$lang.Time_increment} <font color="red">*</font> :</label><br /> 
 									<select name="time_increment">
@@ -55,7 +55,7 @@
 										<option value="120">120</option>
 									</select>
 								</p>
-							{elseif $settings.app.increments == 'dynamic'}
+							{elseif $settings.auction.increments == 'dynamic'}
 								<div id="increments">
 									<label>{$lang.Time_increment} <font color="red">*</font> :</label><br /> 
 									<select name="time_increment">
@@ -136,7 +136,7 @@
 								<input type="checkbox" name="auction_top" class="checkbox" value="1" /> <label>{$lang.Top_auction}</label> 
 							</p>
 							
-							{if $settings.app.podium.active && $settings.app.podium.refund == 'amount'}
+							{if $settings.auction.podium.active && $settings.auction.podium.refund == 'amount'}
 								<p id="podium">
 									<input type="checkbox" name="auction_podium" class="checkbox" value="1" onClick="show_box('podium_box');" /> <label>{$lang.Activate_podium}</label>
 								</p>
@@ -160,7 +160,7 @@
 								<input type="checkbox" name="auction_buynow" id="buynow" class="checkbox" value="1" /> <label>{$lang.Authorize_buynow}</label>
 							</p>
 							
-							{if $settings.app.labels}
+							{if $settings.auction.labels}
 								<p>
 									<label>{$lang.Label}</label><br /> 
 									<select name="auction_label">
