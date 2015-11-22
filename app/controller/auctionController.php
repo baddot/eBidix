@@ -882,7 +882,7 @@ class auctionController extends appController
 											   '".$post_data['auction_buynow']."', 
 											   '".date("Y-m-d H:i:s")."')");
 			$auction = $this->exec_one("SELECT id, product_id FROM ". DB_PREFIX ."auctions ORDER BY id DESC");
-			if($this->settings['app']['increments'] == 'dynamic') {
+			if($this->settings['auction']['increments'] == 'dynamic') {
 				if($post_data['auction_type'] == 3) {
 					if(strpos($post_data['price_increment_1'], ',')) $post_data['price_increment_1'] = str_replace(',', '.', $post_data['price_increment_1']);
 					if(strpos($post_data['price_increment_2'], ',')) $post_data['price_increment_2'] = str_replace(',', '.', $post_data['price_increment_2']);
@@ -900,7 +900,7 @@ class auctionController extends appController
 					$this->exec("INSERT INTO ". DB_PREFIX ."increments (auction_id, bid_debit, price_increment, time_increment) 
 								 VALUES('".$auction['id']."', '1', '0.01', '".$post_data['time_increment']."')");
 				}
-			} elseif($this->settings['app']['increments'] == 'single') {
+			} elseif($this->settings['auction']['increments'] == 'single') {
 				$this->exec("INSERT INTO ". DB_PREFIX ."increments (auction_id, bid_debit, price_increment, time_increment) 
 							 VALUES('".$auction['id']."', '1', '0.01', '".$post_data['time_increment']."')");
 			}
