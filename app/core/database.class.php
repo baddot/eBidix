@@ -146,7 +146,7 @@ class Database
 					$condition .= ($i == $len - 1) ? "{$key} = :{$key}" : "{$key} = :{$key} AND ";
 					$params[$key] = $value;
 				}
-			} else $condition = $conditions;
+			} else $condition .= $conditions;
 		} else $condition = '';
 		
 		$query = "UPDATE ". DB_PREFIX ."{$table} SET {$values} {$condition}";
@@ -163,7 +163,7 @@ class Database
 				$condition .= ($i == $len - 1) ? "{$key} = :{$key}" : "{$key} = :{$key} AND ";
 				$params[$key] = $value;
 			}
-		} else $condition = '';
+		} else $condition .= '';
 		
 		$query = "DELETE FROM ". DB_PREFIX ."{$table} {$condition}";
 		return self::PDOExecute($query, $params);
