@@ -1,6 +1,6 @@
 <?php
 
-define(_DIR_, dirname(__FILE__));
+define('_DIR_', dirname(__FILE__));
 require_once 'config/db.php';
 require_once 'config/settings.inc.php';
 require_once 'app/core/database.class.php';
@@ -28,8 +28,8 @@ switch($_GET['type']){
 					FROM ". DB_PREFIX ."auctions a, ". DB_PREFIX ."autobids b 
 					WHERE a.id = b.auction_id AND a.end_time < '".$autobidEndTime."' AND a.closed = 0 
 					AND a.active = 1 AND a.status_id = 3 AND b.bids > 0 AND b.active=1 ORDER BY b.created DESC";
-			if ($res = $db->query($sql)) {
-				if ($res->fetchColumn() > 0) {
+			if ($res = $db->getRows($sql)) {
+				if (sizeof($res) > 0) {
 					foreach ($res as $row) {
 						if($row['price'] >= $row['minimum_price'] && $row['price'] < $row['maximum_price']) {
 							$bid = lastBid($row['auction_id']);
