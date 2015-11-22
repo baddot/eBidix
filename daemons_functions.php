@@ -268,10 +268,10 @@ function bid($data = array(), $extend = false, $bid_description = null) {
 					"id = {$auction['id']}"
 				);
 
-				if($success == 1) {
+				if($success) {
 					$db->insert("bids", array(
-						user_id => $bid['user_id'],
-						auction_id => $bid['auction_id'],
+						user_id => $data['user_id'],
+						auction_id => $auction['id'],
 						price => $bid['price'],
 						description => $bid['description'],
 						credit => $bid['credit'],
