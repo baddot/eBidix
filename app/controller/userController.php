@@ -999,7 +999,7 @@ class userController extends appController
 			tools::redirect('/admin/user');
 		}
 		
-		$this->smarty->assign('user', $this->user->getData($id));
+		$this->smarty->assign('user', $this->user->getById($id));
 		$this->smarty->display('admin/users/edit_user.tpl');
 	}
 	
@@ -1013,9 +1013,15 @@ class userController extends appController
 					$credit = '';
 					$debit = str_replace("-", "", $data['total']);
 				}
-				$sql_request = $this->exec("INSERT INTO ". DB_PREFIX ."bids (user_id, description, credit, debit, created) 
-											VALUES('".$user_id."', '".$data['description']."', '".$credit."', '".$debit."', '".date("Y-m-d H:i:s")."')");
 				
+				$this->db->insert("bids", array(
+					'user_id' => $user_id,
+					'description' => $data['description'],
+					'credit' => $credit,
+					'debit' => $debit,
+					'created' => date("Y-m-d H:i:s")
+				));
+
 				unlink(_DIR_ .'/data/bids_balance_'.$user_id);
 				tools::setFlash($this->l('Request processed'), 'success');
 				tools::redirect('/admin/user/view/'.$user_id);
@@ -1023,7 +1029,7 @@ class userController extends appController
 	}
 	
 	function admin_delete_transaction($id) {
-		$sql_request = $this->exec("DELETE FROM ". DB_PREFIX ."bids WHERE id=".$id."");
+		$this->db->delete("bids", "id={$id}");
 		tools::setFlash($this->l('Request processed'), 'success');
 		tools::redirect('/admin/user');
 	}
