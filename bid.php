@@ -1,5 +1,6 @@
 <?php
 
+define('_DIR_', dirname(__FILE__));
 require_once 'config/db.php';
 require_once 'config/settings.inc.php';
 require_once 'app/core/tools.class.php';
