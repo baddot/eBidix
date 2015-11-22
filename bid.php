@@ -20,7 +20,7 @@ if(!empty($_GET['id'])) {
 	$data['price_increment'] = get('price_increment', $data['auction_id'], 0);
 }
 
-$data['isPeakNow']  = isPeakNow();
+$data['isPeakNow']  = tools::isPeakNow();
 
 // bid the auction
 $auction = bid($data);
