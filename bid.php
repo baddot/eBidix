@@ -2,6 +2,8 @@
 
 require_once 'config/db.php';
 require_once 'config/settings.inc.php';
+require_once 'app/core/tools.class.php';
+require_once 'app/core/database.class.php';
 require_once 'daemons_functions.php';
 
 date_default_timezone_set($settings['app']['timezone']);

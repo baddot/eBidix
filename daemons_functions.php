@@ -1,7 +1,7 @@
 <?php
 
 function get($name = null, $auction_id = null, $cache = true) {
-	$db = database::getInstance();
+	$db = Database::getInstance();
 
 	if($cache == true) {
 		$setting = cacheRead($name.'_setting');
@@ -19,7 +19,7 @@ function get($name = null, $auction_id = null, $cache = true) {
 }
 
 function checkCanClose($id, $isPeakNow, $timeCheck = true) {
-	$db = database::getInstance();
+	$db = Database::getInstance();
 	$auction = $db->getRow("SELECT id, product_id, end_time, type, peak_only, price, minimum_price, leader_id, extends, extends_limit, extends_bids, users_bids, fixed_price FROM ". DB_PREFIX ."auctions WHERE id = {$id}");
 
 	if($timeCheck == true) {
