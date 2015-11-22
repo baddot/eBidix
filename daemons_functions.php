@@ -8,19 +8,19 @@ function get($name = null, $auction_id = null, $cache = true) {
 		
 		if(!empty($setting)) return $setting;
 		else {
-			$setting = $db->getRow("SELECT value FROM ". _DB_PREFIX_ ."settings WHERE name = '{$name}'");
+			$setting = $db->getRow("SELECT value FROM ". DB_PREFIX ."settings WHERE name = '{$name}'");
 			if(!empty($setting)) return $setting['value'];
 			else return false;
 		}
 	}
 	
-	$increments = $db->getRow("SELECT * FROM ". _DB_PREFIX_ ."increments WHERE auction_id = {$auction_id}");
+	$increments = $db->getRow("SELECT * FROM ". DB_PREFIX ."increments WHERE auction_id = {$auction_id}");
 	return $increments[$name];
 }
 
 function checkCanClose($id, $isPeakNow, $timeCheck = true) {
 	$db = database::getInstance();
-	$auction = $db->getRow("SELECT id, product_id, end_time, type, peak_only, price, minimum_price, leader_id, extends, extends_limit, extends_bids, users_bids, fixed_price FROM ". _DB_PREFIX_ ."auctions WHERE id = {$id}");
+	$auction = $db->getRow("SELECT id, product_id, end_time, type, peak_only, price, minimum_price, leader_id, extends, extends_limit, extends_bids, users_bids, fixed_price FROM ". DB_PREFIX ."auctions WHERE id = {$id}");
 
 	if($timeCheck == true) {
 		if(strtotime($auction['end_time']) > time()) return false;
@@ -29,8 +29,8 @@ function checkCanClose($id, $isPeakNow, $timeCheck = true) {
 	if($auction['peak_only'] == 1 && !$isPeakNow) return false;
 	
 	if($auction['extends'] == 1) {
-		$isExtend = $db->getRow("SELECT id FROM ". _DB_PREFIX_ ."users WHERE id={$auction['leader_id']} AND autobidder=1");
-		$product = $db->getRow("SELECT price FROM ". _DB_PREFIX_ ."products WHERE id={$auction['product_id']}");
+		$isExtend = $db->getRow("SELECT id FROM ". DB_PREFIX ."users WHERE id={$auction['leader_id']} AND autobidder=1");
+		$product = $db->getRow("SELECT price FROM ". DB_PREFIX ."products WHERE id={$auction['product_id']}");
 		$bid_value = get('bid_value');
 		if($auction['price'] < $auction['minimum_price']) {
 			if($isExtend) return false;
@@ -48,7 +48,7 @@ function checkCanClose($id, $isPeakNow, $timeCheck = true) {
 	if(empty($latest_bid)) $latest_bid['user_id'] = 0;
 	elseif($latest_bid['user_id'] !== $auction['leader_id']) return false;
 
-	$autobids = $db->getRows("SELECT user_id FROM ". _DB_PREFIX_ ."autobids WHERE bids > 0 AND minimum_price <= '".$auction['price']."' AND maximum_price > '".$auction['price']."' AND auction_id = ".$auction['id']." AND user_id != ".$latest_bid['user_id']);
+	$autobids = $db->getRows("SELECT user_id FROM ". DB_PREFIX ."autobids WHERE bids > 0 AND minimum_price <= '".$auction['price']."' AND maximum_price > '".$auction['price']."' AND auction_id = ".$auction['id']." AND user_id != ".$latest_bid['user_id']);
 	if(sizeof($autobids) > 0) {
 		foreach($autobids as $autobid) {
 			if(balance($autobid['user_id']) > 0) return false;
@@ -59,7 +59,7 @@ function checkCanClose($id, $isPeakNow, $timeCheck = true) {
 
 function lastBid($auction_id = null) {
 	$db = Database::getInstance();
-	$lastBid = $db->getRow("SELECT b.id, b.debit, u.username, b.description, b.user_id, u.autobidder, b.created FROM ". _DB_PREFIX_ ."bids b, ". _DB_PREFIX_ ."users u WHERE b.auction_id = ".$auction_id." AND b.user_id = u.id ORDER BY b.id DESC");
+	$lastBid = $db->getRow("SELECT b.id, b.debit, u.username, b.description, b.user_id, u.autobidder, b.created FROM ". DB_PREFIX ."bids b, ". DB_PREFIX ."users u WHERE b.auction_id = ".$auction_id." AND b.user_id = u.id ORDER BY b.id DESC");
 	$bid = array();
 
 	if(!empty($lastBid)) {
@@ -77,14 +77,14 @@ function lastBid($auction_id = null) {
 
 function check($auction_id, $end_time, $data) {
 	$db = Database::getInstance();
-	$extend = $db->getRow("SELECT * FROM ". _DB_PREFIX_ ."extends WHERE auction_id = {$auction_id}");
+	$extend = $db->getRow("SELECT * FROM ". DB_PREFIX ."extends WHERE auction_id = {$auction_id}");
 
 	if(!empty($extend)) {
 		if($extend['end_time'] == $end_time) {
 			if($extend['deploy'] <= date('Y-m-d H:i:s')) {
 				placeAutobid($auction_id, $data, time() - $end_time);
 				$db->delete("extends", "auction_id = {$auction_id}");
-				$auction = $db->getRow("SELECT end_time FROM ". _DB_PREFIX_ ."auctions WHERE id = {$auction_id}");
+				$auction = $db->getRow("SELECT end_time FROM ". DB_PREFIX ."auctions WHERE id = {$auction_id}");
 				$end_time = $auction['end_time'];
 			} else return false;
 		} else $db->delete("extends", "auction_id = {$auction_id}");
@@ -110,11 +110,11 @@ function placeAutobid($id, $data = array(), $timeEnding = 0) {
 	if(!empty($bid)) {
 		$bidder = $bid['user_id'];
 		if(empty($user)) {
-			$user = $db->getRow("SELECT id FROM ". _DB_PREFIX_ ."users WHERE active=1 AND autobidder=1 AND id != {$bidder} ORDER BY rand()");
+			$user = $db->getRow("SELECT id FROM ". DB_PREFIX ."users WHERE active=1 AND autobidder=1 AND id != {$bidder} ORDER BY rand()");
 			$data['user_id'] = $user['id'];
 		}
 	} else {
-		$user = $db->getRow("SELECT id FROM ". _DB_PREFIX_ ."users WHERE active=1 AND autobidder=1 ORDER BY rand()");
+		$user = $db->getRow("SELECT id FROM ". DB_PREFIX ."users WHERE active=1 AND autobidder=1 ORDER BY rand()");
 		$data['user_id'] = $user['id'];
 	}
 
@@ -136,12 +136,12 @@ function bid($data = array(), $extend = false, $bid_description = null) {
 
 	// Get the auction
 	$auction_id = $data['auction_id'];
-	$auction = $db->getRow("SELECT id, product_id, start_time, end_time, type, price, status_id, peak_only, closed, minimum_price, pred_cost, extends_bids, users_bids, created FROM ". _DB_PREFIX_ ."auctions WHERE id = {$auction_id}");
+	$auction = $db->getRow("SELECT id, product_id, start_time, end_time, type, price, status_id, peak_only, closed, minimum_price, pred_cost, extends_bids, users_bids, created FROM ". DB_PREFIX ."auctions WHERE id = {$auction_id}");
 
 	if(!empty($auction)){
 		if(!empty($auction['free']) || $auction['type'] == 1) $data['bid_debit'] = 0;
 		if($auction['type'] == 8) {
-			$already_bid = $db->getRow("SELECT id FROM ". _DB_PREFIX_ ."bids WHERE user_id={$data['user_id']} && auction_id={$auction['id']} AND debit > 0");
+			$already_bid = $db->getRow("SELECT id FROM ". DB_PREFIX ."bids WHERE user_id={$data['user_id']} && auction_id={$auction['id']} AND debit > 0");
 			if(!empty($already_bid)) {			
 				if($auction['status_id'] == 1) {
 					$message = 'Enchère non commencée';
@@ -154,7 +154,7 @@ function bid($data = array(), $extend = false, $bid_description = null) {
 			
 			$firstDay = date('Y-m-d H:i:s', mktime(0,0,0, date("m"), date("d")-date("w")+1, date("Y")));
 			$lastDay = date('Y-m-d H:i:s', mktime(23,59,59, date("m"), 7-date("w")+date("d"), date("Y")));
-			$check_win = $db->getRow("SELECT count(id) AS total FROM ". _DB_PREFIX_ ."auctions WHERE winner_id={$data['user_id']} AND end_time BETWEEN '{$firstDay}' AND '{$lastDay}'");
+			$check_win = $db->getRow("SELECT count(id) AS total FROM ". DB_PREFIX ."auctions WHERE winner_id={$data['user_id']} AND end_time BETWEEN '{$firstDay}' AND '{$lastDay}'");
 			if($check_win['total'] >= 3) {
 				$message = 'Vous avez déjà remporté 3 enchères cette semaine';
 				$canBid = false;
@@ -177,7 +177,7 @@ function bid($data = array(), $extend = false, $bid_description = null) {
 		else $balance = balance($data['user_id']);
 		
 		if($auction['type'] == 5 && $extend == false) {
-			$already_win = $db->getRow("SELECT id FROM ". _DB_PREFIX_ ."auctions WHERE winner_id={$data['user_id']}");
+			$already_win = $db->getRow("SELECT id FROM ". DB_PREFIX ."auctions WHERE winner_id={$data['user_id']}");
 			if($already_win) {
 				$message = 'Enchère pour débutants';
 				$canBid = false;
@@ -185,8 +185,8 @@ function bid($data = array(), $extend = false, $bid_description = null) {
 		}
 		
 		if($auction['type'] == 6 && $extend == false) {
-			$product = $db->getRow("SELECT price FROM ". _DB_PREFIX_ ."products WHERE id={$auction['product_id']}");
-			$bid_value = $db->getRow("SELECT value FROM ". _DB_PREFIX_ ."settings WHERE name='bid_value'");
+			$product = $db->getRow("SELECT price FROM ". DB_PREFIX ."products WHERE id={$auction['product_id']}");
+			$bid_value = $db->getRow("SELECT value FROM ". DB_PREFIX ."settings WHERE name='bid_value'");
 			
 			if(($balance * $bid_value['value']) < $product['price']) {
 				$message = 'Enchère pour VIP';
@@ -210,7 +210,7 @@ function bid($data = array(), $extend = false, $bid_description = null) {
 		}
 		
 		/*
-		$bought = mysql_fetch_array(mysql_query("SELECT id FROM ". _DB_PREFIX_ ."auctions WHERE buy_id=".$auction['id']." AND winner_id=".$data['user_id'].""));
+		$bought = mysql_fetch_array(mysql_query("SELECT id FROM ". DB_PREFIX ."auctions WHERE buy_id=".$auction['id']." AND winner_id=".$data['user_id'].""));
 		if(!empty($bought)) {
 			$message = "Produit acheté";
 			$canBid = false;
@@ -245,7 +245,7 @@ function bid($data = array(), $extend = false, $bid_description = null) {
 				else $bid['description'] = "manuel";
 
 				if(!empty($data['autobid'])) {
-					$autobids = $db->getRow("SELECT bids FROM ". _DB_PREFIX_ ."autobids WHERE id = ".$data['autobid']);
+					$autobids = $db->getRow("SELECT bids FROM ". DB_PREFIX ."autobids WHERE id = ".$data['autobid']);
 					if(!empty($autobids)){
 						if($autobids['bids'] >= $data['bid_debit']) {
 							$autobids['bids'] -= $data['bid_debit'];
@@ -299,7 +299,7 @@ function bid($data = array(), $extend = false, $bid_description = null) {
 
 function fixDoubleBids($auction_id = null) {
 	$db = Database::getInstance();
-	$bid_histories = $db->getRow("SELECT * FROM ". _DB_PREFIX_ ."bids WHERE credit = 0 AND auction_id = ".$auction_id." ORDER BY id DESC LIMIT 2");
+	$bid_histories = $db->getRow("SELECT * FROM ". DB_PREFIX ."bids WHERE credit = 0 AND auction_id = ".$auction_id." ORDER BY id DESC LIMIT 2");
 
 	if(sizeof($bid_histories) > 0) {
 		$user_id = 0;
@@ -317,8 +317,8 @@ function fixDoubleBids($auction_id = null) {
 
 function balance($user_id) {
 	$db = Database::getInstance();
-	$credit = $db->getRow("SELECT SUM(credit) as credit FROM ". _DB_PREFIX_ ."bids WHERE user_id = {$user_id}");
-	$debit = $db->getRow("SELECT SUM(debit) as debit FROM ". _DB_PREFIX_ ."bids WHERE user_id = {$user_id}");
+	$credit = $db->getRow("SELECT SUM(credit) as credit FROM ". DB_PREFIX ."bids WHERE user_id = {$user_id}");
+	$debit = $db->getRow("SELECT SUM(debit) as debit FROM ". DB_PREFIX ."bids WHERE user_id = {$user_id}");
 	return $credit['credit'] - $debit['debit'];
 }
 
@@ -331,25 +331,25 @@ function closeAuction($auction = array()) {
 
 	if(!empty($bid)) {
 		$db->update("auctions", array('winner_id' => $bid['user_id'], 'status_id' => 4), "id={$auction['id']}");
+
+		// send email to winner
+		$user = $db->getRow("SELECT username, email FROM ". DB_PREFIX ."users WHERE id=".$bid['user_id']);
+
+		tools::sendMail($user['email'], 'won_auction', array(
+			'username' => $user['username'],
+			'auction_id' => $auction['id']
+		));
 	}
-	
-	// send email to winner
-	$user = $db->getRow("SELECT username, email FROM ". _DB_PREFIX_ ."users WHERE id=".$bid['user_id']);
-	
-	tools::sendMail($user['email'], 'won_auction', array(
-		'username' => $user['username'],
-		'auction_id' => $auction['id']
-	));
 
 	clearCache($auction['id']);
 	$db->delete("extends", "auction_id = {$auction['id']}");
 
 	if(!empty($auction['podium'])) {
-		$podium_data = $db->getRows("SELECT DISTINCT user_id FROM ". _DB_PREFIX_ ."bids WHERE auction_id=".$auction['id']." AND (description = 'manual' OR description = 'auto') AND user_id != ".$bid['user_id']." ORDER BY id DESC LIMIT 2");
+		$podium_data = $db->getRows("SELECT DISTINCT user_id FROM ". DB_PREFIX ."bids WHERE auction_id=".$auction['id']." AND (description = 'manual' OR description = 'auto') AND user_id != ".$bid['user_id']." ORDER BY id DESC LIMIT 2");
 		$users = array();
 		$i=0;
 		foreach($podium_data as $podium) {
-			$user_data = $db->getRow("SELECT username, email, autobidder FROM ". _DB_PREFIX_ ."users WHERE id={$podium['user_id']}");
+			$user_data = $db->getRow("SELECT username, email, autobidder FROM ". DB_PREFIX ."users WHERE id={$podium['user_id']}");
 			$users[$i]['user_id'] = $podium['user_id'];
 			$users[$i]['username'] = $user_data['username'];
 			$users[$i]['email'] = $user_data['email'];
