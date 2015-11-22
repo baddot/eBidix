@@ -336,7 +336,7 @@ textarea:focus {
 #left-column .histories-title {float:left; width:634px; font-weight:bold; text-align:center; margin-top:15px; padding:0 3px 0 3px;}
 #left-column .bid-histories {float:left;width:660px;padding:10px;background-color:#ecedef;border-radius:5px;}
 #left-column .bid-histories th {color:#892317;}
-#left-column .bid-histories td {color:#535353;}
+#left-column .bid-histories td {color:#535353;text-align: center;}
 #left-column .product-description {float:left;width:660px;padding:10px;margin-bottom:20px;background-color:#ecedef;border-radius:5px;}
 
 #auctions h2 a {
