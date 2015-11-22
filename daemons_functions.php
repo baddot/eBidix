@@ -1,27 +1,26 @@
 <?php
 
 function get($name = null, $auction_id = null, $cache = true) {
-	global $config;
+	$db = database::getInstance();
 
 	if($cache == true) {
 		$setting = cacheRead($name.'_setting');
 		
 		if(!empty($setting)) return $setting;
 		else {
-			$setting = mysql_fetch_array(mysql_query("SELECT value FROM ". _DB_PREFIX_ ."settings WHERE name = '".$name."'"), MYSQL_ASSOC);
+			$setting = $db->getRow("SELECT value FROM ". _DB_PREFIX_ ."settings WHERE name = '{$name}'");
 			if(!empty($setting)) return $setting['value'];
 			else return false;
 		}
 	}
 	
-	$increments = mysql_fetch_array(mysql_query("SELECT * FROM ". _DB_PREFIX_ ."increments WHERE auction_id = ".$auction_id.""), MYSQL_ASSOC);
+	$increments = $db->getRow("SELECT * FROM ". _DB_PREFIX_ ."increments WHERE auction_id = {$auction_id}");
 	return $increments[$name];
 }
 
 function checkCanClose($id, $isPeakNow, $timeCheck = true) {
-	global $config;
-
-	$auction = mysql_fetch_array(mysql_query("SELECT id, product_id, end_time, type, peak_only, price, minimum_price, leader_id, extends, extends_limit, extends_bids, users_bids, fixed_price FROM ". _DB_PREFIX_ ."auctions WHERE id = ".$id.""), MYSQL_ASSOC);
+	$db = database::getInstance();
+	$auction = $db->getRow("SELECT id, product_id, end_time, type, peak_only, price, minimum_price, leader_id, extends, extends_limit, extends_bids, users_bids, fixed_price FROM ". _DB_PREFIX_ ."auctions WHERE id = {$id}");
 
 	if($timeCheck == true) {
 		if(strtotime($auction['end_time']) > time()) return false;
@@ -30,8 +29,8 @@ function checkCanClose($id, $isPeakNow, $timeCheck = true) {
 	if($auction['peak_only'] == 1 && !$isPeakNow) return false;
 	
 	if($auction['extends'] == 1) {
-		$isExtend = mysql_fetch_array(mysql_query("SELECT id FROM ". _DB_PREFIX_ ."users WHERE id=".$auction['leader_id']." AND autobidder=1"), MYSQL_ASSOC);
-		$product = mysql_fetch_array(mysql_query("SELECT price FROM ". _DB_PREFIX_ ."products WHERE id=".$auction['product_id'].""), MYSQL_ASSOC);
+		$isExtend = $db->getRow("SELECT id FROM ". _DB_PREFIX_ ."users WHERE id={$auction['leader_id']} AND autobidder=1");
+		$product = $db->getRow("SELECT price FROM ". _DB_PREFIX_ ."products WHERE id={$auction['product_id']}");
 		$bid_value = get('bid_value');
 		if($auction['price'] < $auction['minimum_price']) {
 			if($isExtend) return false;
@@ -49,10 +48,9 @@ function checkCanClose($id, $isPeakNow, $timeCheck = true) {
 	if(empty($latest_bid)) $latest_bid['user_id'] = 0;
 	elseif($latest_bid['user_id'] !== $auction['leader_id']) return false;
 
-	$sql = mysql_query("SELECT user_id FROM ". _DB_PREFIX_ ."autobids WHERE bids > 0 AND minimum_price <= '".$auction['price']."' AND maximum_price > '".$auction['price']."' AND auction_id = ".$auction['id']." AND user_id != ".$latest_bid['user_id']);
-	$totalRows = mysql_num_rows($sql);
-	if($totalRows > 0) {
-		while($autobid = mysql_fetch_array($sql, MYSQL_ASSOC)) {
+	$autobids = $db->getRows("SELECT user_id FROM ". _DB_PREFIX_ ."autobids WHERE bids > 0 AND minimum_price <= '".$auction['price']."' AND maximum_price > '".$auction['price']."' AND auction_id = ".$auction['id']." AND user_id != ".$latest_bid['user_id']);
+	if(sizeof($autobids) > 0) {
+		foreach($autobids as $autobid) {
 			if(balance($autobid['user_id']) > 0) return false;
 		}
 	}
@@ -60,7 +58,7 @@ function checkCanClose($id, $isPeakNow, $timeCheck = true) {
 }
 
 function lastBid($auction_id = null) {
-	$lastBid = mysql_fetch_array(mysql_query("SELECT b.id, b.debit, u.username, b.description, b.user_id, u.autobidder, b.created FROM ". _DB_PREFIX_ ."bids b, ". _DB_PREFIX_ ."users u WHERE b.auction_id = ".$auction_id." AND b.user_id = u.id ORDER BY b.id DESC"), MYSQL_ASSOC);
+	$lastBid = $db->getRow("SELECT b.id, b.debit, u.username, b.description, b.user_id, u.autobidder, b.created FROM ". _DB_PREFIX_ ."bids b, ". _DB_PREFIX_ ."users u WHERE b.auction_id = ".$auction_id." AND b.user_id = u.id ORDER BY b.id DESC");
 	$bid = array();
 
 	if(!empty($lastBid)) {

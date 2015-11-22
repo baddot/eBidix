@@ -2,13 +2,13 @@
 /*******************************************************************************
  *                         Application Controller
  *******************************************************************************
- *      Author:     BWeb Media
+ *      Author:     BWebMedia
  *      Email:      contact@bwebmedia.com
- *      Website:    http://www.bwebmedia.com
+ *      Website:    https://www.bwebmedia.com
  *
  *      File:       appController.php
  *      Version:    1.2
- *      Copyright:  (c) 2014 - BWeb Media 
+ *      Copyright:  (c) 2009+ - BWeb Media
  *      
  ******************************************************************************/
 
@@ -21,8 +21,7 @@ class AppController
 	public $user = array();
 	public $smarty;
 	
-	public function __construct() {	
-		
+	public function __construct() {
 		// set flash message
 		$this->flashMessage();	
 		
@@ -42,18 +41,7 @@ class AppController
 		$this->getUserInfos();
 		
 		// smarty init
-		$this->smarty = new Smarty;	
-		$this->smarty->template_dir = ( defined('_ADMIN_') ) ? _DIR_ .'/app/view/' : _DIR_ .'/app/view/'.$this->settings['app']['theme'];
-		$this->smarty->compile_dir = _DIR_ .'/data/smarty/compile/';
-		$this->smarty->config_dir = _DIR_ .'/data/smarty/configs/';
-		$this->smarty->cache_dir = _DIR_ .'/data/smarty/cache/';
-		$this->smarty->caching = $this->settings['app']['cache'];
-		$this->smarty->assign(array(
-			'lang' => $this->lang,
-			'settings' => $this->settings,
-			'categories' => $this->db->select('fetchAll', 'categories', array('id', 'name')),
-			'user' => $this->user
-		));
+		$this->initSmarty();
 	}
 	
 	private function getSettings() {
@@ -119,6 +107,21 @@ class AppController
 			$balance = $this->db->select("fetch", "bids", "SUM(credit) - SUM(debit) AS total", array("user_id" => $_SESSION['user_id']));
 			$this->user['balance'] = $balance['total'];
 		}
+	}
+
+	private function initSmarty() {
+		$this->smarty = new Smarty;
+		$this->smarty->template_dir = ( defined('_ADMIN_') ) ? _DIR_ .'/app/view/' : _DIR_ .'/app/view/'.$this->settings['app']['theme'];
+		$this->smarty->compile_dir = _DIR_ .'/data/smarty/compile/';
+		$this->smarty->config_dir = _DIR_ .'/data/smarty/configs/';
+		$this->smarty->cache_dir = _DIR_ .'/data/smarty/cache/';
+		$this->smarty->caching = $this->settings['app']['cache'];
+		$this->smarty->assign(array(
+			'lang' => $this->lang,
+			'settings' => $this->settings,
+			'categories' => $this->db->select('fetchAll', 'categories', array('id', 'name')),
+			'user' => $this->user
+		));
 	}
 }
 

@@ -11,8 +11,7 @@
  *      
  ******************************************************************************/
 
-/*date_default_timezone_set('Europe/Paris');
-$start = microtime();*/
+/*$start = microtime();*/
  
 define('_DIR_', dirname(__FILE__));
 require _DIR_ . '/config/config.inc.php';
