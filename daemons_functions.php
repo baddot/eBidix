@@ -58,6 +58,7 @@ function checkCanClose($id, $isPeakNow, $timeCheck = true) {
 }
 
 function lastBid($auction_id = null) {
+	$db = Database::getInstance();
 	$lastBid = $db->getRow("SELECT b.id, b.debit, u.username, b.description, b.user_id, u.autobidder, b.created FROM ". _DB_PREFIX_ ."bids b, ". _DB_PREFIX_ ."users u WHERE b.auction_id = ".$auction_id." AND b.user_id = u.id ORDER BY b.id DESC");
 	$bid = array();
 
@@ -75,39 +76,45 @@ function lastBid($auction_id = null) {
 }
 
 function check($auction_id, $end_time, $data) {
-	$extend = mysql_fetch_array(mysql_query("SELECT * FROM ". _DB_PREFIX_ ."extends WHERE auction_id = ".$auction_id.""), MYSQL_ASSOC);
+	$db = Database::getInstance();
+	$extend = $db->getRow("SELECT * FROM ". _DB_PREFIX_ ."extends WHERE auction_id = {$auction_id}");
 
 	if(!empty($extend)) {
 		if($extend['end_time'] == $end_time) {
 			if($extend['deploy'] <= date('Y-m-d H:i:s')) {
 				placeAutobid($auction_id, $data, time() - $end_time);
-				mysql_query("DELETE FROM ". _DB_PREFIX_ ."extends WHERE auction_id = ".$auction_id."");
-				$auction = mysql_fetch_array(mysql_query("SELECT end_time FROM ". _DB_PREFIX_ ."auctions WHERE id = ".$auction_id.""), MYSQL_ASSOC);
+				$db->delete("extends", "auction_id = {$auction_id}");
+				$auction = $db->getRow("SELECT end_time FROM ". _DB_PREFIX_ ."auctions WHERE id = {$auction_id}");
 				$end_time = $auction['end_time'];
 			} else return false;
-		} else mysql_query("DELETE FROM ". _DB_PREFIX_ ."extends WHERE auction_id = ".$auction_id."");
+		} else $db->delete("extends", "auction_id = {$auction_id}");
 	}
 
 	$str_end_time = strtotime($end_time);
 	$timeDifference = $str_end_time - time();
 	$randomTime = rand(3, $timeDifference);
 	$deploy = date('Y-m-d H:i:s', $str_end_time - $randomTime);
-	mysql_query("INSERT INTO ". _DB_PREFIX_ ."extends VALUES('', '".$auction_id."', '".$deploy."', '".$end_time."')");
+	$db->insert("extends", array(
+		"auction_id" => $auction_id,
+		"deploy" => $deploy,
+		"end_time" => $end_time
+	));
 	return $data;
 }
 
 function placeAutobid($id, $data = array(), $timeEnding = 0) {
 	$data['auction_id']	= $id;
 	$bid = lastBid($id);
+	$db = Database::getInstance();
 
 	if(!empty($bid)) {
 		$bidder = $bid['user_id'];
 		if(empty($user)) {
-			$user = mysql_fetch_array(mysql_query("SELECT id FROM ". _DB_PREFIX_ ."users WHERE active=1 AND autobidder=1 AND id != ".$bidder." ORDER BY rand()"), MYSQL_ASSOC);
+			$user = $db->getRow("SELECT id FROM ". _DB_PREFIX_ ."users WHERE active=1 AND autobidder=1 AND id != {$bidder} ORDER BY rand()");
 			$data['user_id'] = $user['id'];
 		}
 	} else {
-		$user = mysql_fetch_array(mysql_query("SELECT id FROM ". _DB_PREFIX_ ."users WHERE active=1 AND autobidder=1 ORDER BY rand()"), MYSQL_ASSOC);
+		$user = $db->getRow("SELECT id FROM ". _DB_PREFIX_ ."users WHERE active=1 AND autobidder=1 ORDER BY rand()");
 		$data['user_id'] = $user['id'];
 	}
 
@@ -116,7 +123,7 @@ function placeAutobid($id, $data = array(), $timeEnding = 0) {
 }
 
 function bid($data = array(), $extend = false, $bid_description = null) {
-	global $config;
+	$db = Database::getInstance();
 
 	$canBid = true;
 	$message = '';
@@ -129,12 +136,12 @@ function bid($data = array(), $extend = false, $bid_description = null) {
 
 	// Get the auction
 	$auction_id = $data['auction_id'];
-	$auction = mysql_fetch_array(mysql_query("SELECT id, product_id, start_time, end_time, type, price, status_id, peak_only, closed, minimum_price, pred_cost, extends_bids, users_bids, created FROM ". _DB_PREFIX_ ."auctions WHERE id = ".$auction_id.""), MYSQL_ASSOC);
+	$auction = $db->getRow("SELECT id, product_id, start_time, end_time, type, price, status_id, peak_only, closed, minimum_price, pred_cost, extends_bids, users_bids, created FROM ". _DB_PREFIX_ ."auctions WHERE id = {$auction_id}");
 
 	if(!empty($auction)){
 		if(!empty($auction['free']) || $auction['type'] == 1) $data['bid_debit'] = 0;
 		if($auction['type'] == 8) {
-			$already_bid = mysql_fetch_array(mysql_query("SELECT id FROM ". _DB_PREFIX_ ."bids WHERE user_id=".$data['user_id']." && auction_id=".$auction['id']." AND debit > 0"), MYSQL_ASSOC);
+			$already_bid = $db->getRow("SELECT id FROM ". _DB_PREFIX_ ."bids WHERE user_id={$data['user_id']} && auction_id={$auction['id']} AND debit > 0");
 			if(!empty($already_bid)) {			
 				if($auction['status_id'] == 1) {
 					$message = 'Enchère non commencée';
@@ -147,7 +154,7 @@ function bid($data = array(), $extend = false, $bid_description = null) {
 			
 			$firstDay = date('Y-m-d H:i:s', mktime(0,0,0, date("m"), date("d")-date("w")+1, date("Y")));
 			$lastDay = date('Y-m-d H:i:s', mktime(23,59,59, date("m"), 7-date("w")+date("d"), date("Y")));
-			$check_win = mysql_fetch_array(mysql_query("SELECT count(id) AS total FROM ". _DB_PREFIX_ ."auctions WHERE winner_id=".$data['user_id']." AND end_time BETWEEN '".$firstDay."' AND '".$lastDay."'"), MYSQL_ASSOC);
+			$check_win = $db->getRow("SELECT count(id) AS total FROM ". _DB_PREFIX_ ."auctions WHERE winner_id={$data['user_id']} AND end_time BETWEEN '{$firstDay}' AND '{$lastDay}'");
 			if($check_win['total'] >= 3) {
 				$message = 'Vous avez déjà remporté 3 enchères cette semaine';
 				$canBid = false;
@@ -170,7 +177,7 @@ function bid($data = array(), $extend = false, $bid_description = null) {
 		else $balance = balance($data['user_id']);
 		
 		if($auction['type'] == 5 && $extend == false) {
-			$already_win = mysql_fetch_array(mysql_query("SELECT id FROM ". _DB_PREFIX_ ."auctions WHERE winner_id=".$data['user_id'].""), MYSQL_ASSOC);
+			$already_win = $db->getRow("SELECT id FROM ". _DB_PREFIX_ ."auctions WHERE winner_id={$data['user_id']}");
 			if($already_win) {
 				$message = 'Enchère pour débutants';
 				$canBid = false;
@@ -178,8 +185,8 @@ function bid($data = array(), $extend = false, $bid_description = null) {
 		}
 		
 		if($auction['type'] == 6 && $extend == false) {
-			$product = mysql_fetch_array(mysql_query("SELECT price FROM ". _DB_PREFIX_ ."products WHERE id=".$auction['product_id'].""), MYSQL_ASSOC);
-			$bid_value = mysql_fetch_array(mysql_query("SELECT value FROM ". _DB_PREFIX_ ."settings WHERE name='bid_value'"));
+			$product = $db->getRow("SELECT price FROM ". _DB_PREFIX_ ."products WHERE id={$auction['product_id']}");
+			$bid_value = $db->getRow("SELECT value FROM ". _DB_PREFIX_ ."settings WHERE name='bid_value'");
 			
 			if(($balance * $bid_value['value']) < $product['price']) {
 				$message = 'Enchère pour VIP';
@@ -238,20 +245,39 @@ function bid($data = array(), $extend = false, $bid_description = null) {
 				else $bid['description'] = "manuel";
 
 				if(!empty($data['autobid'])) {
-					$autobids = mysql_fetch_array(mysql_query("SELECT bids FROM ". _DB_PREFIX_ ."autobids WHERE id = ".$data['autobid']), MYSQL_ASSOC);
+					$autobids = $db->getRow("SELECT bids FROM ". _DB_PREFIX_ ."autobids WHERE id = ".$data['autobid']);
 					if(!empty($autobids)){
 						if($autobids['bids'] >= $data['bid_debit']) {
 							$autobids['bids'] -= $data['bid_debit'];
-							mysql_query("UPDATE ". _DB_PREFIX_ ."autobids SET bids = ".$autobids['bids']." WHERE id = ".$data['autobid']."");
+							$db->update("autobids", array('bids' => $autobids['bids']), "id = {$data['autobid']}");
 						} else return $auction;
 					}
 				}
 
 				$auction['leader_id'] = $data['user_id'];
 
-				$success = mysql_query("UPDATE ". _DB_PREFIX_ ."auctions SET end_time = '".$auction['end_time']."', price = '".$auction['price']."', extends_bids = ".$auction['extends_bids'].", users_bids = ".$auction['users_bids'].", leader_id = ".$auction['leader_id']." WHERE id = ".$auction['id']);
+				$success = $db->update(
+					"auctions",
+					array(
+						'end_time' => $auction['end_time'],
+						'price' => $auction['price'],
+						'extends_bids' => $auction['extends_bids'],
+						'users_bids' => $auction['users_bids'],
+						'leader_id' => $auction['leader_id']
+					),
+					"id = {$auction['id']}"
+				);
+
 				if($success == 1) {
-					mysql_query("INSERT INTO ". _DB_PREFIX_ ."bids (user_id, auction_id, price, description, credit, debit, created) VALUES ('".$bid['user_id']."', '".$bid['auction_id']."', '".$bid['price']."', '".$bid['description']."', '".$bid['credit']."', '".$bid['debit']."', '".date('Y-m-d H:i:s')."')");
+					$db->insert("bids", array(
+						user_id => $bid['user_id'],
+						auction_id => $bid['auction_id'],
+						price => $bid['price'],
+						description => $bid['description'],
+						credit => $bid['credit'],
+						debit => $bid['debit'],
+						created => date('Y-m-d H:i:s')
+					));
 					clearCache($auction['id'], $data['user_id']);
 					$message = "offre validée";
 				} else $message = "problème";
@@ -272,16 +298,16 @@ function bid($data = array(), $extend = false, $bid_description = null) {
 }
 
 function fixDoubleBids($auction_id = null) {
-	$bid_histories = mysql_query("SELECT * FROM ". _DB_PREFIX_ ."bids WHERE credit = 0 AND auction_id = ".$auction_id." ORDER BY id DESC LIMIT 2");
-	$total_bids    = mysql_num_rows($bid_histories);
+	$db = Database::getInstance();
+	$bid_histories = $db->getRow("SELECT * FROM ". _DB_PREFIX_ ."bids WHERE credit = 0 AND auction_id = ".$auction_id." ORDER BY id DESC LIMIT 2");
 
-	if($total_bids > 0) {
+	if(sizeof($bid_histories) > 0) {
 		$user_id = 0;
-		while($bid = mysql_fetch_array($bid_histories, MYSQL_ASSOC)) {
+		foreach($bid_histories as $bid) {
 			if(empty($user_id)) $user_id = $bid['user_id'];
 			else {
 				if($bid['user_id'] == $user_id) {
-					mysql_query("DELETE FROM ". _DB_PREFIX_ ."bids WHERE id = ".$bid['id']);
+					$db->delete("bids", "id = {$bid['id']}");
 					clearCache($auction_id, $bid['user_id']);
 				}
 			}
@@ -290,25 +316,25 @@ function fixDoubleBids($auction_id = null) {
 }
 
 function balance($user_id) {
-	global $config;
-	$credit = mysql_fetch_array(mysql_query("SELECT SUM(credit) as credit FROM ". _DB_PREFIX_ ."bids WHERE user_id = ".$user_id.""), MYSQL_ASSOC);
-	$debit = mysql_fetch_array(mysql_query("SELECT SUM(debit) as debit FROM ". _DB_PREFIX_ ."bids WHERE user_id = ".$user_id.""), MYSQL_ASSOC);
+	$db = Database::getInstance();
+	$credit = $db->getRow("SELECT SUM(credit) as credit FROM ". _DB_PREFIX_ ."bids WHERE user_id = {$user_id}");
+	$debit = $db->getRow("SELECT SUM(debit) as debit FROM ". _DB_PREFIX_ ."bids WHERE user_id = {$user_id}");
 	return $credit['credit'] - $debit['debit'];
 }
 
 function closeAuction($auction = array()) {
-	global $config;
+	$db = Database::getInstance();
 
-	mysql_query("UPDATE ". _DB_PREFIX_ ."auctions SET closed=1, end_time = '".date('Y-m-d H:i:s')."' WHERE id = ".$auction['id']);
+	$db->update("auctions", array('closed'=> 1, 'end_time' => date('Y-m-d H:i:s')), "id = {$auction['id']}");
 	usleep(250000);
 	$bid = lastBid($auction['id']);
 
 	if(!empty($bid)) {
-		mysql_query("UPDATE ". _DB_PREFIX_ ."auctions SET winner_id=".$bid['user_id'].", status_id=4 WHERE id=".$auction['id']);
+		$db->update("auctions", array('winner_id' => $bid['user_id'], 'status_id' => 4), "id={$auction['id']}");
 	}
 	
 	// send email to winner
-	$user = mysql_fetch_array(mysql_query("SELECT username, email FROM ". _DB_PREFIX_ ."users WHERE id=".$bid['user_id']), MYSQL_ASSOC);
+	$user = $db->getRow("SELECT username, email FROM ". _DB_PREFIX_ ."users WHERE id=".$bid['user_id']);
 	
 	tools::sendMail($user['email'], 'won_auction', array(
 		'username' => $user['username'],
@@ -316,14 +342,14 @@ function closeAuction($auction = array()) {
 	));
 
 	clearCache($auction['id']);
-	mysql_query("DELETE FROM ". _DB_PREFIX_ ."extends WHERE auction_id = ".$auction['id']);
+	$db->delete("extends", "auction_id = {$auction['id']}");
 
 	if(!empty($auction['podium'])) {
-		$podium_data = mysql_query("SELECT DISTINCT user_id FROM ". _DB_PREFIX_ ."bids WHERE auction_id=".$auction['id']." AND (description = 'manual' OR description = 'auto') AND user_id != ".$bid['user_id']." ORDER BY id DESC LIMIT 2");
+		$podium_data = $db->getRows("SELECT DISTINCT user_id FROM ". _DB_PREFIX_ ."bids WHERE auction_id=".$auction['id']." AND (description = 'manual' OR description = 'auto') AND user_id != ".$bid['user_id']." ORDER BY id DESC LIMIT 2");
 		$users = array();
 		$i=0;
-		while($podium = mysql_fetch_array($podium_data)) {
-			$user_data = mysql_fetch_array(mysql_query("SELECT username, email, autobidder FROM ". _DB_PREFIX_ ."users WHERE id=".$podium['user_id'].""));
+		foreach($podium_data as $podium) {
+			$user_data = $db->getRow("SELECT username, email, autobidder FROM ". _DB_PREFIX_ ."users WHERE id={$podium['user_id']}");
 			$users[$i]['user_id'] = $podium['user_id'];
 			$users[$i]['username'] = $user_data['username'];
 			$users[$i]['email'] = $user_data['email'];
@@ -332,14 +358,26 @@ function closeAuction($auction = array()) {
 		}
 		
 		if(empty($users[0]['autobidder'])) {
-			mysql_query("INSERT INTO ". _DB_PREFIX_ ."bids (user_id, auction_id, description, credit, created) VALUES ('".$users[0]['user_id']."', '".$auction['id']."', 'free_credits#podium#second', '".$auction['second_credits']."', '".date('Y-m-d H:i:s')."')");
+			$db->insert("bids", array(
+				'user_id' => $users[0]['user_id'],
+				'auction_id' => $auction['id'],
+				'description' => 'free_credits#podium#second',
+				'credit' => $auction['second_credits'],
+				'created' => date('Y-m-d H:i:s')
+			));
 		}
 		
 		if(empty($users[1]['autobidder'])) {
-			mysql_query("INSERT INTO ". _DB_PREFIX_ ."bids (user_id, auction_id, description, credit, created) VALUES ('".$users[1]['user_id']."', '".$auction['id']."', 'free_credits#podium#third', '".$auction['third_credits']."', '".date('Y-m-d H:i:s')."')");
+			$db->insert("bids", array(
+				'user_id' => $users[1]['user_id'],
+				'auction_id' => $auction['id'],
+				'description' => 'free_credits#podium#third',
+				'credit' => $auction['third_credits'],
+				'created' => date('Y-m-d H:i:s')
+			));
 		}
 		
-		mysql_query("UPDATE ". _DB_PREFIX_ ."auctions SET second='".$users[0]['username']."', third='".$users[1]['username']."' WHERE id=".$auction['id']."");
+		$db->update("auctions", array('second' => $users[0]['username'], 'third' => $users[1]['username']), "id={$auction['id']}");
 	}
 }
 
