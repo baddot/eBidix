@@ -66,8 +66,8 @@ switch($_GET['type']){
 
 		while (time() < $expireTime) {
 			$sql = "SELECT id, peak_only, end_time FROM ". DB_PREFIX ."auctions WHERE end_time <= '".date('Y-m-d H:i:s')."' AND closed=0 AND active=1 AND status_id=3";
-			if ($res = $db->query($sql)) {			
-				if ($res->fetchColumn() > 0) {
+			if ($res = $db->getRows($sql)) {
+				if (sizeof($res) > 0) {
 					foreach ($res as $auction) {
 						if(checkCanClose($auction['id'], $isPeakNow) == false) {
 							if($auction['peak_only'] == 1 && !$isPeakNow) {
@@ -84,7 +84,7 @@ switch($_GET['type']){
 									$endTime = date('Y-m-d H:i:s', strtotime($endTime) + 86400);	
 								}
 								
-								mysql_query("UPDATE ". DB_PREFIX ."auctions SET end_time = '".$endTime."' WHERE id = ".$auction['id']);
+								$db->update('auctions', "end_time = '{$endTime}'", "id = {$auction['id']}");
 							} else {			
 								$data['auction_peak_start'] = get('auction_peak_start');
 								$data['auction_peak_end'] 	= get('auction_peak_end');
