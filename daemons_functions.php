@@ -299,7 +299,7 @@ function bid($data = array(), $extend = false, $bid_description = null) {
 
 function fixDoubleBids($auction_id = null) {
 	$db = Database::getInstance();
-	$bid_histories = $db->getRow("SELECT * FROM ". DB_PREFIX ."bids WHERE credit = 0 AND auction_id = ".$auction_id." ORDER BY id DESC LIMIT 2");
+	$bid_histories = $db->getRows("SELECT * FROM ". DB_PREFIX ."bids WHERE credit = 0 AND auction_id = ".$auction_id." ORDER BY id DESC LIMIT 2");
 
 	if(sizeof($bid_histories) > 0) {
 		$user_id = 0;
