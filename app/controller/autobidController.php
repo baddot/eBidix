@@ -24,7 +24,7 @@ class autobidController extends appController
 				$autobids[$i]['date'] = tools::niceShort($data['created']);
 				$i++;
 			}
-			$this->smarty->assign('autobids' => $autobids);
+			$this->smarty->assign(array('autobids' => $autobids));
 			$this->smarty->display('user/autobids.tpl');
 		} else {
 			tools::setFlash(ERROR_LOGIN, 'error');
@@ -43,7 +43,6 @@ class autobidController extends appController
 				} else {
 					if(strpos($post_data['minimum_price'], ',')) $post_data['minimum_price'] = str_replace(',', '.', $post_data['minimum_price']);
 					if(strpos($post_data['maximum_price'], ',')) $post_data['maximum_price'] = str_replace(',', '.', $post_data['maximum_price']);
-					$auction = $this->exec_one("SELECT price FROM ". _DB_PREFIX_ ."auctions WHERE id=".$id."");
 					$this->exec("INSERT INTO ". _DB_PREFIX_ ."autobids (user_id, auction_id, minimum_price, maximum_price, total_bids, bids, active, created)
 												VALUES('".$user_id."', 
 													   '".$auction_id."', 
@@ -79,7 +78,7 @@ class autobidController extends appController
 			
 			$autobid = $this->exec_one("SELECT * FROM ". _DB_PREFIX_ ."autobids WHERE id = ".$autobid_id." AND user_id = ".$user_id."");
 			
-			$this->smarty->assign('autobid' => $autobid);
+			$this->smarty->assign(array('autobid' => $autobid));
 			$this->smarty->display('user/edit_autobid.tpl');
 		}
 	}

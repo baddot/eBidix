@@ -63,7 +63,7 @@ foreach($data as $key => $value) {
 
 				foreach ($res as $row) {
 					$bid_history['Bid']['id']          = $row['id'];
-					$bid_history['Bid']['created']     = niceShort($row['created']);
+					$bid_history['Bid']['created']     = tools::niceShort($row['created']);
 					$bid_history['Bid']['description'] = $row['description'];
 					$bid_history['Bid']['username']    = utf8_encode($row['username']);
 					$bid_history['Bid']['amount']      = $row['price'].'&euro;';

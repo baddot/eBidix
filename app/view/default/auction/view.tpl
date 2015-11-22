@@ -64,7 +64,7 @@
 		{if $auction.autobids == 1 && isset($smarty.session.user_id)  && $auction.closed == 0}
 			<h3>{$lang.Program_your_auction}</h3>
 			<div class="auction-autobid">
-				<form method="POST" action="/autobids/set/{$auction.id}">
+				<form method="POST" action="/autobid/set/{$auction.id}">
 					{$lang.Minimum_price} <input type="text" name="minimum_price" /> 
 					{$lang.Maximum_price} <input type="text" name="maximum_price" /> 
 					{$lang.Maximum_bids} <input type="text" name="bids" /> 
