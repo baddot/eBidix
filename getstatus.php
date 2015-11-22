@@ -81,17 +81,12 @@ foreach($data as $key => $value) {
 	$result['User_id'] = $user_id;
 	
 	if (!empty($user_id)) {
-		$db = database::getInstance();
-		
 		$balance = tools::readCache('bids_balance_'.$user_id);
 		if (empty($balance)) {
-			$balance = $db->getRow("SELECT SUM(credit) - SUM(debit) AS balance FROM ". DB_PREFIX ."bids WHERE user_id = {$user_id}");
-		}
-		
-		if (!empty($balance)){
-			$result['Balance'] = $balance;
+			$balance = database::getInstance()->getRow("SELECT SUM(credit) - SUM(debit) AS balance FROM ". DB_PREFIX ."bids WHERE user_id = {$user_id}");
 			tools::writeCache('bids_balance_'.$user_id, $balance);
 		}
+		$result['Balance'] = $balance['balance'];
 	}
 
 	$result['Auction']['price'] = $result['Auction']['price'];
