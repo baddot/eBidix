@@ -1,5 +1,6 @@
 <?php
 
+define(_DIR_, dirname(__FILE__));
 require_once 'config/db.php';
 require_once 'config/settings.inc.php';
 require_once 'app/core/database.class.php';
@@ -17,7 +18,7 @@ switch($_GET['type']){
 		$data = array();
 		$data['auction_peak_start'] = get('auction_peak_start');
 		$data['auction_peak_end'] = get('auction_peak_end');
-		$data['isPeakNow'] = isPeakNow();
+		$data['isPeakNow'] = tools::isPeakNow();
 
 		$expireTime = time() + 60;
 
@@ -60,7 +61,7 @@ switch($_GET['type']){
 		
 		$db = database::getInstance();
 		
-		$isPeakNow = isPeakNow();	
+		$isPeakNow = tools::isPeakNow();
 		$expireTime = time() + 60;
 
 		while (time() < $expireTime) {
@@ -70,7 +71,7 @@ switch($_GET['type']){
 					foreach ($res as $auction) {
 						if(checkCanClose($auction['id'], $isPeakNow) == false) {
 							if($auction['peak_only'] == 1 && !$isPeakNow) {
-								$peak = isPeakNow(true);
+								$peak = tools::isPeakNow(true);
 								if(strtotime($peak['peak_start']) < time()) {
 									$peak['peak_start'] = date('Y-m-d H:i:s', strtotime($peak['peak_start']) + 86400);	
 								}
