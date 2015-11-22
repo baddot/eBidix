@@ -1,7 +1,7 @@
 {include file='admin/elements/header.tpl'}
 	
 	<div class="container_12">
-		<div class="crumb">&raquo <a href="/admin/users">{$lang.Users}</a> &raquo {$lang.Infos}</div>
+		<div class="crumb">&raquo <a href="/admin/user">{$lang.Users}</a> &raquo {$lang.Infos}</div>
 		
 		<div class="grid_5">
 			<div class="sb-box">

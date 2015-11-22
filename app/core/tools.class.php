@@ -4,7 +4,7 @@
  *******************************************************************************
  *      Author:     BWeb Media
  *      Email:      contact@bwebmedia.com
- *      Website:    http://www.bwebmedia.com
+ *      Website:    https://www.bwebmedia.com
  *
  *      File:       tools.class.php
  *      Version:    1.2
@@ -277,13 +277,11 @@ Iqr7pQ7PAEsFaH1IRx6JEkL+2auL6rvYrJh0Y5QOrWzQ
 	public static function paginate($sql, $conditions, $table, $page = 1, $per_page = 30) {
         $offset = ($page - 1) * $per_page;
 		$limit = 'LIMIT '.$offset.','.$per_page;
-		$new_sql = $sql.' '.$conditions.' '.$limit;
-		$items = $this->exec_all($new_sql);
-		$total_items = $this->exec_one("SELECT COUNT(*) AS 'row_count' FROM ".$table." ".$conditions."");
+		$items = database::getInstance()->select('fetchAll', $table, '*', $conditions, null, $limit);
 		return array(
 			$items,
 			array(
-				'total'    => $total_items['row_count'], 
+				'total'    => sizeof(items),
 				'page'     => $page, 
 				'per_page' => $per_page
 			)
@@ -645,9 +643,9 @@ Iqr7pQ7PAEsFaH1IRx6JEkL+2auL6rvYrJh0Y5QOrWzQ
 		// keep session
 		$pathCookie = _DIR_ .'cookies.txt';
 		if (!file_exists(realpath($pathCookie))) touch($pathCookie);
-		curl_setopt($curl, CURLOPT_COOKIESESSION, true);
-		curl_setopt($curl, CURLOPT_COOKIEJAR, realpath($pathCookie));
-		curl_setopt($curl, CURLOPT_COOKIEFILE, realpath($pathCookie));
+		curl_setopt($ch, CURLOPT_COOKIESESSION, true);
+		curl_setopt($ch, CURLOPT_COOKIEJAR, realpath($pathCookie));
+		curl_setopt($ch, CURLOPT_COOKIEFILE, realpath($pathCookie));
 		
 		switch ($type) {
 			case 'get':

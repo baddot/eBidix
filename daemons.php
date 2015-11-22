@@ -9,8 +9,8 @@ date_default_timezone_set($settings['app']['timezone']);
 
 switch($_GET['type']){
 	case 'autobid':
-		if(cacheRead('autobid.pid')) return false;
-		else cacheWrite('autobid.pid', microtime(), 50);
+		if(tools::readCache('autobid.pid')) return false;
+		else tools::writeCache('autobid.pid', microtime(), 50);
 		
 		$db = database::getInstance();
 		
@@ -51,12 +51,12 @@ switch($_GET['type']){
 			}
 			sleep(4);
 		}
-		cacheDelete('autobid.pid');
+		tools::deleteCache('autobid.pid');
 		break;
 		
 	case 'close':
-		if(cacheRead('close.pid')) return false;
-		else cacheWrite('close.pid', microtime(), 50);
+		if(tools::readCache('close.pid')) return false;
+		else tools::writeCache('close.pid', microtime(), 50);
 		
 		$db = database::getInstance();
 		
@@ -100,7 +100,7 @@ switch($_GET['type']){
 			}
 			usleep(500000);
 		}
-		cacheDelete('close.pid');
+		tools::deleteCache('close.pid');
 		break;
 }
 
