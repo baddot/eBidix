@@ -878,6 +878,10 @@ class userController extends appController
 			$user['address'] = $address['address'];
 			$user['postcode'] = $address['postcode'];
 			$user['city'] = $address['city'];
+		} else {
+			$user['address'] = '';
+			$user['postcode'] = '';
+			$user['city'] = '';
 		}
 		
 		$balance = $this->db->getRow("SELECT SUM(credit) - SUM(debit) AS balance FROM ". DB_PREFIX ."bids WHERE user_id=".$user_id."");

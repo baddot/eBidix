@@ -17,21 +17,23 @@
 								<li>{$lang.Total_buy_credits}: <b>{$user.total_buy_credits}&euro;</b></li>
 								<li>{$lang.Total_offered_credits}: <b>{$user.total_offered_credits}&euro;</b></li>
 								<li>{$lang.Total_spent_credits}: <b>{$user.spent_credits}</b></li>
-								<li>{$lang.Total_win_auctions}: <b>{if !empty($user.win_auctions)}<a href="/admin/auctions/closed?user_id={$user.id}">{$user.win_auctions}</a>{else}0{/if}</b></li>
+								<li>{$lang.Total_win_auctions}: <b>{if !empty($user.win_auctions)}<a href="/admin/auction/closed?user_id={$user.id}">{$user.win_auctions}</a>{else}0{/if}</b></li>
 								<li>{$lang.Total_win_amount}: <b>{$user.total_win_amount}&euro;</b></li>
 								<li>{$lang.Desired_products_cat}: <b>{$user.desired_category}</b></li>
-								<li>{$lang.Referrer}: <b><a href="/admin/users/view/{$user.referrer_id}">{$user.referrer_username}</a></b></li>
-								<li>{$lang.Referrals}: <b><a href="/admin/users?referrer_id={$user.id}">{$user.referrals}</a></b></li>
+								{if $user.referrer_id}
+									<li>{$lang.Referrer}: <b><a href="/admin/user/view/{$user.referrer_id}">{$user.referrer_username}</a></b></li>
+									<li>{$lang.Referrals}: <b><a href="/admin/user?referrer_id={$user.id}">{$user.referrals}</a></b></li>
+								{/if}
 								<li style="border-bottom:1px dotted #555555; margin:10px 0 10px 0;"></li>
 								<li>{$lang.Date_of_registration}: <b>{$user.created|date_format:"%d-%m-%Y %H:%M:%S"}</b></li>
 								<li>{$lang.Source}: <b>{$user.source}</b></li>
 								<li>{$lang.Newsletter}: {if $user.newsletter == 1}{$lang.Yes}{else}{$lang.No}{/if}</li>
 								<li>{$lang.Last_connect_date}: <b>{$user.last_access|date_format:"%d-%m-%Y %H:%M:%S"}</b></li>
-								<li>{$lang.Date_of_birth}: <b>{$user.date_of_birth}</b></li>
-								<li>{$lang.Gender}: <b>{if $user.gender_id == 1}{$lang.Male}{elseif $user.gender_id == 2}{$lang.Female}{/if}</b></li>
+								<li>{$lang.Date_of_birth}: <b>{$user.birthday}</b></li>
+								<li>{$lang.Gender}: <b>{if $user.gender == 1}{$lang.Male}{elseif $user.gender == 2}{$lang.Female}{/if}</b></li>
 								<li>{$lang.Address}: <b><br />{$user.address|stripslashes} <br />{$user.postcode} {$user.city} <br />{$user.country}</b></li>
 								<li>{$lang.Phone}: <b>{$user.phone}</b></li>
-								<li>{$lang.Mobile}: <b>{$user.mobile}</b></li>
+								<li>{$lang.Mobile}: <b>{if $user.mobile}{$user.mobile}{/if}</b></li>
 							</ul>
 						</div>
 					</div>
