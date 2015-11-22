@@ -331,8 +331,8 @@ textarea:focus {
 #left-column .auction-infos .bid-message {}
 #left-column .auction-infos .increments {float:left; margin-top:10px; height:30px;}
 #left-column .buynow-button {float:left; width:130px; margin:10px 0 0 10px;}
-#left-column .auction-autobid {float:left;width:660px;height:35px;padding:10px;background:#ecedef;border-radius:5px;}
-#left-column .auction-autobid input[type=text] {width:50px;margin:0 25px 0 5px;}
+#left-column .auction-autobid {float:left;width:660px;height:30px;padding:10px;background:#ecedef;border-radius:5px;}
+#left-column .auction-autobid input[type=text] {width:50px;margin:0 20px 0 5px;}
 #left-column .histories-title {float:left; width:634px; font-weight:bold; text-align:center; margin-top:15px; padding:0 3px 0 3px;}
 #left-column .bid-histories {float:left;width:660px;padding:10px;background-color:#ecedef;border-radius:5px;}
 #left-column .bid-histories th {color:#892317;}

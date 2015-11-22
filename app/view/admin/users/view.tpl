@@ -138,7 +138,7 @@
 						{/literal}
 					</div>
 					<div class="bcont">
-						<form method="post" action="/admin/users/add_transaction/{$user.id}">
+						<form method="post" action="/admin/user/add_transaction/{$user.id}">
 							<p>
 								<label>{$lang.Description} <span style="color:red;">*</span> : </label><br />
 								<input type="text" name="description" class="inputtext medium" />	
