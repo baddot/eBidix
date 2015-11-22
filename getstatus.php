@@ -56,7 +56,7 @@ foreach($data as $key => $value) {
 		}
 		
 		if(!empty($_GET['histories'])) {
-			$res = $db->getRow("SELECT b.id, b.user_id, b.price, b.description, b.debit, b.created, u.username FROM ". DB_PREFIX ."bids b, ". DB_PREFIX ."users u WHERE b.credit = 0 AND b.user_id = u.id AND b.auction_id = ".$auction['id']." ORDER BY b.id DESC LIMIT 10");
+			$res = $db->getRows("SELECT b.id, b.user_id, b.price, b.description, b.debit, b.created, u.username FROM ". DB_PREFIX ."bids b, ". DB_PREFIX ."users u WHERE b.credit = 0 AND b.user_id = u.id AND b.auction_id = ".$auction['id']." ORDER BY b.id DESC LIMIT 10");
 			
 			if ($res) {
 				$bid_histories_result = array();
