@@ -853,34 +853,34 @@ class userController extends appController
 	}
 	
 	function admin_view($user_id) {
-		$user = $this->exec_one("SELECT id, username, firstname, lastname, phone, mobile, gender, birthday, source, desired_category_id, created, last_access FROM ". DB_PREFIX ."users WHERE id=".$user_id."");
+		$user = $this->user->getById($user_id);
 		if(!empty($user['desired_category_id'])) {
-			$category = $this->exec_one("SELECT name FROM ". DB_PREFIX ."categories WHERE id=".$user['desired_category_id']."");
+			$category = $this->db->getRow("SELECT name FROM ". DB_PREFIX ."categories WHERE id=".$user['desired_category_id']."");
 			$user['desired_category'] = $category['name'];
 		}
 		
 		if(!empty($user['source_id'])) {
-			$source = $this->exec_one("SELECT name FROM ". DB_PREFIX ."sources WHERE id=".$user['source_id']."");
+			$source = $this->db->getRow("SELECT name FROM ". DB_PREFIX ."sources WHERE id=".$user['source_id']."");
 			$user['source'] = $source['name'];
 		}
 		
-		$referrer = $this->exec_one("SELECT r.referrer_id, u.username FROM ". DB_PREFIX ."referrals r, ". DB_PREFIX ."users u WHERE r.user_id=".$user['id']." AND u.id=r.referrer_id");
+		$referrer = $this->db->getRow("SELECT r.referrer_id, u.username FROM ". DB_PREFIX ."referrals r, ". DB_PREFIX ."users u WHERE r.user_id=".$user['id']." AND u.id=r.referrer_id");
 		if(!empty($referrer['referrer_id'])) {
 			$user['referrer_id'] = $referrer['referrer_id'];
 			$user['referrer_username'] = $referrer['username'];
 		}
 		
-		$referrals = $this->exec_one("SELECT count(id) as total FROM ". DB_PREFIX ."referrals WHERE referrer_id=".$user['id']."");
+		$referrals = $this->db->getRow("SELECT count(id) as total FROM ". DB_PREFIX ."referrals WHERE referrer_id=".$user['id']."");
 		$user['referrals'] = $referrals['total'];
 		
-		$address = $this->exec_one("SELECT address, postcode, city FROM ". DB_PREFIX ."addresses WHERE user_id=".$user_id."");
+		$address = $this->db->getRow("SELECT address, postcode, city FROM ". DB_PREFIX ."addresses WHERE user_id=".$user_id."");
 		if($address) {
 			$user['address'] = $address['address'];
 			$user['postcode'] = $address['postcode'];
 			$user['city'] = $address['city'];
 		}
 		
-		$balance = $this->exec_one("SELECT SUM(credit) - SUM(debit) AS balance FROM ". DB_PREFIX ."bids WHERE user_id=".$user_id."");
+		$balance = $this->db->getRow("SELECT SUM(credit) - SUM(debit) AS balance FROM ". DB_PREFIX ."bids WHERE user_id=".$user_id."");
 		$user['balance'] = $balance['balance'];
 		
 		$total_buy_credits_sql = $this->exec_all("SELECT p.price FROM ". DB_PREFIX ."bids b, ". DB_PREFIX ."packages p 
@@ -895,10 +895,10 @@ class userController extends appController
 		foreach($total_offered_credits_sql as $amount) $total_offered_credits += $amount['credit'];
 		$user['total_offered_credits'] = $total_offered_credits;
 		
-		$credits = $this->exec_one("SELECT count(id) as amount FROM ". DB_PREFIX ."bids WHERE user_id=".$user_id." AND debit > 0 AND auction_id != 0");
+		$credits = $this->db->getRow("SELECT count(id) as amount FROM ". DB_PREFIX ."bids WHERE user_id=".$user_id." AND debit > 0 AND auction_id != 0");
 		$user['spent_credits'] = $credits['amount'];
 		
-		$win_auctions = $this->exec_one("SELECT count(id) as count FROM ". DB_PREFIX ."auctions WHERE closed=1 AND status_id > 3 AND winner_id=".$user_id."");
+		$win_auctions = $this->db->getRow("SELECT count(id) as count FROM ". DB_PREFIX ."auctions WHERE closed=1 AND status_id > 3 AND winner_id=".$user_id."");
 		$user['win_auctions'] = $win_auctions['count'];
 		
 		$total_win_amount_sql = $this->exec_all("SELECT p.price FROM ". DB_PREFIX ."auctions a, ". DB_PREFIX ."products p 

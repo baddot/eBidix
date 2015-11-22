@@ -10,7 +10,7 @@
 						<h3>{$lang.Infos}</h3>
 					</div>
 					<div class="bcont">
-						<div style="font-weight:bold;">{$user.last_name} {$user.first_name} (aka {$user.username})</div>
+						<div style="font-weight:bold;">{$user.lastname} {$user.firstname} (aka {$user.username})</div>
 						<div style="margin-top:15px;">
 							<ul>
 								<li>{$lang.Total_credits}: <b>{if !empty($user.balance)}{$user.balance}{else}0{/if}</b></li>

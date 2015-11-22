@@ -761,7 +761,7 @@ CREATE TABLE IF NOT EXISTS `eb_users` (
   `phone` varchar(80) NOT NULL,
   `mobile` varchar(255) NOT NULL,
   `birthday` date NOT NULL,
-  `gender_id` int(11) NOT NULL,
+  `gender` tinyint(1) NOT NULL,
   `email` varchar(80) NOT NULL,
   `active` int(11) NOT NULL,
   `validation_key` varchar(40) NOT NULL,

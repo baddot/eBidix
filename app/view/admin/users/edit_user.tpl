@@ -1,7 +1,7 @@
 {include file='admin/elements/header.tpl'}
 
 	<div class="container_12">
-		<div class="crumb">&raquo <a href="/admin/users">{$lang.Users}</a> &raquo {$lang.Edit}</div>
+		<div class="crumb">&raquo <a href="/admin/user">{$lang.Users}</a> &raquo {$lang.Edit}</div>
 
 		<div class="grid_12">
 			<div class="sb-box">
@@ -10,7 +10,7 @@
 						<h3>{$lang.Users}</h3>
 					</div>
 					<div class="bcont">
-						<form method="post" action="/admin/users/edit/{$user.id}">
+						<form method="post" action="/admin/user/edit/{$user.id}">
 							<p>
 								<label>{$lang.User} <span style="color:red;">*</span> :</label><br/> 
 								<input type="text" name="username" class="inputtext medium" value="{$user.username}" />
