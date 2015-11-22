@@ -150,7 +150,8 @@ Class tools
 	
 	public static function sendMail($to, $template, $toReplace) {
 		// set template dir
-		$dir = _DIR_ .'/assets/mails/' . $_SESSION['lang'] . '/';
+		$lang = (isset($_SESSION['lang'])) ? $_SESSION['lang'] : 'en';
+		$dir = _DIR_ . "/assets/mails/{$lang}/";
 		$template_dir = (file_exists($dir)) ? $dir : _DIR_ . '/assets/mails/en/';
 		
 		// get html content

@@ -383,12 +383,12 @@ function closeAuction($auction = array()) {
 
 function clearCache($auction_id = null, $user_id = null) {
 	if(!empty($auction_id)) {
-		cacheDelete('auction_view_'.$auction_id);
-		cacheDelete('auction_'.$auction_id);
+		tools::deleteCache('auction_view_'.$auction_id);
+		tools::deleteCache('auction_'.$auction_id);
 	}
 
 	if(!empty($user_id)) {
-		cacheDelete('bids_balance_'.$user_id);
+		tools::deleteCache('bids_balance_'.$user_id);
 	}
 }
 
