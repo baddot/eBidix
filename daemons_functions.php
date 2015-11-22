@@ -270,13 +270,13 @@ function bid($data = array(), $extend = false, $bid_description = null) {
 
 				if($success) {
 					$db->insert("bids", array(
-						user_id => $data['user_id'],
-						auction_id => $auction['id'],
-						price => $bid['price'],
-						description => $bid['description'],
-						credit => $bid['credit'],
-						debit => $bid['debit'],
-						created => date('Y-m-d H:i:s')
+						'user_id' => $bid['user_id'],
+						'auction_id' => $bid['auction_id'],
+						'price' => $bid['price'],
+						'description' => $bid['description'],
+						'credit' => $bid['credit'],
+						'debit' => $bid['debit'],
+						'created' => date('Y-m-d H:i:s')
 					));
 					clearCache($auction['id'], $data['user_id']);
 					$message = "offre validée";
