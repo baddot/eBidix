@@ -2,7 +2,7 @@
 
 // report all errors
 @ini_set('display_errors', '1'); // 0, 1
-@error_reporting(E_ALL); // 0, E_ALL
+@error_reporting(E_ERROR); // 0, E_ALL, E_ERROR
 
 // improve PHP configuration to prevent issues
 ini_set('upload_max_filesize', '100M');

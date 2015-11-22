@@ -20,7 +20,7 @@
 								<li>{$lang.Total_win_auctions}: <b>{if !empty($user.win_auctions)}<a href="/admin/auction/closed?user_id={$user.id}">{$user.win_auctions}</a>{else}0{/if}</b></li>
 								<li>{$lang.Total_win_amount}: <b>{$user.total_win_amount}&euro;</b></li>
 								<li>{$lang.Desired_products_cat}: <b>{$user.desired_category}</b></li>
-								{if $user.referrer_id}
+								{if !empty($user.referrer_id)}
 									<li>{$lang.Referrer}: <b><a href="/admin/user/view/{$user.referrer_id}">{$user.referrer_username}</a></b></li>
 									<li>{$lang.Referrals}: <b><a href="/admin/user?referrer_id={$user.id}">{$user.referrals}</a></b></li>
 								{/if}
@@ -33,7 +33,7 @@
 								<li>{$lang.Gender}: <b>{if $user.gender == 1}{$lang.Male}{elseif $user.gender == 2}{$lang.Female}{/if}</b></li>
 								<li>{$lang.Address}: <b><br />{$user.address|stripslashes} <br />{$user.postcode} {$user.city} <br />{$user.country}</b></li>
 								<li>{$lang.Phone}: <b>{$user.phone}</b></li>
-								<li>{$lang.Mobile}: <b>{if $user.mobile}{$user.mobile}{/if}</b></li>
+								<li>{$lang.Mobile}: <b>{if !empty($user.mobile)}{$user.mobile}{/if}</b></li>
 							</ul>
 						</div>
 					</div>

@@ -873,15 +873,17 @@ class userController extends appController
 		$referrals = $this->db->getRow("SELECT count(id) as total FROM ". DB_PREFIX ."referrals WHERE referrer_id=".$user['id']."");
 		$user['referrals'] = $referrals['total'];
 		
-		$address = $this->db->getRow("SELECT address, postcode, city FROM ". DB_PREFIX ."addresses WHERE user_id=".$user_id."");
+		$address = $this->db->getRow("SELECT address, postcode, city, country FROM ". DB_PREFIX ."addresses WHERE user_id=".$user_id."");
 		if($address) {
 			$user['address'] = $address['address'];
 			$user['postcode'] = $address['postcode'];
 			$user['city'] = $address['city'];
+			$user['country'] = $address['country'];
 		} else {
 			$user['address'] = '';
 			$user['postcode'] = '';
 			$user['city'] = '';
+			$user['country'] = '';
 		}
 		
 		$balance = $this->db->getRow("SELECT SUM(credit) - SUM(debit) AS balance FROM ". DB_PREFIX ."bids WHERE user_id=".$user_id."");
