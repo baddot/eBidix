@@ -1,4 +1,4 @@
-# eBidix script
+# eBidix
 Penny auction script
 
 ## Set cron jobs
