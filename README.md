@@ -6,6 +6,7 @@ Clone files to your web server directory, create database ebidix & import bdd.sq
 ```
 mysql -u user -p ebidix < bdd.sql
 ```
+Update config/db.php with your credentials
 
 ## Set good rights to data & upload dir
 ```
