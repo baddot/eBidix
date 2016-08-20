@@ -35,7 +35,7 @@
 										<td>{$auction.start_time}</td>
 										<td>{$auction.price}&euro;</td>
 										<td>{if $auction.active == 1}{$lang.Yes} {else}{$lang.No}{/if}</td>
-										<td class="small"><a class="action" href="#"></a><div class="opmenu"><ul><li><a href="/{$auction.id}" target="_blank">{$lang.View}</a></li><li><a href="/admin/auction/stats/{$auction.id}">{$lang.Stats}</a></li><li style="color:#717171; margin-left:5px;"><a href="/admin/auction/delete/{$auction.id}">{$lang.Delete}</a></li></ul><div class="clear"></div><div class="foot"></div></div></td>
+										<td class="small"><a class="action" href="#"></a><div class="opmenu"><ul><li><a href="/{$auction.id}" target="_blank">{$lang.View}</a></li><li><a href="/admin/auction/stats/{$auction.id}">{$lang.Stats}</a></li><li><a href="/admin/auction/delete/{$auction.id}">{$lang.Delete}</a></li></ul><div class="clear"></div><div class="foot"></div></div></td>
 									</tr>
 								{/foreach}
 							</tbody>

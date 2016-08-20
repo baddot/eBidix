@@ -157,12 +157,12 @@ textarea:focus {
 #header .inner .top-menu a.admin{color:red;}
 
 #header .login-box {
-	width:230px;
+	width:235px;
 	height:165px;
 	padding:5px 10px 5px 10px;
 	position:absolute;
 	top:21px;
-	right:40px;
+	right:41px;
 	z-index:5;
 	display:none;
 	background:#373737 url("../img/bg_header.png") 0 0 repeat;
@@ -462,8 +462,8 @@ textarea:focus {
 
 /* user pages */
 #total-column {
-	float:left; 
-	width:920px; 
+	float:left;
+	width:920px;
 	margin-top:15px;
 }
 #total-column .crumb{text-align:left; font-weight:bold; overflow:hidden; background:url("../admin/img/home_icon.png") no-repeat left top; padding:1.1em 0 0.6em 3.4em; margin-bottom:15px;}
@@ -491,7 +491,7 @@ textarea:focus {
 	color: #ffffff;
 	text-decoration: none;
 }
-#footer a:hover { 
+#footer a:hover {
 	text-decoration: underline;
 }
 #footer .main {
@@ -527,7 +527,7 @@ textarea:focus {
 }
 #footer .useful-links {
 	float: left;
-	width: 215px;	
+	width: 215px;
 	margin-left:50px;
 }
 #footer .infos {
