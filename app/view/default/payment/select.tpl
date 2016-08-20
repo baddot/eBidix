@@ -1,9 +1,9 @@
 {include file='header.tpl'}
 
 <div id="left-column">
-	<div class="breadcrumb"><a href="/">{$lang.Home}</a> > {$lang.Choose_your_payment}</div>
+	<div class="breadcrumb"><a href="/">{$lang.Home}</a> &raquo; {$lang.Choose_your_payment}</div>
 	<div class="content">
-		<div class="payments_subtitle">
+		<!--<div class="payments_subtitle">
 			{if isset($coupon)}
 				<p>
 					{$lang.Coupon_submitted} : {$coupon.code}
@@ -17,8 +17,7 @@
 			{elseif $data.model == 'auction'}
 				<span style="color:#e06c0b; font-weight:bold;">{$data.price}&euro;</span>
 			{/if}
-		</div>
-		<div class="arrow"></div>
+		</div>-->
 		<div class="paypal">
 			<a href="/payment?name=paypal&model={$data.model}&id={$data.id}">
 				<span style="font-weight:bold; color:#000000;">Paypal</span>

@@ -1,18 +1,12 @@
-{include file='elements/header.tpl'}
-	
-	<div id="total-column">
-		<div id="case">
-			<div class="title">{$lang.My_account}</div>
-		</div>
-		<div id="user-menu">
-			{include file='elements/user_menu.tpl'}
-		</div>
-		<div id="user-content">
-			<div class="crumb">&raquo {$lang.Buynow}</div>
-			
+{include file='header.tpl'}
+
+	<div id="left-column">
+		<div class="breadcrumb"><a href="/">{$lang.Home}</a> &raquo; {$lang.Buynow}</div>
+		<div class="content">
+
 			<div>
 				<div>{$lang.Product_buy}: <b>{$auction.product_name}</b></div>
-				
+
 				<div>
 					{if $can_buy}
 						<div style="margin-top:15px;">{$lang.You_will_pay} <b>{$auction.price_to_buy}&euro;</b></div>
@@ -34,6 +28,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 </div>
-{include file='elements/footer.tpl'}
+
+{include file='footer.tpl'}

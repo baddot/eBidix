@@ -1,15 +1,9 @@
-{include file='elements/header.tpl'}
-	
-	<div id="total-column">
-		<div id="case">
-			<div class="title">{$lang.My_account}</div>
-		</div>
-		<div id="user-menu">
-			{include file='elements/user_menu.tpl'}
-		</div>
-		<div id="user-content">
-			<div class="crumb">&raquo {$lang.User_menu.My_email_alerts}</div>
-			
+{include file='header.tpl'}
+
+	<div id="left-column">
+		<div class="breadcrumb">&raquo; {$lang.User_menu.My_email_alerts}</div>
+		<div class="content">
+
 			<div class="items_list">
 				<table cellpadding="0" cellspacing="0" align="center">
 					<tr>
@@ -30,6 +24,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 </div>
-{include file='elements/footer.tpl'}
+
+{include file='footer.tpl'}

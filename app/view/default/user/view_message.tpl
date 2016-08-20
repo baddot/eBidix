@@ -1,15 +1,8 @@
-{include file='elements/header.tpl'}
-	
-	<div id="total-column">
-		<div id="case">
-			<div class="title">{$lang.Messages}</div>
-		</div>
-		<div id="user-menu">
-			{include file='elements/user_menu.tpl'}
-		</div>
-		<div id="user-content">
-			<div class="crumb">&raquo <a href="/messages">{$lang.User_menu.My_messages}</a> &raquo {$lang.View}</div>
-			
+{include file='header.tpl'}
+
+	<div id="left-column">
+		<div class="breadcrumb"><a href="/">{$lang.Home}</a> &raquo; <a href="/messages">{$lang.User_menu.My_messages}</a> &raquo; {$lang.View}</div>
+		<div class="content">
 			<div style="text-align:left;">
 				<p><b>{$message.object}</b></p>
 				<div style="background-color:#ffffff; padding:10px;">{$message.message}</div>
@@ -25,6 +18,6 @@
 			</div>
 		</div>
 	</div>
-	
+
 </div>
-{include file='elements/footer.tpl'}
+{include file='footer.tpl'}

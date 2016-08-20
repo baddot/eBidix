@@ -1,5 +1,5 @@
-{include file='elements/header.tpl'}
-	
+{include file='header.tpl'}
+
 	{literal}
 	<script type='text/javascript'>
 		function toggleAll(element) {
@@ -10,26 +10,20 @@
 		}
 	</script>
 	{/literal}
-	
-	<div id="total-column">
-		<div id="case">
-			<div class="title">{$lang.My_account}</div>
-		</div>
-		<div id="user-menu">
-			{include file='elements/user_menu.tpl'}
-		</div>
-		<div id="user-content">
-			<div class="crumb">&raquo {$lang.User_menu.Invit_my_friends}</div>
-			
+
+	<div id="left-column">
+			<div class="breadcrumb"><a href="/">{$lang.Home}</a> &raquo; {$lang.User_menu.Invit_my_friends}</div>
+			<div class="content">
+				
 			<div>
 				<div style="text-align:left; margin-left:25px;">
 					<b>{$lang.Title_invit_1}</b>
 					<br />{$lang.Text_invit_1}
 				</div>
-				
+
 				<div style="margin-top:15px;">
 					{$lang.Title_invit_2}
-					<br /><form id="InviteIndexForm" method="post" action="/users/invit">				
+					<br /><form id="InviteIndexForm" method="post" action="/users/invit">
 					<textarea name="friends_email" id="recipient_list" cols="70" rows="10" >{$contents}{if !empty($errors)}{foreach from=$errors item=error}{$error}{/foreach}{/if}{if !empty($success)}{foreach from=$success item=msg}{$msg}{/foreach}{/if}</textarea>
 					<div style="margin-top:15px;">
 						<label for="InviteMessage">{$lang.Invitation_message}</label><br/>
@@ -45,7 +39,7 @@ http://www.bidjokers.com/?pid={$user.id}
 					<div class="submit" style="text-align:center;"><button class="button green"><span>{$lang.Invit}</span></button></div>
 					</form>
 				</div>
-				
+
 				{if !$import_ok}
 					<div style="text-align:center; font-weight:bold; margin-top:30px;">{$lang.Import_text}</div>
 					<br />
@@ -79,6 +73,7 @@ http://www.bidjokers.com/?pid={$user.id}
 			</div>
 		</div>
 	</div>
-	
+
 </div>
-{include file='elements/footer.tpl'}
+
+{include file='footer.tpl'}

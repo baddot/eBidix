@@ -1,15 +1,9 @@
-{include file='elements/header.tpl'}
-	
-	<div id="total-column">
-		<div id="case">
-			<div class="title">{$lang.My_account}</div>
-		</div>
-		<div id="user-menu">
-			{include file='elements/user_menu.tpl'}
-		</div>
-		<div id="user-content">
-			<div class="crumb">&raquo {$lang.User_menu.Referrals}</div>
-			
+{include file='header.tpl'}
+
+	<div id="left-column">
+		<div class="breadcrumb"><a href="/">{$lang.Home}</a> &raquo; {$lang.User_menu.Referrals}</div>
+		<div class="content">
+
 			<div>
 				<u><b>Voici vos informations dans l'optique du parrainage</b></u>
 				<br /><br />Proposez ce lien aux personnes intéressées pour devenir leur parrain :
@@ -41,6 +35,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 </div>
-{include file='elements/footer.tpl'}
+
+{include file='footer.tpl'}

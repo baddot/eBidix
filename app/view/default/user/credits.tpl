@@ -1,15 +1,8 @@
 {include file='header.tpl'}
-	
-	<div id="total-column">
-		<div id="case">
-			<div class="title">{$lang.My_account}</div>
-		</div>
-		<div id="user-menu">
-			{include file='user_menu.tpl'}
-		</div>
-		<div id="user-content">
-			<div class="crumb">&raquo {$lang.User_menu.My_credits}</div>
-			
+
+	<div id="left-column">
+		<div class="breadcrumb"><a href="/">{$lang.Home}</a> &raquo; {$lang.User_menu.My_credits}</div>
+		<div class="content">
 			<div class="items_list">
 				<table cellpadding="0" cellspacing="0" align="center">
 					<tr>
@@ -37,6 +30,7 @@
 			<div class="pagination">{$lang.Page}: {pagination params=$pagination}{/pagination}</div>
 		</div>
 	</div>
-	
+
 </div>
+
 {include file='footer.tpl'}
