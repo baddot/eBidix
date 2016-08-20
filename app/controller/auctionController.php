@@ -1027,8 +1027,7 @@ class auctionController extends appController
 	}
 
 	function admin_delete($id) {
-		$id = tools::filter($_GET['id']);
-		$this->exec("DELETE FROM ". DB_PREFIX ."auctions WHERE id=".$id."");
+		$this->exec("DELETE FROM ". DB_PREFIX ."auctions WHERE id=".tools::filter($id)."");
 		tools::setFlash($this->l('Request processed'), 'success');
 		tools::redirect('/admin/auction');
 	}
