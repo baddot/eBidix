@@ -1,9 +1,13 @@
 {include file='header.tpl'}
 
-	<div id="left-column">
-		<div class="breadcrumb"><a href="/">{$lang.Home}</a> &raquo; <a href="/won-auctions">{$lang.User_menu.My_won_auctions}</a> &raquo; {$lang.Pay}</div>
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<ol class="breadcrumb">
+		  <li><a href="/">{$lang.Home}</a></li>
+			<li><a href="/won-auctions">{$lang.User_menu.My_won_auctions}</a></li>
+		  <li class="active">{$lang.Pay}</li>
+		</ol>
 		<div class="content">
-
 			<div style="margin-left:15px;">{$lang.Pay_text} <b>{math equation="a + b" a=$auction.price b=$auction.delivery_cost}&euro;</b> ({$auction.price}&euro; + {$auction.delivery_cost}&euro; {$lang.delivery_fees}) {$lang.for_the_auction}<a href="/auctions/view/{$auction.id}">{$auction.id}</a></div>
 			<form method="GET" action="/payment">
 				<input type="hidden" name="id" value="{$auction.id}" />
