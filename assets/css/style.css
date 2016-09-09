@@ -324,6 +324,7 @@ textarea:focus {
 	-moz-box-shadow: 0 3px 3px #aaaaaa;
 	box-shadow: 0 3px 3px #aaaaaa;
 }
+<<<<<<< HEAD
 .auction-infos .content .auction-options a {color:#000;}
 .au_item .bid-config{}
 .au_item .bid-price {height:20px;color:#515e70;font-size:25px;font-weight:bold;margin-top:10px;}
@@ -333,6 +334,17 @@ textarea:focus {
 /*.au_item .bid-button {margin-top:20px;}
 .au_item .bid-button a {font-size:25px;padding:5px 90px 5px 90px;}*/
 .au_item .bid-message {}
+=======
+.auction-infos .content .auction-options a {color:#ffffff;}
+.auction-infos .bid-config{}
+.auction-infos .bid-price {height:20px;color:#515e70;font-size:25px;font-weight:bold;margin-top:10px;}
+.auction-infos .product-price {height:20px;font-size:11px;color:#a8a7a8;}
+.auction-infos .countdown {height:30px;color:orange;font-size:25px;font-weight:bold;margin-top:10px;}
+.auction-infos .bid-bidder {height:20px;font-size:14px;}
+.auction-infos .bid-button {margin-top:20px;}
+.auction-infos .bid-button a {font-size:25px;padding:5px 90px 5px 90px;}
+.auction-infos .bid-message {}
+>>>>>>> 61ea784ce2063bc7be7f33a27a060646a4812729
 .auction-infos .increments {float:left; margin-top:10px; height:30px;}
 .buynow-button {float:left; width:130px; margin:10px 0 0 10px;}
 .auction-autobid {float:left;width:660px;height:30px;padding:10px;background:#ecedef;border-radius:5px;}
@@ -506,6 +518,7 @@ footer  ul li {
 	width: 230px;
 	margin-left: 15px;
 }
+<<<<<<< HEAD
 
 
 div.paclist{
@@ -542,3 +555,5 @@ div.au_item h2{
 	padding:0 0 5px;
 	margin: 0;
 }
+=======
+>>>>>>> 61ea784ce2063bc7be7f33a27a060646a4812729

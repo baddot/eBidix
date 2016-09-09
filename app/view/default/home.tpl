@@ -7,7 +7,11 @@
 		{if !empty($home_text)}<div class="infos-message">{$home_text}</div>{/if}
 
 		<div id="auctions">
+<<<<<<< HEAD
 			
+=======
+			<ul>
+>>>>>>> 61ea784ce2063bc7be7f33a27a060646a4812729
 				{if !empty($ongoing_auctions)}
 					{foreach from=$ongoing_auctions item=auction}
 						{include file='auction/display.tpl'}

@@ -77,12 +77,15 @@
 										<li class="dropdown {if isset($active) && $active == 6}active{/if}">
 											<a href="/account" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{$lang.Menu.My_account} <span class="caret"></span></a>
 											<ul class="dropdown-menu">
+<<<<<<< HEAD
 												{if isset($smarty.session.user_id)}
 												{if isset($smarty.session.admin)}<li><a href="/admin" class="admin">Admin</a></li>{/if}
 												
 													<li><a href="/user/logout">{$lang.logout}</a></li>
 												
 												{/if}
+=======
+>>>>>>> 61ea784ce2063bc7be7f33a27a060646a4812729
 												<li><a href="/edit-account">{$lang.User_menu.Edit_account}</a></li>
 												<li><a href="/edit-password">{$lang.User_menu.Change_password}</a></li>
 												<li><a href="/messages">{$lang.User_menu.My_messages}</a></li>
@@ -94,7 +97,10 @@
 												<li><a href="/debits">{$lang.User_menu.My_debits}</a></li>
 												<li><a href="/referrals">{$lang.User_menu.Referrals}</a></li>
 												{*<li><a href="/users/invit">{$lang.User_menu.Invit_my_friends}</a></li>*}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 61ea784ce2063bc7be7f33a27a060646a4812729
 											</ul>
 										</li>
 									{else}
@@ -108,8 +114,16 @@
 									</li>
 									<li>
 
+<<<<<<< HEAD
 											{if !isset($smarty.session.user_id)}
 												<a href="#" id="login" data-toggle="modal" data-target="#myModal">{$lang.Login}</a>
+=======
+											{if isset($smarty.session.user_id)}
+												{if isset($smarty.session.admin)}<a href="/admin" class="admin">Admin</a> - {/if}
+												<a href="/user/logout">{$lang.logout}</a>
+											{else}
+												<a href="#" id="login">{$lang.Login}</a>
+>>>>>>> 61ea784ce2063bc7be7f33a27a060646a4812729
 											{/if}
 
 									</li>
