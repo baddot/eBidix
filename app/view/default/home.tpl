@@ -7,7 +7,7 @@
 		{if !empty($home_text)}<div class="infos-message">{$home_text}</div>{/if}
 
 		<div id="auctions">
-			<ul>
+		
 				{if !empty($ongoing_auctions)}
 					{foreach from=$ongoing_auctions item=auction}
 						{include file='auction/display.tpl'}
@@ -19,7 +19,7 @@
 						{include file='auction/display.tpl'}
 					{/foreach}
 				{/if}
-			</ul>
+			
 		</div>
 	</div>
 

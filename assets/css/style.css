@@ -324,16 +324,16 @@ textarea:focus {
 	-moz-box-shadow: 0 3px 3px #aaaaaa;
 	box-shadow: 0 3px 3px #aaaaaa;
 }
-.auction-infos .content .auction-options a {color:#ffffff;}
-.auction-infos .bid-config{}
-.auction-infos .bid-price {height:20px;color:#515e70;font-size:25px;font-weight:bold;margin-top:10px;}
-.auction-infos .product-price {height:20px;font-size:11px;color:#a8a7a8;}
-.auction-infos .countdown {height:30px;color:orange;font-size:25px;font-weight:bold;margin-top:10px;}
-.auction-infos .bid-bidder {height:20px;font-size:14px;}
-.auction-infos .bid-button {margin-top:20px;}
-.auction-infos .bid-button a {font-size:25px;padding:5px 90px 5px 90px;}
-.auction-infos .bid-message {}
-.auction-infos .increments {float:left; margin-top:10px; height:30px;}
+.auction-infos .content .auction-options a {color:#000;}
+.au_item .bid-config{}
+.au_item .bid-price {height:20px;color:#515e70;font-size:25px;font-weight:bold;margin-top:10px;}
+.au_item .product-price {height:20px;font-size:11px;color:#a8a7a8; margin-top: 10px;}
+.au_item .countdown {height:30px;color:orange;font-size:25px;font-weight:bold;margin-top:10px; }
+.au_item .bid-bidder {height:20px;font-size:14px;}
+/*.au_item .bid-button {margin-top:20px;}
+.au_item .bid-button a {font-size:25px;padding:5px 90px 5px 90px;}*/
+.au_item .bid-message {}
+.au_item .increments {float:left; margin-top:10px; height:30px;}
 .buynow-button {float:left; width:130px; margin:10px 0 0 10px;}
 .auction-autobid {float:left;width:660px;height:30px;padding:10px;background:#ecedef;border-radius:5px;}
 .auction-autobid input[type=text] {width:50px;margin:0 20px 0 5px;}
@@ -506,3 +506,14 @@ footer  ul li {
 	width: 230px;
 	margin-left: 15px;
 }
+
+div.au_item{
+	border: 1px solid #eee;
+	margin-bottom: 10px;
+	padding: 10px;
+}
+
+div.au_item h2{
+	padding:0 0 5px;
+	margin: 0;
+} 
