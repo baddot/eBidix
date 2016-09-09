@@ -1,11 +1,7 @@
 {include file='header.tpl'}
 
-<div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<ol class="breadcrumb">
-		  <li><a href="/">{$lang.Home}</a></li>
-		  <li class="active">{$lang.Payment}</li>
-		</ol>
+	<div id="left-column">
+		<div class="breadcrumb"><a href="/">{$lang.Home}</a> &raquo; {$lang.Payment}</div>
 		<div class="content">
 			<div>{$lang.Please_wait_transfering}</div>
 			<div style="margin-top:15px;">
@@ -32,7 +28,7 @@
 			</div>
 		</div>
 	</div>
+
 </div>
 
 {include file='footer.tpl'}
-

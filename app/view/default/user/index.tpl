@@ -1,13 +1,9 @@
 {include file='header.tpl'}
 
-<div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-		<ol class="breadcrumb">
-		  <li><a href="/">{$lang.Home}</a></li>
-		  <li class="active">{$lang.Menu.My_account}</li>
-		</ol>
-		<div class="content">
-			<p>
+<div id="left-column">
+	<div class="breadcrumb"><a href="/">{$lang.Home}</a> &raquo; {$lang.Menu.My_account}</div>
+	<div class="content">
+		<p>
 			<u>{$lang.Things_to_do}</u>
 			<ul>
 				{if empty($profile.firstname)}<li><a href="/edit-account">{$lang.Complete_profil}</a></li>{/if}
@@ -21,20 +17,15 @@
 		<div class="coupon">
 			{$lang.If_have_coupon}<br>
 			<form method="POST" action="/coupon">
-				<div class="form-group">
-					<input type="text" class="form-control" name="code" placeholder="{$lang.Code_coupon}" required> 
-				</div>
-				<div class="form-group">
-					<input type="submit" class="btn btn-success" value="{$lang.Submit}">
-				</div>
+				<input type="text" name="code" placeholder="{$lang.Code_coupon}" required> 
+				<input type="submit" class="button green" value="{$lang.Submit}">
 			</form>
 		</div>
-		</div>
 	</div>
+</div>
 
-	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-right">
-		{include file='right_column.tpl'}
-	</div>
+<div id="right-column">
+	{include file='right_column.tpl'}
 </div>
 
 {include file='footer.tpl'}

@@ -1,12 +1,9 @@
 {include file='header.tpl'}
 
-<div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-		<ol class="breadcrumb">
-		  <li><a href="/">{$lang.Home}</a></li>
-		  <li class="active">{$lang.User_menu.My_messages}</li>
-		</ol>
+	<div id="left-column">
+		<div class="breadcrumb"><a href="/">{$lang.Home}</a> &raquo; {$lang.User_menu.My_messages}</div>
 		<div class="content">
+
 			{if !empty($errors_text)}
 				<div style="color:red; font-weight:bold; margin-bottom:15px;">
 					{$errors_text}
@@ -23,9 +20,6 @@
 		</div>
 	</div>
 
-	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-right">
-		{include file='right_column.tpl'}
-	</div>
 </div>
 
 {include file='footer.tpl'}

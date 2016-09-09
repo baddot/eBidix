@@ -45,35 +45,6 @@
 	</div>
 </footer>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-        <form method="post" action="/user/login">
-			<div class="form-group">
-			  <label for="username-input">Name:</label>
-			  <input type="text" class="form-control" name="username" id="username-input" placeholder="{$lang.Username}" required>
-			</div>
-			<div class="form-group">
-			  <label for="password">Password:</label>
-			  <input type="password" name="password" placeholder="{$lang.Password}" required class="form-control">
-			</div>
-			<div class="form-group">
-				<input type="submit" class="btn btn-success" name="submit" value="{$lang.Login}">
-			</div>
-			<div class="form-group">
-				<p><a href="/reset-password">{$lang.Password_lost}</a> - <a class="sign-up-link" href="/signup">{$lang.Sign_up}</a></p>
-			</div>
-			<div class="form-group">
-				<p>{$lang.Facebook_connect_text}<br><a href="https://www.facebook.com/dialog/oauth?client_id={$settings.facebook.app_id}&redirect_uri={$settings.facebook.redirect_uri}&scope=email"><img src="/assets/img/facebook_connect_button.png" alt="facebook connect button" /></a></p>
-			</div>
-		</form>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script type="text/javascript" src="/assets/js/jquery-2.0.3.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
