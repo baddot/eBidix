@@ -1,23 +1,29 @@
 {include file='header.tpl'}
-	
-	<div id="left-column">
-		<div class="breadcrumb"><a href="/">{$lang.Home}</a> > {$lang.Reset_password_title}</div>
+
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+		<ol class="breadcrumb">
+		  <li><a href="/">{$lang.Home}</a></li>
+		  <li class="active">{$lang.Reset_password_title}</li>
+		</ol>
 		<div class="content">
 			<p>{$lang.Password_reset_text}</p>
 			<p>
 				<form method="POST" action="/user/reset">
-					<ul>
-						<li><input type="email" name="email" placeholder="{$lang.Email}" required autofocus></li>
-						<li><input type="submit" class="button green" name="submit" value="{$lang.Submit}"></li>
-					</ul>
+						<div class="form-group">
+						<input type="email" name="email" class="form-control" placeholder="{$lang.Email}" required autofocus>
+						</div>
+						<div class="form-group">
+						<input type="submit" class="btn btn-success" name="submit" value="{$lang.Submit}">
+						</div>
 				</form>
 			</p>
 		</div>
 	</div>
-	
-	<div id="right-column">
+
+	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-right">
 		{include file='right_column.tpl'}
 	</div>
-	
 </div>
+
 {include file='footer.tpl'}
