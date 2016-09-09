@@ -1,13 +1,14 @@
 {include file='header.tpl'}
 
-	<div id="left-column">	
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
 		{if $top_ad.active == 1}<div class="top-ad">{$top_ad.content}</div>{/if}
-		
+
 		{if !empty($home_text)}<div class="infos-message">{$home_text}</div>{/if}
-		
+
 		<div id="auctions">
-			<ul>
-				{if !empty($ongoing_auctions)}	
+			
+				{if !empty($ongoing_auctions)}
 					{foreach from=$ongoing_auctions item=auction}
 						{include file='auction/display.tpl'}
 					{/foreach}
@@ -18,12 +19,13 @@
 						{include file='auction/display.tpl'}
 					{/foreach}
 				{/if}
-			</ul>
+			
 		</div>
 	</div>
-	
-	<div id="right-column">
+
+	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-right">
 		{include file='right_column.tpl'}
 	</div>
+</div>
 
 {include file='footer.tpl'}

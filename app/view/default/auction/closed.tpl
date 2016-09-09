@@ -1,7 +1,11 @@
 {include file='header.tpl'}
 
-	<div id="left-column">		
-		<div class="breadcrumb"><a href="/">{$lang.Home}</a> &raquo; {$lang.Menu.Closed_auctions}</div>
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+		<ol class="breadcrumb">
+		  <li><a href="/">{$lang.Home}</a></li>
+		  <li class="active">{$lang.Menu.Closed_auctions}</li>
+		</ol>
 		<div id="auctions">
 			<ul>
 				{foreach from=$auctions item=auction}
@@ -10,11 +14,10 @@
 			</ul>
 		</div>
 	</div>
-	
-	<div id="right-column">
+
+	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-right">
 		{include file='right_column.tpl'}
 	</div>
-	
 </div>
 
 {include file='footer.tpl'}

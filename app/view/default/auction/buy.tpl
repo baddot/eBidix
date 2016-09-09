@@ -1,9 +1,13 @@
+
 {include file='header.tpl'}
 
-	<div id="left-column">
-		<div class="breadcrumb"><a href="/">{$lang.Home}</a> &raquo; {$lang.Buynow}</div>
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<ol class="breadcrumb">
+		  <li><a href="/">{$lang.Home}</a></li>
+		  <li class="active">{$lang.Buynow}</li>
+		</ol>
 		<div class="content">
-
 			<div>
 				<div>{$lang.Product_buy}: <b>{$auction.product_name}</b></div>
 

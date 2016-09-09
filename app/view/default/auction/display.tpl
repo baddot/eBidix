@@ -1,5 +1,6 @@
 				{if $sort == 'labels'}
-					<li class="label auction-item" id="auction_{$auction.id}">
+					<div class="label auction-item col-xs-12 col-sm-12 col-md-4 col-lg-4" id="auction_{$auction.id}">
+						<div class="au_item">
 						<h2><a href="/{$auction.id}-{$auction.link_name}" title="{$auction.name}">{$auction.name}</a></h2>
 						<div class="details">
 							<div class="image">
@@ -14,18 +15,20 @@
 									{if $auction.closed != 1}
 										{if $auction.status_id == 1}
 											<div class="set-autobid"><a href="/{$auction.id}-{$auction.link_name}">{$lang.Set_autobid}</a></div>
-											<a class="button green" id="{$auction.id}" style="display:none;">{$lang.Bid}</a>
+											<a class="btn btn-success" id="{$auction.id}" style="display:none;">{$lang.Bid}</a>
 										{else}	
-											<a class="button green" id="{$auction.id}">{$lang.Bid}</a>
+											<a class="btn btn-success" id="{$auction.id}">{$lang.Bid}</a>
 										{/if}
 									{/if}
 								</div>
 							</div>
 						</div>
 						<div class="bid-message"></div>
-					</li>
+						</div>
+					</div>
 				{elseif $sort == 'list'}
-					<li class="list auction-item" id="auction_{$auction.id}">
+					<div class="list auction-item col-xs-12 col-sm-12 col-md-4 col-lg-4" id="auction_{$auction.id}">
+						<div class="au_item">
 						<div class="image">
 							<a href="/{$auction.id}-{$auction.link_name}"><img src="{$settings.app.site_url}/assets/img/product/thumb/{$auction.product_id}/home_list.jpg" width="60" height="35" alt="{$auction.name}"></a>
 						</div>
@@ -42,12 +45,13 @@
 							{if $auction.closed != 1}
 								{if $auction.status_id == 1}
 									<div class="set-autobid"><a href="/{$auction.id}-{$auction.link_name}">{$lang.Set_autobid}</a></div>
-									<a class="button green" id="{$auction.id}" style="display:none;">{$lang.Bid}</a>
+									<a class="btn btn-success" id="{$auction.id}" style="display:none;">{$lang.Bid}</a>
 								{else}	
-									<a class="button green" id="{$auction.id}">{$lang.Bid}</a>
+									<a class="btn btn-success" id="{$auction.id}">{$lang.Bid}</a>
 								{/if}
 							{/if}
 						</div>
 						<div class="bid-message"></div>
-					</li>
+						</div>
+					</div>
 				{/if}
