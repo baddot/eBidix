@@ -8,17 +8,19 @@
 	</div>
 {/if}
 
-<div class="well">
-	<div>
+
 		{if isset($smarty.session.user_id)}
+		<div class="well">
+	<div>
 			<div class="content">
 				{$lang.Hi} <strong>{$smarty.session.username}</strong>,
 				<br>{$lang.you_have} <span class="bid-balance" style="font-weight:bold;">{if !empty($user.balance)}{$user.balance}{else}0{/if}</span> {$lang.credits}
 			</div>
-		{/if}
-	</div>
+			</div>
 </div>
 
+		{/if}
+	
 
 {if isset($auction.buynow) && $auction.buynow == 1}
 <div class="well">
