@@ -8,7 +8,7 @@
 		</ol>
 		<div class="content">
 			<div class="items_list">
-				<table cellpadding="0" cellspacing="0" align="center">
+				<table class="table" cellpadding="0" cellspacing="0" align="center">
 					<tr>
 						<th>{$lang.Auction}</th>
 						<th>{$lang.Date_hour_end}</th>

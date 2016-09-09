@@ -1,9 +1,13 @@
 {include file='header.tpl'}
 
-<div id="left-column">
-	<div class="breadcrumb"><a href="/">{$lang.Home}</a> &raquo; {$lang.Choose_your_payment}</div>
-	<div class="content">
-		<!--<div class="payments_subtitle">
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+		<ol class="breadcrumb">
+		  <li><a href="/">{$lang.Home}</a></li>
+		  <li class="active">{$lang.Choose_your_payment}</li>
+		</ol>
+		<div class="content">
+			<!--<div class="payments_subtitle">
 			{if isset($coupon)}
 				<p>
 					{$lang.Coupon_submitted} : {$coupon.code}
@@ -30,11 +34,13 @@
 				<br /><span style="font-weight:bold; color:#000000;">Carte de crédit</span>
 			</a>
 		</div>-->
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-right">
+		{include file='right_column.tpl'}
 	</div>
 </div>
 
-<div id="right-column">
-	{include file='right_column.tpl'}
-</div>
-
 {include file='footer.tpl'}
+

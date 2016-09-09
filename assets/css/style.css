@@ -94,7 +94,7 @@ input:hover.button.orange, a:hover.button.orange {
 	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#f7b900), to(#ffe009));
 }
 
-input[type=text], input[type=password], input[type=email], input[type=tel] , input[type=date], select{
+/*input[type=text], input[type=password], input[type=email], input[type=tel] , input[type=date], select{
 	padding:0 10px;
 	width:185px;
 	height:30px;
@@ -123,7 +123,7 @@ textarea:focus {
 	color:white;
 	background:rgba(0, 0, 0, 0.1);
 	outline:0;
-}
+}*/
 
 /* header */
 #header {
@@ -505,6 +505,31 @@ footer  ul {
 footer  ul li {
 	width: 230px;
 	margin-left: 15px;
+}
+
+
+div.paclist{
+	border: 1px solid #eee; 
+	padding: 10px;
+	margin-bottom: 10px;
+}
+
+div.paclist img{
+	display: block;
+	margin: 0 auto;
+}
+
+div.paclist a.btn-pac{
+	display: block;
+	margin: 0 auto;
+}
+
+div.content, div.auction-item{
+	margin-bottom: 20px;
+}
+
+div.checkbox{
+	margin-left: 25px;
 }
 
 div.au_item{

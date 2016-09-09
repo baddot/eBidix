@@ -358,7 +358,13 @@ Iqr7pQ7PAEsFaH1IRx6JEkL+2auL6rvYrJh0Y5QOrWzQ
 			$text .= $messages;
 		}
 		
-		$_SESSION['flash_message'] = '<div id="flash-message" class="'.$template.'">'.$text.'</div>';
+		//$_SESSION['flash_message'] = '<div id="flash-message" class="'.$template.'"></div>';
+		
+		if($template == 'success'){
+			$_SESSION['flash_message'] = '<div class="alert alert-success" role="alert">'.$text.'</div>';
+		} else {
+			$_SESSION['flash_message'] = '<div class="alert alert-danger" role="alert">'.$text.'</div>';
+		}
 	}
 	
 	public static function redirect($url) {

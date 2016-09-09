@@ -1,7 +1,12 @@
 {include file='header.tpl'}
 
-	<div id="left-column">
-		<div class="breadcrumb"><a href="/">{$lang.Home}</a> &raquo; <a href="/messages">{$lang.User_menu.My_messages}</a> &raquo; {$lang.View}</div>
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<ol class="breadcrumb">
+		  <li><a href="/">{$lang.Home}</a></li>
+		  <li>{$lang.User_menu.My_messages}</li>
+		  <li class="active">{$lang.View}</li>
+		</ol>
 		<div class="content">
 			<div style="text-align:left;">
 				<p><b>{$message.object}</b></p>
@@ -18,6 +23,6 @@
 			</div>
 		</div>
 	</div>
-
 </div>
+
 {include file='footer.tpl'}

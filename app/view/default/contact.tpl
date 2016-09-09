@@ -9,16 +9,25 @@
 		</ol>
 		<div class="content">
 			<form action="/contact" method="post">
-				<ul>
+				
 					{if !isset($smarty.session.user_id)}
-						<li><input type="email" name="email" placeholder="{$lang.Email}" required autofocus></li>
+						<div class="form-group">
+							<input type="email" class="form-control" name="email" placeholder="{$lang.Email}" required autofocus>
+						</div>
 					{else}
-						<input type="hidden" name="user_id" value="{$smarty.session.user_id}">
+						<div class="form-group">
+							<input type="hidden" class="form-control" name="user_id" value="{$smarty.session.user_id}">
+						</div>
 					{/if}
-					<li><input type="text" name="object" placeholder="{$lang.Object}" required></li>
-					<li><textarea name="message" cols="50" rows="10" placeholder="{$lang.Message}" required></textarea></li>
-					<li><input type="submit" class="button green" value="{$lang.Send}"></li>
-				</ul>
+					<div class="form-group">
+						<input type="text" class="form-control" name="object" placeholder="{$lang.Object}" required>
+					</div>
+					<div class="form-group">
+						<textarea name="message" class="form-control" cols="50" rows="10" placeholder="{$lang.Message}" required></textarea>
+					</div>
+					<div class="form-group">
+						<input type="submit" class="btn btn-success" value="{$lang.Send}">
+					</div>
 			</form>
 		</div>
 	</div>

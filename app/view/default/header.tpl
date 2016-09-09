@@ -4,7 +4,7 @@
 	<meta charset="{$settings.app.encoding}">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<title>{$settings.app.default_meta_title}</title>
-	<meta name="viewport" content="maximum-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="{$settings.app.default_meta_description}">
 	<meta name="keywords" content="{$settings.app.default_meta_keywords}">
 	<link type="text/css" media="screen" rel="stylesheet" href="/assets/css/style.css" />
@@ -77,6 +77,12 @@
 										<li class="dropdown {if isset($active) && $active == 6}active{/if}">
 											<a href="/account" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{$lang.Menu.My_account} <span class="caret"></span></a>
 											<ul class="dropdown-menu">
+												{if isset($smarty.session.user_id)}
+												{if isset($smarty.session.admin)}<li><a href="/admin" class="admin">Admin</a></li>{/if}
+												
+													<li><a href="/user/logout">{$lang.logout}</a></li>
+												
+												{/if}
 												<li><a href="/edit-account">{$lang.User_menu.Edit_account}</a></li>
 												<li><a href="/edit-password">{$lang.User_menu.Change_password}</a></li>
 												<li><a href="/messages">{$lang.User_menu.My_messages}</a></li>
@@ -88,6 +94,7 @@
 												<li><a href="/debits">{$lang.User_menu.My_debits}</a></li>
 												<li><a href="/referrals">{$lang.User_menu.Referrals}</a></li>
 												{*<li><a href="/users/invit">{$lang.User_menu.Invit_my_friends}</a></li>*}
+
 											</ul>
 										</li>
 									{else}
@@ -101,11 +108,8 @@
 									</li>
 									<li>
 
-											{if isset($smarty.session.user_id)}
-												{if isset($smarty.session.admin)}<a href="/admin" class="admin">Admin</a> - {/if}
-												<a href="/user/logout">{$lang.logout}</a>
-											{else}
-												<a href="#" id="login">{$lang.Login}</a>
+											{if !isset($smarty.session.user_id)}
+												<a href="#" id="login" data-toggle="modal" data-target="#myModal">{$lang.Login}</a>
 											{/if}
 
 									</li>

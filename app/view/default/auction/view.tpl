@@ -78,14 +78,37 @@
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					{if $auction.autobids == 1 && isset($smarty.session.user_id)  && $auction.closed == 0}
 						<h3>{$lang.Program_your_auction}</h3>
-						<div class="auction-autobid">
 							<form method="POST" action="/autobid/set/{$auction.id}">
-								{$lang.Minimum_price} <input type="text" name="minimum_price" />
-								{$lang.Maximum_price} <input type="text" name="maximum_price" />
-								{$lang.Maximum_bids} <input type="text" name="bids" />
-								<input type="submit" name="submit" class="button blue" value="{$lang.Save}" />
+								
+									<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3" style="margin-bottom: 10px;">
+										<div class="form-group">
+										  <label>{$lang.Minimum_price}</label>
+										  <input type="text" name="minimum_price" class="form-control" />
+										</div>
+									</div>
+									
+									<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3" style="margin-bottom: 10px;">
+										<div class="form-group">
+										  <label>{$lang.Maximum_price}</label>
+										  <input type="text" name="maximum_price" class="form-control" />
+										</div>
+									</div>
+									
+									<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3" style="margin-bottom: 10px;">
+										<div class="form-group">
+										  <label>{$lang.Maximum_bids}</label>
+										  <input type="text" name="bids" class="form-control" />
+										</div>
+									</div>
+									
+									<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3" style="margin-bottom: 10px;">
+										<div class="form-group">
+											<label style="width:100%;">&nbsp;</label>
+											<input type="submit" name="submit" class="btn btn-primary" value="{$lang.Save}" />
+										</div>
+									</div>
 							</form>
-						</div>
+						
 					{/if}
 				</div>
 			</div>

@@ -8,17 +8,20 @@
 		</ol>
 		<div class="content">
 			<p style="font-weight:bold;">{$lang.Different_packages} :</p>
-			<ul class="packages-list">
+			<div class="row">
 				{foreach from=$packages item=package}
-					<li>
-						<div>
-							<img src="/assets/img/pack_{$package.bids}.png" alt=""><br>
-							{$package.bids} {$lang.credits} ({$package.price}{$settings.app.currency_code})
+					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+						<div class="paclist">
+							<div>
+								<img src="/assets/img/pack_{$package.bids}.png" alt=""><br>
+								{$package.bids} {$lang.credits} ({$package.price}{$settings.app.currency_code})
+							</div>
+							<div style="margin-top:10px;"><a class="btn btn-warning btn-pac" style="margin-top:10px;" href="/payment/select?model=package&id={$package.id}">{$lang.Buy}</a></div>
 						</div>
-						<div style="margin-top:10px;"><a class="button orange" style="margin-top:10px;" href="/payment/select?model=package&id={$package.id}">{$lang.Buy}</a></div>
-					</li>
+					</div>
 				{/foreach}
-			</ul>
+			</div>
+		</div>
 	</div>
 
 	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-right">

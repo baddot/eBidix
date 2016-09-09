@@ -1,6 +1,6 @@
 				{if $sort == 'labels'}
 					<div class="label auction-item col-xs-12 col-sm-12 col-md-4 col-lg-4" id="auction_{$auction.id}">
-+						<div class="au_item">
+						<div class="au_item">
 						<h2><a href="/{$auction.id}-{$auction.link_name}" title="{$auction.name}">{$auction.name}</a></h2>
 						<div class="details">
 							<div class="image">
@@ -28,7 +28,7 @@
 					</div>
 				{elseif $sort == 'list'}
 					<div class="list auction-item col-xs-12 col-sm-12 col-md-4 col-lg-4" id="auction_{$auction.id}">
-+						<div class="au_item">
+						<div class="au_item">
 						<div class="image">
 							<a href="/{$auction.id}-{$auction.link_name}"><img src="{$settings.app.site_url}/assets/img/product/thumb/{$auction.product_id}/home_list.jpg" width="60" height="35" alt="{$auction.name}"></a>
 						</div>
