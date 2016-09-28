@@ -1,7 +1,7 @@
 {include file='header.tpl'}
 
 <div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
 		<ol class="breadcrumb">
 		  <li><a href="/">{$lang.Home}</a></li>
 		  <li class="active">{$lang.Login_page}</li>
