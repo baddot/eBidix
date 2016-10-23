@@ -417,12 +417,12 @@ textarea:focus {
 .col-right  .descriptions {
 	float:left;
 	text-align:left;
-  width: 50%;
+  width: 70%;
 }
 .col-right  .prices {
 	float:left;
 	text-align:right;
-  width: 50%;
+  width: 30%;
 }
 .col-right  .buy-button {
 	clear:both;
