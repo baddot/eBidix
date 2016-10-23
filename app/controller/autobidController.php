@@ -36,22 +36,25 @@ class autobidController extends appController
 		if(isset($_SESSION['user_id'])) {
 			$user_id = $_SESSION['user_id'];
 			$post_data = tools::filter($_POST);
-			if(!empty($_POST))	{
-				if(empty($_POST['maximum_price']) || empty($_POST['bids'])) {
+
+			if (!empty($_POST))	{
+				if (empty($_POST['maximum_price']) || empty($_POST['bids'])) {
 					tools::setFlash(EMPTY_FIELDS, 'error');
 					tools::redirect('/'.$auction_id);
 				} else {
-					if(strpos($post_data['minimum_price'], ',')) $post_data['minimum_price'] = str_replace(',', '.', $post_data['minimum_price']);
-					if(strpos($post_data['maximum_price'], ',')) $post_data['maximum_price'] = str_replace(',', '.', $post_data['maximum_price']);
-					$this->exec("INSERT INTO ". _DB_PREFIX_ ."autobids (user_id, auction_id, minimum_price, maximum_price, total_bids, bids, active, created)
-												VALUES('".$user_id."', 
-													   '".$auction_id."', 
-													   '".$post_data['minimum_price']."', 
-													   '".$post_data['maximum_price']."', 
-													   '".$post_data['bids']."', 
-													   '".$post_data['bids']."', 
-													   '1', 
-													   '".date("Y-m-d H:i:s")."')");
+					if (strpos($post_data['minimum_price'], ',')) $post_data['minimum_price'] = str_replace(',', '.', $post_data['minimum_price']);
+					if (strpos($post_data['maximum_price'], ',')) $post_data['maximum_price'] = str_replace(',', '.', $post_data['maximum_price']);
+
+                    $this->autobid->add(array(
+                        'user_id' => $user_id,
+                        'auction_id' => $auction_id,
+                        'minimum_price' => $post_data['minimum_price'],
+                        'maximum_price' => $post_data['maximum_price'],
+                        'total_bids' => $post_data['bids'],
+                        'bids' => $post_data['bids'],
+                        'active' => 1,
+                        'created' => date("Y-m-d H:i:s")
+                    ));
 					
 					tools::setFlash(SUCCESS_AUTOBID_ADD, 'success');
 					tools::redirect('/'.$auction_id);

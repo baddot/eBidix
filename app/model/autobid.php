@@ -2,9 +2,9 @@
 
 Class autobid
 {
-	public function getValue($id) {
-		
-	}
+    public function add($values) {
+        return Database::getInstance()->insert('autobids', $values);
+    }
 }
 
 ?>
