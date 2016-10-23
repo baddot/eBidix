@@ -33,7 +33,7 @@ a:hover {text-decoration:none;}
 @font-face {
 	font-family: 'HelveticaRoundedBold';
 	src: url('../fonts/HelveticaRoundedLTStd-Bd.eot');
-	src: local('?'), url('../fonts/HelveticaRoundedLTStd-Bd.woff') format('woff'), url('../fonts/HelveticaRoundedLTStd-Bd.ttf') format('truetype'), url('../fonts/HelveticaRoundedLTStd-Bd.svg') format('svg');
+	src: local('☺'), url('../fonts/HelveticaRoundedLTStd-Bd.woff') format('woff'), url('../fonts/HelveticaRoundedLTStd-Bd.ttf') format('truetype'), url('../fonts/HelveticaRoundedLTStd-Bd.svg') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
