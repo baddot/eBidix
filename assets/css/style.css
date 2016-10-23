@@ -338,9 +338,7 @@ textarea:focus {
 .auction-autobid {float:left;width:660px;height:30px;padding:10px;background:#ecedef;border-radius:5px;}
 .auction-autobid input[type=text] {width:50px;margin:0 20px 0 5px;}
 .histories-title {float:left; width:634px; font-weight:bold; text-align:center; margin-top:15px; padding:0 3px 0 3px;}
-.bid-histories {float:left;width:660px;padding:10px;background-color:#ecedef;border-radius:5px;}
-.bid-histories th {color:#892317;}
-.bid-histories td {color:#535353;text-align: center;}
+.bid-histories td, .bid-histories th {text-align: center;}
 .product-description {float:left;width:660px;padding:10px;margin-bottom:20px;background-color:#ecedef;border-radius:5px;}
 
 #auctions h2 a {
@@ -419,12 +417,12 @@ textarea:focus {
 .col-right  .descriptions {
 	float:left;
 	text-align:left;
-  width: 50%;
+  width: 70%;
 }
 .col-right  .prices {
 	float:left;
 	text-align:right;
-  width: 50%;
+  width: 30%;
 }
 .col-right  .buy-button {
 	clear:both;
@@ -547,4 +545,15 @@ div.infos-message{
 div.col-xs-12 .btn,
 div.col-sm-12 .btn{
 	width: 100%;
+}
+
+@media (max-width: @screen-xs-max) {
+	.btn{
+		width: 100%;
+	}
+}
+@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+	.btn{
+		width: 100%;
+	}
 }

@@ -252,7 +252,7 @@ class userController extends appController
 			$user_id = $_SESSION['user_id'];
 
 			if(isset($_POST['message'])) {
-				$message = $this->exec_one("SELECT id, object, receiver_id FROM ". DB_PREFIX ."messages WHERE id=".$id."");
+				$message = $this->exec_one("SELECT id, object, receiver_id FROM ". DB_PREFIX ."messages WHERE id=".$id);
 				if(!empty($message)) {
 					$post_data = tools::filter($_POST);
 					$this->exec("INSERT INTO ". DB_PREFIX ."messages (object, message, sender_id, receiver_id, discuss_id, created)
@@ -262,8 +262,8 @@ class userController extends appController
 				}
 			}
 
-			$message = $this->exec_one("SELECT id, object, message FROM ". DB_PREFIX ."messages WHERE id=".$id."");
-			$this->exec("UPDATE ". DB_PREFIX ."messages SET open=1 WHERE id=".$id."");
+			$message = $this->exec_one("SELECT id, object, message FROM ". DB_PREFIX ."messages WHERE id=".$id);
+			$this->exec("UPDATE ". DB_PREFIX ."messages SET open=1 WHERE id=".$id);
 
 			$this->smarty->assign(array(
 				'message' => $message
@@ -426,14 +426,14 @@ class userController extends appController
 				}
 
 				/*
-				$auction = $this->exec_one("SELECT id, winner_id FROM ". DB_PREFIX ."auctions WHERE id= ".$id."");
+				$auction = $this->exec_one("SELECT id, winner_id FROM ". DB_PREFIX ."auctions WHERE id= ".$id);
 				if($user_id != $auction['winner_id']) {
 					tools::setFlash(ERROR_WINNER , 'error');
 					tools::redirect('/account');
 				}
 				*/
 
-				$testimonial = $this->exec_one("SELECT id FROM ". DB_PREFIX ."testimonials WHERE user_id=".$user_id." AND auction_id=".$id."");
+				$testimonial = $this->exec_one("SELECT id FROM ". DB_PREFIX ."testimonials WHERE user_id=".$user_id." AND auction_id=".$id);
 				if(!empty($testimonial)) {
 					tools::setFlash(ALREADY_LEAVE_COMMENT , 'error');
 					tools::redirect('/account');
@@ -809,7 +809,7 @@ class userController extends appController
 				$conditions = "AND DATE_FORMAT(created, '%Y') = '".$year."'";
 			}
 		} elseif(isset($_GET['referrer_id'])) {
-			$referrals_ids = $this->exec_all("SELECT user_id FROM ". DB_PREFIX ."referrals WHERE referrer_id=".$_GET['referrer_id']."");
+			$referrals_ids = $this->exec_all("SELECT user_id FROM ". DB_PREFIX ."referrals WHERE referrer_id=".$_GET['referrer_id']);
 			$ids = "";
 			$i=0;
 			foreach($referrals_ids as $id) {
@@ -819,7 +819,7 @@ class userController extends appController
 			}
 			$conditions = "AND id IN (".$ids.")";
 		} elseif(isset($_GET['coupon_id'])) {
-			$users_ids = $this->exec_all("SELECT user_id FROM ". DB_PREFIX ."coupons_submitted WHERE coupon_id=".$_GET['coupon_id']."");
+			$users_ids = $this->exec_all("SELECT user_id FROM ". DB_PREFIX ."coupons_submitted WHERE coupon_id=".$_GET['coupon_id']);
 			$ids = "";
 			$i=0;
 			foreach($users_ids as $id) {
@@ -831,7 +831,7 @@ class userController extends appController
 		} else $conditions = "";
 
 		$users = $this->exec_all("SELECT id, username, firstname, lastname, email, ip, newsletter, admin, DATE_FORMAT(birthday, '%d/%m/%Y') AS date_of_birth, DATE_FORMAT(created, '%d/%m/%Y') AS register_date, active, blacklist
-								  FROM ". DB_PREFIX ."users WHERE autobidder=0 AND blacklist=0 AND username != 'admin' ".$conditions."");
+								  FROM ". DB_PREFIX ."users WHERE autobidder=0 AND blacklist=0 AND username != 'admin' ".$conditions);
 
 		$this->smarty->assign(array(
 			'users' => $users
@@ -856,12 +856,12 @@ class userController extends appController
 	function admin_view($user_id) {
 		$user = $this->user->getById($user_id);
 		if(!empty($user['desired_category_id'])) {
-			$category = $this->db->getRow("SELECT name FROM ". DB_PREFIX ."categories WHERE id=".$user['desired_category_id']."");
+			$category = $this->db->getRow("SELECT name FROM ". DB_PREFIX ."categories WHERE id=".$user['desired_category_id']);
 			$user['desired_category'] = $category['name'];
 		}
 
 		if(!empty($user['source_id'])) {
-			$source = $this->db->getRow("SELECT name FROM ". DB_PREFIX ."sources WHERE id=".$user['source_id']."");
+			$source = $this->db->getRow("SELECT name FROM ". DB_PREFIX ."sources WHERE id=".$user['source_id']);
 			$user['source'] = $source['name'];
 		}
 
@@ -871,10 +871,10 @@ class userController extends appController
 			$user['referrer_username'] = $referrer['username'];
 		}
 
-		$referrals = $this->db->getRow("SELECT count(id) as total FROM ". DB_PREFIX ."referrals WHERE referrer_id=".$user['id']."");
+		$referrals = $this->db->getRow("SELECT count(id) as total FROM ". DB_PREFIX ."referrals WHERE referrer_id=".$user['id']);
 		$user['referrals'] = $referrals['total'];
 
-		$address = $this->db->getRow("SELECT address, postcode, city, country FROM ". DB_PREFIX ."addresses WHERE user_id=".$user_id."");
+		$address = $this->db->getRow("SELECT address, postcode, city, country FROM ". DB_PREFIX ."addresses WHERE user_id=".$user_id);
 		if($address) {
 			$user['address'] = $address['address'];
 			$user['postcode'] = $address['postcode'];
@@ -887,7 +887,7 @@ class userController extends appController
 			$user['country'] = '';
 		}
 
-		$balance = $this->db->getRow("SELECT SUM(credit) - SUM(debit) AS balance FROM ". DB_PREFIX ."bids WHERE user_id=".$user_id."");
+		$balance = $this->db->getRow("SELECT SUM(credit) - SUM(debit) AS balance FROM ". DB_PREFIX ."bids WHERE user_id=".$user_id);
 		$user['balance'] = $balance['balance'];
 
 		$total_buy_credits_sql = $this->exec_all("SELECT p.price FROM ". DB_PREFIX ."bids b, ". DB_PREFIX ."packages p
@@ -897,7 +897,7 @@ class userController extends appController
 		$user['total_buy_credits'] = $total_buy_credits;
 
 		$total_offered_credits_sql = $this->exec_all("SELECT credit FROM ". DB_PREFIX ."bids
-												      WHERE description NOT LIKE 'package#%' AND credit > 0 AND user_id=".$user_id."");
+												      WHERE description NOT LIKE 'package#%' AND credit > 0 AND user_id=".$user_id);
 		$total_offered_credits = 0;
 		foreach($total_offered_credits_sql as $amount) $total_offered_credits += $amount['credit'];
 		$user['total_offered_credits'] = $total_offered_credits;
@@ -905,7 +905,7 @@ class userController extends appController
 		$credits = $this->db->getRow("SELECT count(id) as amount FROM ". DB_PREFIX ."bids WHERE user_id=".$user_id." AND debit > 0 AND auction_id != 0");
 		$user['spent_credits'] = $credits['amount'];
 
-		$win_auctions = $this->db->getRow("SELECT count(id) as count FROM ". DB_PREFIX ."auctions WHERE closed=1 AND status_id > 3 AND winner_id=".$user_id."");
+		$win_auctions = $this->db->getRow("SELECT count(id) as count FROM ". DB_PREFIX ."auctions WHERE closed=1 AND status_id > 3 AND winner_id=".$user_id);
 		$user['win_auctions'] = $win_auctions['count'];
 
 		$total_win_amount_sql = $this->exec_all("SELECT p.price FROM ". DB_PREFIX ."auctions a, ". DB_PREFIX ."products p
@@ -1062,7 +1062,7 @@ class userController extends appController
 				$users[$i]['firstname'] = $user['firstname'];
 				$users[$i]['lastname'] = $user['lastname'];
 				$users[$i]['email'] = $user['email'];
-				$address = $this->exec_one("SELECT * FROM ". DB_PREFIX ."addresses WHERE user_id=".$user['id']."");
+				$address = $this->exec_one("SELECT * FROM ". DB_PREFIX ."addresses WHERE user_id=".$user['id']);
 				$users[$i]['address'] = $address['address'];
 				$users[$i]['postcode'] = $address['postcode'];
 				$users[$i]['city'] = $address['city'];
@@ -1070,10 +1070,10 @@ class userController extends appController
 				if($user['gender'] == 1) $gender = 'homme';
 				elseif($user['gender'] == 2) $gender = 'femme';
 				$users[$i]['gender'] = $gender;
-				$source = $this->exec_one("SELECT name FROM ". DB_PREFIX ."sources WHERE id = ".$user['source']."");
+				$source = $this->exec_one("SELECT name FROM ". DB_PREFIX ."sources WHERE id = ".$user['source']);
 				$users[$i]['source'] = $source['name'];
 				$users[$i]['created'] = $user['created'];
-				$balance = $this->exec_one("SELECT SUM(credit) - SUM(debit) as credits FROM ". DB_PREFIX ."bids WHERE user_id = ".$user['id']."");
+				$balance = $this->exec_one("SELECT SUM(credit) - SUM(debit) as credits FROM ". DB_PREFIX ."bids WHERE user_id = ".$user['id']);
 				$users[$i]['balance'] = $balance['credits'];
 				$i++;
 			}
@@ -1087,31 +1087,31 @@ class userController extends appController
 	}
 
 	function admin_suspend($user_id) {
-		$this->exec("UPDATE ". DB_PREFIX ."users SET active='0' WHERE id=".$user_id."");
+		$this->exec("UPDATE ". DB_PREFIX ."users SET active='0' WHERE id=".$user_id);
 		tools::setFlash($this->l('Request processed'), 'success');
 		tools::redirect('/admin/user');
 	}
 
 	function admin_activate($user_id) {
-		$this->exec("UPDATE ". DB_PREFIX ."users SET active='1' WHERE id=".$user_id."");
+		$this->exec("UPDATE ". DB_PREFIX ."users SET active='1' WHERE id=".$user_id);
 		tools::setFlash($this->l('Request processed'), 'success');
 		tools::redirect('/admin/user');
 	}
 
 	function admin_delete($user_id) {
-		$this->exec("DELETE FROM ". DB_PREFIX ."users WHERE id=".$user_id."");
+		$this->exec("DELETE FROM ". DB_PREFIX ."users WHERE id=".$user_id);
 		tools::setFlash($this->l('Request processed'), 'success');
 		tools::redirect('/admin/user');
 	}
 
 	function admin_add_blacklist($user_id) {
-		$this->exec("UPDATE ". DB_PREFIX ."users SET blacklist='1' WHERE id=".$user_id."");
+		$this->exec("UPDATE ". DB_PREFIX ."users SET blacklist='1' WHERE id=".$user_id);
 		tools::setFlash($this->l('Request processed'), 'success');
 		tools::redirect('/admin/user');
 	}
 
 	function admin_delete_blacklist($user_id) {
-		$this->exec("UPDATE ". DB_PREFIX ."users SET blacklist='0' WHERE id=".$user_id."");
+		$this->exec("UPDATE ". DB_PREFIX ."users SET blacklist='0' WHERE id=".$user_id);
 		tools::setFlash($this->l('Request processed'), 'success');
 		tools::redirect('/admin/user');
 	}
@@ -1126,7 +1126,7 @@ class userController extends appController
 			$referrals[$i]['username'] = $referral['username'];
 			$referrals[$i]['first_name'] = $referral['first_name'];
 			$referrals[$i]['last_name'] = $referral['last_name'];
-			$referrer = $this->exec_one("SELECT username FROM ". DB_PREFIX ."users WHERE id=".$referral['referrer_id']."");
+			$referrer = $this->exec_one("SELECT username FROM ". DB_PREFIX ."users WHERE id=".$referral['referrer_id']);
 			$referrals[$i]['referrer_username'] = $referrer['username'];
 			$referrals[$i]['date'] = $referral['date'];
 			$i++;
@@ -1167,7 +1167,7 @@ class userController extends appController
 			tools::redirect('/admin/user/extends');
 		}
 
-		$extend = $this->exec_one("SELECT id, username, active FROM ". DB_PREFIX ."users WHERE id=".$id."");
+		$extend = $this->exec_one("SELECT id, username, active FROM ". DB_PREFIX ."users WHERE id=".$id);
 		$this->smarty->assign('extend', $extend);
 		$this->smarty->display('admin/users/edit_extend.tpl');
 	}

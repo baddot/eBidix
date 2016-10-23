@@ -16,7 +16,7 @@
 						<div style="margin-top:15px;">{$lang.You_will_pay} <b>{$auction.price_to_buy}&euro;</b></div>
 						<div style="margin-top:15px;">
 							<p>
-								<form method="POST" action="/auctions/buy/{$auction.id}">
+								<form method="POST" action="/auction/buy/{$auction.id}">
 									<input type="hidden" name="confirm" value="1" />
 									<button class="button green"><span>{$lang.Confirm}</span></button>
 								</form>
@@ -25,7 +25,7 @@
 					{else}
 						<div style="margin-top:15px;">
 							<span style="color:red;">{$lang.Cant_buynow}</span><br />
-							<a href="/auctions/view/{$auction.id}">{$lang.Return_to_auction}</a>
+							<a href="/auction/view/{$auction.id}">{$lang.Return_to_auction}</a>
 						</div>
 					{/if}
 				</div>

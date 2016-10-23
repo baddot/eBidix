@@ -14,6 +14,6 @@ sudo chmod -R 777 assets/
 ## Set cron jobs
 crontab -e
 ```
-* * * * * curl -s -o /dev/null http://site.com/daemons/close 
-* * * * * curl -s -o /dev/null http://site.com/daemons/autobids
+* * * * * curl -s -o /dev/null http://site.com/daemons.php?type=close 
+* * * * * curl -s -o /dev/null http://site.com/daemons.php?type=autobid
 ```

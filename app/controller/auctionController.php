@@ -14,7 +14,7 @@ class auctionController extends appController
 		$auctions_data = $this->exec_all("SELECT a.id, a.product_id, p.name, p.price AS product_price, a.price, a.closed, a.label, a.status_id
 										  FROM ". DB_PREFIX ."auctions a, ". DB_PREFIX ."products p
 										  WHERE a.product_id = p.id AND a.active=1 AND a.closed=0 AND a.status_id=3
-										  ORDER BY a.end_time ".$this->settings['app']['auctions_order']." LIMIT ".$this->settings['auction']['home_limit']."");
+										  ORDER BY a.end_time ".$this->settings['app']['auctions_order']." LIMIT ".$this->settings['auction']['home_limit']);
 		$ongoing_auctions = array();
 		$i=0;
 		foreach($auctions_data as $auction) {
@@ -67,7 +67,7 @@ class auctionController extends appController
 					$last_purchases[$i]['link_name'] = strtolower(str_replace(" ", "-", $auction['name']));
 					$last_purchases[$i]['product_price'] = $auction['product_price'];
 					$last_purchases[$i]['price'] =  ($auction['type'] == 4) ? $auction['fixed_price'] : $auction['price'];
-					$user_data = $this->exec_one("SELECT username FROM ". DB_PREFIX ."users WHERE id=".$auction['winner_id']."");
+					$user_data = $this->exec_one("SELECT username FROM ". DB_PREFIX ."users WHERE id=".$auction['winner_id']);
 					$last_purchases[$i]['winner'] = $user_data['username'];
 					$image = $this->exec_one("SELECT link FROM ". DB_PREFIX ."images WHERE product_id=".$auction['product_id']." AND by_default=1");
 					$last_purchases[$i]['image'] = $image['link'];
@@ -107,7 +107,7 @@ class auctionController extends appController
 		$auction['description'] = html_entity_decode($auction['description'], ENT_QUOTES, 'UTF-8');
 
 		// get auction increments
-		$increments = $this->exec_one("SELECT time_increment, price_increment, bid_debit FROM ". DB_PREFIX ."increments WHERE auction_id=".$auction_id."");
+		$increments = $this->exec_one("SELECT time_increment, price_increment, bid_debit FROM ". DB_PREFIX ."increments WHERE auction_id=".$auction_id);
 		$auction['time_increment'] = $increments['time_increment'];
 		$auction['price_increment'] = $increments['price_increment'];
 		$auction['bid_debit'] = $increments['bid_debit'];
@@ -133,8 +133,8 @@ class auctionController extends appController
 		$page = (isset($_GET['page'])) ? $_GET['page'] : 1;
 		$offset = ($page - 1) * $per_page;
 		$limit = 'LIMIT '.$offset.','.$per_page;
-		$category = $this->exec_one("SELECT name FROM ". DB_PREFIX ."categories WHERE id=".$id."");
-		$auctions_data = $this->exec_all("SELECT a.id, a.product_id, p.name, p.category_id, p.price AS product_price, a.price, a.status_id, a.closed FROM ". DB_PREFIX ."auctions a, ". DB_PREFIX ."products p WHERE a.product_id = p.id AND a.active=1 AND a.closed=0 AND p.category_id=".$id." ORDER BY a.end_time ".$this->settings['app']['auctions_order']." ".$limit."");
+		$category = $this->exec_one("SELECT name FROM ". DB_PREFIX ."categories WHERE id=".$id);
+		$auctions_data = $this->exec_all("SELECT a.id, a.product_id, p.name, p.category_id, p.price AS product_price, a.price, a.status_id, a.closed FROM ". DB_PREFIX ."auctions a, ". DB_PREFIX ."products p WHERE a.product_id = p.id AND a.active=1 AND a.closed=0 AND p.category_id=".$id." ORDER BY a.end_time ".$this->settings['app']['auctions_order']." ".$limit);
 		$auctions = array();
 		$i=0;
 		foreach($auctions_data as $auction) {
@@ -152,7 +152,7 @@ class auctionController extends appController
 		$pagination = array();
 		$pagination['per_page'] = $per_page;
 		$pagination['page'] = $page;
-		$total_auctions = $this->exec_one("SELECT count(a.id) as nb, p.category_id FROM ". DB_PREFIX ."auctions a, ". DB_PREFIX ."products p WHERE a.active=1 AND a.closed=0 AND a.status_id=1 AND p.category_id=".$id."");
+		$total_auctions = $this->exec_one("SELECT count(a.id) as nb, p.category_id FROM ". DB_PREFIX ."auctions a, ". DB_PREFIX ."products p WHERE a.active=1 AND a.closed=0 AND a.status_id=1 AND p.category_id=".$id);
 		$pagination['total'] = $total_auctions['nb'];
 
 		if(isset($_GET['sort'])) $sort = tools::filter($_GET['sort']);
@@ -173,7 +173,7 @@ class auctionController extends appController
 		$page = (isset($_GET['page'])) ? $_GET['page'] : 1;
 		$offset = ($page - 1) * $per_page;
 		$limit = 'LIMIT '.$offset.','.$per_page;
-		$auctions_data = $this->exec_all("SELECT a.id, a.product_id, p.name, p.category_id, p.price AS product_price, a.price, a.status_id, a.winner_id, a.closed FROM ". DB_PREFIX ."auctions a, ". DB_PREFIX ."products p WHERE a.product_id = p.id AND a.end_time < '".date("Y-m-d H:i:s")."' AND a.active=1 AND a.closed=1 AND a.status_id > 3 ORDER BY a.end_time DESC ".$limit."");
+		$auctions_data = $this->exec_all("SELECT a.id, a.product_id, p.name, p.category_id, p.price AS product_price, a.price, a.status_id, a.winner_id, a.closed FROM ". DB_PREFIX ."auctions a, ". DB_PREFIX ."products p WHERE a.product_id = p.id AND a.end_time < '".date("Y-m-d H:i:s")."' AND a.active=1 AND a.closed=1 AND a.status_id > 3 ORDER BY a.end_time DESC ".$limit);
 		$auctions = array();
 		$i=0;
 		foreach($auctions_data as $auction) {
@@ -187,7 +187,7 @@ class auctionController extends appController
 			$auctions[$i]['closed'] = $auction['closed'];
 			$image = $this->exec_one("SELECT link FROM ". DB_PREFIX ."images WHERE product_id=".$auction['product_id']." AND by_default=1");
 			$auctions[$i]['image'] = $image['link'];
-			$category_data = $this->exec_one("SELECT name FROM ". DB_PREFIX ."categories WHERE id=".$auction['category_id']."");
+			$category_data = $this->exec_one("SELECT name FROM ". DB_PREFIX ."categories WHERE id=".$auction['category_id']);
 			$auctions[$i]['category'] = $category_data['name'];
 			$testimonial = $this->exec_one("SELECT * FROM ". DB_PREFIX ."testimonials WHERE auction_id=".$auction['id']." AND user_id=".$auction['winner_id']." AND active=1 AND validate=1");
 			if(!empty($testimonial)) {
@@ -220,8 +220,8 @@ class auctionController extends appController
 		if(isset($_SESSION['user_id'])) {
 			$auction_id = tools::filter($id);
 			$user_id = $_SESSION['user_id'];
-			//$auction = $this->exec_one("SELECT credits_offered FROM ". DB_PREFIX ."auctions WHERE id=".$id."");
-			$already_add = $this->exec_one("SELECT * FROM ". DB_PREFIX ."email_alerts WHERE auction_id=".$auction_id." AND user_id=".$user_id."");
+			//$auction = $this->exec_one("SELECT credits_offered FROM ". DB_PREFIX ."auctions WHERE id=".$id);
+			$already_add = $this->exec_one("SELECT * FROM ". DB_PREFIX ."email_alerts WHERE auction_id=".$auction_id." AND user_id=".$user_id);
 			if(!empty($already_add)) {
 				tools::setFlash(ALREADY_EMAIL_ADD, 'success');
 				tools::redirect('/'.$auction_id);
@@ -244,7 +244,7 @@ class auctionController extends appController
 					$follows[$i]['id'] = $follow['id'];
 					$follows[$i]['auction_id'] = $follow['auction_id'];
 					$follows[$i]['product_id'] = $follow['product_id'];
-					$product = $this->exec_one("SELECT name FROM ". DB_PREFIX ."products WHERE id=".$follow['product_id']."");
+					$product = $this->exec_one("SELECT name FROM ". DB_PREFIX ."products WHERE id=".$follow['product_id']);
 					$follows[$i]['auction_name'] = $product['name'];
 					$follows[$i]['price'] = $follow['price'];
 					$follows[$i]['end_time'] = $follow['end_time'];
@@ -274,7 +274,7 @@ class auctionController extends appController
 			$id = tools::filter($id);
 			$user_id = $_SESSION['user_id'];
 
-			$this->exec("DELETE FROM ". DB_PREFIX ."follows WHERE id=".$id." AND user_id=".$user_id."");
+			$this->exec("DELETE FROM ". DB_PREFIX ."follows WHERE id=".$id." AND user_id=".$user_id);
 			tools::setFlash($this->l('Request processed'), 'success');
 			tools::redirect('/watchlist');
 		} else tools::redirect('/user/login');
@@ -282,10 +282,10 @@ class auctionController extends appController
 
 	function buy($id) {
 		if(isset($_SESSION['user_id'])) {
-			if($this->settings['app']['buy_now']) {
+			if($this->settings['auction']['buy_now']) {
 				$user_id = $_SESSION['user_id'];
-				$auction_id = tools::filter($_GET['id']);
-				$auction = $this->exec_one("SELECT a.id,
+				$auction_id = tools::filter($id);
+				$auction = $this->db->getRow("SELECT a.id,
 												   a.product_id,
 												   a.end_time,
 												   a.buynow,
@@ -295,16 +295,16 @@ class auctionController extends appController
 												   p.price AS product_price,
 												   p.delivery_cost
 											FROM ". DB_PREFIX ."auctions a, ". DB_PREFIX ."products p
-											WHERE a.id = ".$this->safe($auction_id)." AND p.id = a.product_id");
+											WHERE a.id = ".$auction_id." AND p.id = a.product_id");
 
 				// check if buynow activated on this auction
-				if(empty($auction['buynow'])) {
+				if($auction['buynow'] === 0) {
 					tools::setFlash(ERROR_BUYNOW, 'error');
 					tools::redirect('/'.$auction_id);
 				}
 
 				// check if user already buy this auction
-				$already_buy = $this->exec_one("SELECT id FROM ". DB_PREFIX ."auctions WHERE winner_id=".$user_id." AND buy_id=".$this->safe($auction_id)."");
+				$already_buy = $this->exec_one("SELECT id FROM ". DB_PREFIX ."auctions WHERE winner_id=".$user_id." AND buy_id=".$auction_id);
 				if($already_buy) {
 					tools::setFlash(ERROR_ALREADY_BUY, 'error');
 					tools::redirect('/'.$auction_id);
@@ -327,7 +327,7 @@ class auctionController extends appController
 				}
 
 				// check if the user reach the necessary number of bids to buy
-				$user = $this->exec_one("SELECT count(id) as count FROM ". DB_PREFIX ."bids WHERE user_id = ".$user_id." AND auction_id = ".$this->safe($auction_id)." AND debit > 0");
+				$user = $this->exec_one("SELECT count(id) as count FROM ". DB_PREFIX ."bids WHERE user_id = ".$user_id." AND auction_id = ".$auction_id." AND debit > 0");
 				$user['cost'] = $user['count'] * $this->settings['app']['bid_value'];
 				$price_to_reach = $auction['product_price'] * $this->settings['app']['percent_bids_to_buy'] / 100;
 				$auction['price_to_buy'] = $auction['product_price'] + $auction['delivery_cost'] - $user['cost'];
@@ -341,7 +341,7 @@ class auctionController extends appController
 									VALUES('".$auction['product_id']."', '".date("Y-m-d H:i:s")."', '".$price."', '".$user_id."', '1', '4', '".$auction['id']."', '".date("Y-m-d H:i:s")."')");
 					if($sql_request) {
 						// delete the user autobids
-						$this->exec("DELETE FROM ". DB_PREFIX ."autobids WHERE auction_id=".$auction['id']." AND user_id=".$user_id."");
+						$this->exec("DELETE FROM ". DB_PREFIX ."autobids WHERE auction_id=".$auction['id']." AND user_id=".$user_id);
 
 						tools::setFlash(SUCCESS_BUY, 'success');
 						tools::redirect('/won-auctions');
@@ -384,9 +384,9 @@ class auctionController extends appController
 				$auctions[$i]['end_time'] = $auction['end_time'];
 				$auctions[$i]['paid_price'] = $auction['paid_price'];
 				$auctions[$i]['status_id'] = $auction['status_id'];
-				$status = $this->exec_one("SELECT name FROM ". DB_PREFIX ."auctions_statuses WHERE status_id=".$auction['status_id']."");
+				$status = $this->exec_one("SELECT name FROM ". DB_PREFIX ."auctions_statuses WHERE status_id=".$auction['status_id']);
 				$auctions[$i]['status'] = $status['name'];
-				$comment = $this->exec_one("SELECT id FROM ". DB_PREFIX ."testimonials WHERE user_id=".$user_id." AND auction_id=".$auction['id']."");
+				$comment = $this->exec_one("SELECT id FROM ". DB_PREFIX ."testimonials WHERE user_id=".$user_id." AND auction_id=".$auction['id']);
 				$auctions[$i]['comment'] = $comment['id'];
 				$i++;
 			}
@@ -403,7 +403,7 @@ class auctionController extends appController
 		if(isset($_SESSION['user_id'])) {
 			$user_id = $_SESSION['user_id'];
 			$auction_id = tools::filter($id);
-			$auction = $this->exec_one("SELECT a.id, a.price, a.winner_id, a.status_id, p.price as product_price, p.delivery_cost FROM ". DB_PREFIX ."auctions a, ". DB_PREFIX ."products p WHERE a.id = ".$this->safe($auction_id)." AND p.id=a.product_id");
+			$auction = $this->exec_one("SELECT a.id, a.price, a.winner_id, a.status_id, p.price as product_price, p.delivery_cost FROM ". DB_PREFIX ."auctions a, ". DB_PREFIX ."products p WHERE a.id = ".$auction_id." AND p.id=a.product_id");
 
 			if($auction['winner_id'] != $user_id) {
 				tools::setFlash(ERROR_WINNER, 'error');
@@ -443,9 +443,9 @@ class auctionController extends appController
 			$auctions[$i]['autobids'] = $auction['autobids'];
 			$auctions[$i]['buynow'] = $auction['buynow'];
 			$auctions[$i]['product_price'] = $auction['product_price'];
-			$email_alerts = $this->exec_one("SELECT count(id) as count FROM ". DB_PREFIX ."email_alerts WHERE auction_id=".$auction['id']."");
+			$email_alerts = $this->exec_one("SELECT count(id) as count FROM ". DB_PREFIX ."email_alerts WHERE auction_id=".$auction['id']);
 			$auctions[$i]['email_alerts'] = (!empty($email_alerts)) ? $email_alerts['count'] : 0;
-			$autobids = $this->exec_one("SELECT count(id) as count FROM ". DB_PREFIX ."autobids WHERE auction_id=".$auction['id']."");
+			$autobids = $this->exec_one("SELECT count(id) as count FROM ". DB_PREFIX ."autobids WHERE auction_id=".$auction['id']);
 			$auctions[$i]['autobids'] = (!empty($autobids)) ? $autobids['count'] : 0;
 			$auctions[$i]['hits'] = $auction['hits'];
 			$i++;
@@ -493,7 +493,7 @@ class auctionController extends appController
 	}
 
 	function admin_closed() {
-		if(isset($_GET['user_id'])) $conditions = "AND winner_id=".$this->safe($_GET['user_id'])."";
+		if(isset($_GET['user_id'])) $conditions = "AND winner_id=".$_GET['user_id'];
 		elseif(isset($_POST['actions'])) {
 			if($_POST['actions'] == 'today') {
 				$day = date("Y-m-d");
@@ -558,13 +558,13 @@ class auctionController extends appController
 			$auctions[$i]['price'] = $auction['price'];
 			$auctions[$i]['type'] = $auction['type'];
 			$auctions[$i]['winner_id'] = $auction['winner_id'];
-			$winner = $this->exec_one("SELECT username FROM ". DB_PREFIX ."users WHERE id=".$auction['winner_id']."");
+			$winner = $this->exec_one("SELECT username FROM ". DB_PREFIX ."users WHERE id=".$auction['winner_id']);
 			$auctions[$i]['winner'] = $winner['username'];
 			$auctions[$i]['active'] = $auction['active'];
 			$auctions[$i]['status_id'] = $auction['status_id'];
-			$status = $this->exec_one("SELECT name FROM ". DB_PREFIX ."auctions_statuses WHERE status_id=".$auction['status_id']."");
+			$status = $this->exec_one("SELECT name FROM ". DB_PREFIX ."auctions_statuses WHERE status_id=".$auction['status_id']);
 			$auctions[$i]['status_name'] = $status['name'];
-			$sent = $this->exec_one("SELECT id FROM ". DB_PREFIX ."products_buys WHERE auction_id=".$auction['id']."");
+			$sent = $this->exec_one("SELECT id FROM ". DB_PREFIX ."products_buys WHERE auction_id=".$auction['id']);
 			$auctions[$i]['sent'] = (empty($sent['id'])) ? 0 : 1;
 			$i++;
 		}
@@ -581,7 +581,7 @@ class auctionController extends appController
 
 		if(!empty($_POST)) {
 			if(!empty($_POST['object']) && !empty($_POST['message']) && !empty($_POST['supplier_id'])) {
-				$supplier = $this->exec_one("SELECT email FROM ". DB_PREFIX ."suppliers WHERE id=".$this->safe($_POST['supplier_id'])."");
+				$supplier = $this->exec_one("SELECT email FROM ". DB_PREFIX ."suppliers WHERE id=".$_POST['supplier_id']);
 				tools::sendMail($supplier['email'], $_POST['object'], $_POST['message']);
 
 				// add product buy
@@ -619,7 +619,7 @@ class auctionController extends appController
 	}
 
 	function admin_buys() {
-		if(isset($_GET['buy_id'])) $conditions = "AND buy_id=".$this->safe($_GET['buy_id'])."";
+		if(isset($_GET['buy_id'])) $conditions = "AND buy_id=".$_GET['buy_id'];
 		elseif(isset($_POST['actions'])) {
 			if($_POST['actions'] == 'today') {
 				$day = date("Y-m-d");
@@ -652,7 +652,7 @@ class auctionController extends appController
 			}
 		} else $conditions = '';
 
-		$auctions_data = $this->exec_all("SELECT a.id, a.product_id, p.name, a.end_time, a.price, a.winner_id, a.active, a.status_id FROM ". DB_PREFIX ."auctions a, ". DB_PREFIX ."products p WHERE a.product_id = p.id AND a.closed=1 AND a.buy_id != 0 ".$conditions."");
+		$auctions_data = $this->exec_all("SELECT a.id, a.product_id, p.name, a.end_time, a.price, a.winner_id, a.active, a.status_id FROM ". DB_PREFIX ."auctions a, ". DB_PREFIX ."products p WHERE a.product_id = p.id AND a.closed=1 AND a.buy_id != 0 ".$conditions);
 
 		$auctions = array();
 		$i=0;
@@ -663,13 +663,13 @@ class auctionController extends appController
 			$auctions[$i]['end_time'] = $auction['end_time'];
 			$auctions[$i]['price'] = $auction['price'];
 			$auctions[$i]['winner_id'] = $auction['winner_id'];
-			$winner = $this->exec_one("SELECT username FROM ". DB_PREFIX ."users WHERE id=".$auction['winner_id']."");
+			$winner = $this->exec_one("SELECT username FROM ". DB_PREFIX ."users WHERE id=".$auction['winner_id']);
 			$auctions[$i]['winner_username'] = $winner['username'];
 			$auctions[$i]['active'] = $auction['active'];
 			$auctions[$i]['status_id'] = $auction['status_id'];
-			$status = $this->exec_one("SELECT name FROM ". DB_PREFIX ."auctions_statuses WHERE status_id=".$auction['status_id']."");
+			$status = $this->exec_one("SELECT name FROM ". DB_PREFIX ."auctions_statuses WHERE status_id=".$auction['status_id']);
 			$auctions[$i]['status_name'] = $status['name'];
-			$sent = $this->exec_one("SELECT id FROM ". DB_PREFIX ."products_buys WHERE auction_id=".$auction['id']."");
+			$sent = $this->exec_one("SELECT id FROM ". DB_PREFIX ."products_buys WHERE auction_id=".$auction['id']);
 			$auctions[$i]['sent'] = (empty($sent['id'])) ? 0 : 1;
 			$i++;
 		}
@@ -751,13 +751,13 @@ class auctionController extends appController
 				} else $conditions = "WHERE u.id = b.user_id AND u.autobidder=0 AND b.description LIKE 'package%' ORDER BY b.created DESC LIMIT 0,500";
 			}
 		} elseif(isset($_GET['auction_id']) && !empty($_GET['auction_id'])) {
-			$conditions = "WHERE u.id = b.user_id AND u.autobidder=0 AND b.auction_id = ".$this->safe($_GET['auction_id'])." ORDER BY b.created DESC LIMIT 0,500";
+			$conditions = "WHERE u.id = b.user_id AND u.autobidder=0 AND b.auction_id = ".$_GET['auction_id']." ORDER BY b.created DESC LIMIT 0,500";
 		} elseif(isset($_GET['user_id']) && !empty($_GET['user_id'])) {
-			$conditions = "WHERE u.id = b.user_id AND u.autobidder=0 AND b.user_id = ".$this->safe($_GET['user_id'])." ORDER BY b.created DESC LIMIT 0,500";
+			$conditions = "WHERE u.id = b.user_id AND u.autobidder=0 AND b.user_id = ".$_GET['user_id']." ORDER BY b.created DESC LIMIT 0,500";
 		} elseif(isset($_GET['username']) && !empty($_GET['username'])) {
-			$conditions = "WHERE u.id = b.user_id AND u.autobidder=0 AND u.username = '".$this->safe($_GET['username'])."' ORDER BY b.created DESC LIMIT 0,500";
+			$conditions = "WHERE u.id = b.user_id AND u.autobidder=0 AND u.username = '".$_GET['username']."' ORDER BY b.created DESC LIMIT 0,500";
 		} else $conditions = "WHERE u.id = b.user_id AND u.autobidder=0 ORDER BY b.created DESC LIMIT 0,500";
-		$bids_data = $this->exec_all("SELECT b.auction_id, b.user_id, u.username, b.description, b.credit, b.debit, b.created FROM ". DB_PREFIX ."bids b, ". DB_PREFIX ."users u ".$conditions."");
+		$bids_data = $this->exec_all("SELECT b.auction_id, b.user_id, u.username, b.description, b.credit, b.debit, b.created FROM ". DB_PREFIX ."bids b, ". DB_PREFIX ."users u ".$conditions);
 		$bids = array();
 		$i=0;
 		foreach($bids_data as $bid) {
@@ -820,13 +820,13 @@ class auctionController extends appController
 
 	function admin_add($product_id) {
 		// check if the product image was added
-		$check_image = $this->exec_one("SELECT link FROM ". DB_PREFIX ."images WHERE product_id = ".$product_id."");
+		$check_image = $this->exec_one("SELECT link FROM ". DB_PREFIX ."images WHERE product_id = ".$product_id);
 		if(empty($check_image['link'])) {
 			tools::setFlash(EMPTY_PRODUCT_IMAGE, 'error');
 			tools::redirect('/admin/product/images/'.$product_id);
 		}
 
-		$product = $this->exec_one("SELECT id, name, price, delivery_cost FROM ". DB_PREFIX ."products WHERE id=".$product_id."");
+		$product = $this->exec_one("SELECT id, name, price, delivery_cost FROM ". DB_PREFIX ."products WHERE id=".$product_id);
 		// minimum price calculation
 		$minimum_price = (($product['price'] + $product['delivery_cost']) / $this->settings['app']['bid_value']) / 100;
 		$product['minimum_price'] = number_format($minimum_price, 2);
@@ -929,7 +929,7 @@ class auctionController extends appController
 	function admin_start($id) {
 		if(!empty($_POST)) {
 			// Send email alerts to users who asked
-			$email_alerts = $this->exec_all("SELECT user_id FROM ". DB_PREFIX ."email_alerts WHERE auction_id=".$id."");
+			$email_alerts = $this->exec_all("SELECT user_id FROM ". DB_PREFIX ."email_alerts WHERE auction_id=".$id);
 			$email_template = $this->exec_one("SELECT object, content FROM ". DB_PREFIX ."email_templates WHERE name = 'email_alert' AND language = '".$this->settings['app']['language']."'");
 			$auction = $this->exec_one("SELECT a.id, a.type, a.fixed_time_limit, p.name FROM ". DB_PREFIX ."auctions a, ". DB_PREFIX ."products p WHERE a.id=".$id." AND p.id=a.product_id");
 			foreach($email_alerts as $alert) {
@@ -944,7 +944,7 @@ class auctionController extends appController
 			//$endTime = time() + $this->settings['app']['waiting_time'];
 			$endTime = $_POST['date']." ".$_POST['auction_hour'].":".$_POST['auction_min'].":".$_POST['auction_sec'];
 
-			$this->exec("UPDATE ". DB_PREFIX ."auctions SET start_time='".$endTime."', end_time='".$endTime."', status_id=3 WHERE id=".$id."");
+			$this->exec("UPDATE ". DB_PREFIX ."auctions SET start_time='".$endTime."', end_time='".$endTime."', status_id=3 WHERE id=".$id);
 			$name = _DIR_ ."/data/auction_".$id;
 			$name_2 = _DIR_ ."/data/auction_view_".$id;
 			if(file_exists($name)) unlink($name);
@@ -985,7 +985,7 @@ class auctionController extends appController
 											buy_option='".$post_data['auction_buy_option']."',
 											buynow='".$post_data['auction_buy_now']."',
 											active='".$post_data['auction_active']."'
-										WHERE id=".$id."");
+										WHERE id=".$id);
 			$name = _DIR_ ."/data/auction_".$id;
 			$name_2 = _DIR_ ."/data/auction_view_".$id;
 			if(file_exists($name)) unlink($name);
@@ -994,7 +994,7 @@ class auctionController extends appController
 			tools::redirect('/admin/auction/ongoing');
 		}
 
-		$auction = $this->exec_one("SELECT * FROM ". DB_PREFIX ."auctions WHERE id=".$id."");
+		$auction = $this->exec_one("SELECT * FROM ". DB_PREFIX ."auctions WHERE id=".$id);
 
 		$this->smarty->assign(array('auction' => $auction));
 		$this->smarty->display('admin/auction/edit.tpl');
@@ -1002,7 +1002,7 @@ class auctionController extends appController
 
 	function admin_stats($id) {
 		$auction = $this->exec_one("SELECT a.id, a.price, a.minimum_price, p.category_id, p.price AS product_price, p.name as product_name FROM ". DB_PREFIX ."auctions a, ". DB_PREFIX ."products p WHERE a.id=".$id." AND p.id=a.product_id");
-		$category = $this->exec_one("SELECT name FROM ". DB_PREFIX ."categories WHERE id=".$auction['category_id']."");
+		$category = $this->exec_one("SELECT name FROM ". DB_PREFIX ."categories WHERE id=".$auction['category_id']);
 		$auction['category_name'] = $category['name'];
 		$total_bids = $this->exec_one("SELECT count(b.id) as count FROM ". DB_PREFIX ."bids b, ". DB_PREFIX ."users u WHERE b.auction_id=".$id." AND b.user_id=u.id AND u.autobidder=0");
 		$auction['total_bids'] = (!empty($total_bids)) ? $total_bids['count'] : 0;
@@ -1010,7 +1010,7 @@ class auctionController extends appController
 		$auction['total_manuals'] = (!empty($total_manuals)) ? $total_manuals['count'] : 0;
 		$total_auto = $this->exec_one("SELECT count(b.id) as count FROM ". DB_PREFIX ."bids b, ". DB_PREFIX ."users u WHERE b.auction_id=".$id." AND b.user_id=u.id AND u.autobidder=0 AND b.description = 'auto'");
 		$auction['total_auto'] = (!empty($total_auto)) ? $total_auto['count'] : 0;
-		$total_buynows = $this->exec_one("SELECT count(id) as count FROM ". DB_PREFIX ."auctions WHERE buy_id=".$id."");
+		$total_buynows = $this->exec_one("SELECT count(id) as count FROM ". DB_PREFIX ."auctions WHERE buy_id=".$id);
 		$auction['total_buynows'] = (!empty($total_buynows)) ? $total_buynows['count'] : 0;
 
 		$bids = $this->exec_all("SELECT u.id as user_id, u.username, b.description, b.created FROM ". DB_PREFIX ."bids b, ". DB_PREFIX ."users u WHERE b.auction_id=".$id." AND b.user_id=u.id AND u.autobidder=0 ORDER BY b.created DESC");
@@ -1027,7 +1027,7 @@ class auctionController extends appController
 	}
 
 	function admin_delete($id) {
-		$this->exec("DELETE FROM ". DB_PREFIX ."auctions WHERE id=".tools::filter($id)."");
+		$this->exec("DELETE FROM ". DB_PREFIX ."auctions WHERE id=".tools::filter($id));
 		tools::setFlash($this->l('Request processed'), 'success');
 		tools::redirect('/admin/auction');
 	}
