@@ -374,13 +374,9 @@ textarea:focus {
 	float:right;
 	width:300px;
 	line-height:13px;
-	font-size:10px;
+	font-size:12px;
 	text-align:center;
 	margin-right:15px;
-	border-left:1px solid #dadada;
-	border-right:1px solid #dadada;
-	border-bottom:1px solid #dadada;
-	border-radius:0 0 5px 5px;
 }
 
 /* auction's label display */

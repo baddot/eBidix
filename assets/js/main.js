@@ -26,7 +26,6 @@ $(document).ready(function(){
     var bidOfficialTime = $('.bid-official-time');
     var bidBalance = $('.bid-balance');
     var price = '';
-    var getstatus_url_time;
     var getstatus_url;
 
     if ($('.bid-histories').length) {

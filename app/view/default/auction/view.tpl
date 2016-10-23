@@ -127,8 +127,7 @@
 												<th>{$lang.Type}</th>
 											</tr>
 										</thead>
-										<tbody>
-										</tbody>
+										<tbody id="bidHistoryTable{$auction.id}tbody"></tbody>
 									</table>
 								</div>
 				</div>
