@@ -282,7 +282,7 @@ class auctionController extends appController
 
 	function buy($id) {
 		if(isset($_SESSION['user_id'])) {
-			if($this->settings['app']['buy_now']) {
+			if($this->settings['auction']['buy_now']) {
 				$user_id = $_SESSION['user_id'];
 				$auction_id = tools::filter($_GET['id']);
 				$auction = $this->exec_one("SELECT a.id,
@@ -295,16 +295,16 @@ class auctionController extends appController
 												   p.price AS product_price,
 												   p.delivery_cost
 											FROM ". DB_PREFIX ."auctions a, ". DB_PREFIX ."products p
-											WHERE a.id = ".$this->safe($auction_id)." AND p.id = a.product_id");
+											WHERE a.id = ".$auction_id." AND p.id = a.product_id");
 
 				// check if buynow activated on this auction
-				if(empty($auction['buynow'])) {
+				if($auction['buynow'] === 0) {
 					tools::setFlash(ERROR_BUYNOW, 'error');
 					tools::redirect('/'.$auction_id);
 				}
 
 				// check if user already buy this auction
-				$already_buy = $this->exec_one("SELECT id FROM ". DB_PREFIX ."auctions WHERE winner_id=".$user_id." AND buy_id=".$this->safe($auction_id)."");
+				$already_buy = $this->exec_one("SELECT id FROM ". DB_PREFIX ."auctions WHERE winner_id=".$user_id." AND buy_id=".$auction_id."");
 				if($already_buy) {
 					tools::setFlash(ERROR_ALREADY_BUY, 'error');
 					tools::redirect('/'.$auction_id);
@@ -327,7 +327,7 @@ class auctionController extends appController
 				}
 
 				// check if the user reach the necessary number of bids to buy
-				$user = $this->exec_one("SELECT count(id) as count FROM ". DB_PREFIX ."bids WHERE user_id = ".$user_id." AND auction_id = ".$this->safe($auction_id)." AND debit > 0");
+				$user = $this->exec_one("SELECT count(id) as count FROM ". DB_PREFIX ."bids WHERE user_id = ".$user_id." AND auction_id = "$auction_id." AND debit > 0");
 				$user['cost'] = $user['count'] * $this->settings['app']['bid_value'];
 				$price_to_reach = $auction['product_price'] * $this->settings['app']['percent_bids_to_buy'] / 100;
 				$auction['price_to_buy'] = $auction['product_price'] + $auction['delivery_cost'] - $user['cost'];
@@ -341,7 +341,7 @@ class auctionController extends appController
 									VALUES('".$auction['product_id']."', '".date("Y-m-d H:i:s")."', '".$price."', '".$user_id."', '1', '4', '".$auction['id']."', '".date("Y-m-d H:i:s")."')");
 					if($sql_request) {
 						// delete the user autobids
-						$this->exec("DELETE FROM ". DB_PREFIX ."autobids WHERE auction_id=".$auction['id']." AND user_id=".$user_id."");
+						$this->exec("DELETE FROM ". DB_PREFIX ."autobids WHERE auction_id=".$auction['id']." AND user_id=".$user_id);
 
 						tools::setFlash(SUCCESS_BUY, 'success');
 						tools::redirect('/won-auctions');
