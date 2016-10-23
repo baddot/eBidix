@@ -10,7 +10,7 @@ date_default_timezone_set($settings['app']['timezone']);
 
 switch($_GET['type']){
 	case 'autobid':
-		if(tools::readCache('autobid.pid')) return false;
+		if (tools::readCache('autobid.pid')) return false;
 		else tools::writeCache('autobid.pid', microtime(), 50);
 		
 		$db = database::getInstance();
@@ -31,10 +31,10 @@ switch($_GET['type']){
 			if ($res = $db->getRows($sql)) {
 				if (sizeof($res) > 0) {
 					foreach ($res as $row) {
-						if($row['price'] >= $row['minimum_price'] && $row['price'] < $row['maximum_price']) {
+						if ($row['price'] >= $row['minimum_price'] && $row['price'] < $row['maximum_price']) {
 							$bid = lastBid($row['auction_id']);
 							
-							if(!empty($bid['user_id']) && $bid['user_id'] == $row['user_id']) {
+							if (!empty($bid['user_id']) && $bid['user_id'] == $row['user_id']) {
 								continue;
 							}
 							
@@ -52,11 +52,12 @@ switch($_GET['type']){
 			}
 			sleep(4);
 		}
+
 		tools::deleteCache('autobid.pid');
 		break;
 		
 	case 'close':
-		if(tools::readCache('close.pid')) return false;
+		if (tools::readCache('close.pid')) return false;
 		else tools::writeCache('close.pid', microtime(), 50);
 		
 		$db = database::getInstance();
@@ -69,10 +70,10 @@ switch($_GET['type']){
 			if ($res = $db->getRows($sql)) {
 				if (sizeof($res) > 0) {
 					foreach ($res as $auction) {
-						if(checkCanClose($auction['id'], $isPeakNow) == false) {
-							if($auction['peak_only'] == 1 && !$isPeakNow) {
+						if (checkCanClose($auction['id'], $isPeakNow) == false) {
+							if ($auction['peak_only'] == 1 && !$isPeakNow) {
 								$peak = tools::isPeakNow(true);
-								if(strtotime($peak['peak_start']) < time()) {
+								if (strtotime($peak['peak_start']) < time()) {
 									$peak['peak_start'] = date('Y-m-d H:i:s', strtotime($peak['peak_start']) + 86400);	
 								}
 								
@@ -80,7 +81,7 @@ switch($_GET['type']){
 								$time = strtotime($peak['peak_start']) + $seconds_after_peak;	
 								$endTime = date('Y-m-d H:i:s', $time);
 								
-								if(strtotime($endTime) < time()) {
+								if (strtotime($endTime) < time()) {
 									$endTime = date('Y-m-d H:i:s', strtotime($endTime) + 86400);	
 								}
 								
@@ -101,6 +102,7 @@ switch($_GET['type']){
 			}
 			usleep(500000);
 		}
+
 		tools::deleteCache('close.pid');
 		break;
 }

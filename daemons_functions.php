@@ -4,7 +4,7 @@ function get($name = null, $auction_id = null, $cache = true) {
 	$db = Database::getInstance();
 
 	if($cache == true) {
-		$setting = cacheRead($name.'_setting');
+		$setting = tools::readCache($name.'_setting');
 		
 		if(!empty($setting)) return $setting;
 		else {
@@ -102,7 +102,7 @@ function check($auction_id, $end_time, $data) {
 	return $data;
 }
 
-function placeAutobid($id, $data = array(), $timeEnding = 0) {
+function placeAutobid($id, $data = array()) {
 	$data['auction_id']	= $id;
 	$bid = lastBid($id);
 	$db = Database::getInstance();
@@ -118,7 +118,7 @@ function placeAutobid($id, $data = array(), $timeEnding = 0) {
 		$data['user_id'] = $user['id'];
 	}
 
-	if(!empty($user)) $auction = bid($data, true, 'manual');
+	if(!empty($user)) bid($data, true, 'manual');
 	else return null;
 }
 
