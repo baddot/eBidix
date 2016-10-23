@@ -5,7 +5,7 @@
 		<div class="content">
 
 			<div class="items_list">
-				<table cellpadding="0" cellspacing="0" align="center">
+				<table cellpadding="0" cellspacing="0" align="center" class="table">
 					<tr>
 						<th>{$lang.Auction_id}</th>
 						<th>{$lang.Product_name}</th>

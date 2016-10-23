@@ -6,12 +6,19 @@ class emailController extends appController
 		if(isset($_SESSION['user_id'])) {
 			$user_id = $_SESSION['user_id'];
 			
-			$alerts = $this->exec_all("SELECT e.id, e.auction_id, e.created, e.validated, p.name AS product_name, a.status_id FROM ". _DB_PREFIX_ ."email_alerts e, ". _DB_PREFIX_ ."auctions a, ". _DB_PREFIX_ ."products p WHERE e.user_id = ".$user_id." AND a.id = e.auction_id AND p.id = a.product_id ORDER BY created DESC");
-			$this->smarty->assign(array(
+			$alerts = $this->exec_all("
+              SELECT e.id, e.auction_id, e.created, e.validated, p.name AS product_name, a.status_id 
+              FROM ". _DB_PREFIX_ ."email_alerts e, ". _DB_PREFIX_ ."auctions a, ". _DB_PREFIX_ ."products p 
+              WHERE e.user_id = ".$user_id." AND a.id = e.auction_id AND p.id = a.product_id 
+              ORDER BY created DESC"
+            );
+
+            $this->smarty->assign(array(
 				'alerts'   => $alerts,
 				'active'   => 8
 			));
-			$this->smarty->display('users/email_alerts.tpl');
+
+			$this->smarty->display('user/email_alerts.tpl');
 		} else {
 			$this->set_flash(ERROR_LOGIN, 'error');
 			$this->redirect('/users/login');
