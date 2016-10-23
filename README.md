@@ -2,11 +2,8 @@
 Penny auction script
 
 ## Install
-Clone files to your web server directory, create database ebidix & import bdd.sql
-```
-mysql -u user -p ebidix < bdd.sql
-```
-Update config/db.php with your credentials
+* Clone files to your web server directory
+* Open the url yourdomain.com/install in your favorite browser and follow instructions
 
 ## Set good rights to data & upload dir
 ```
