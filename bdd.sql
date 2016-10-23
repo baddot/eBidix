@@ -295,9 +295,10 @@ DROP TABLE IF EXISTS `eb_connexions`;
 CREATE TABLE `eb_connexions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `created` datetime NOT NULL,
+  `ip` VARCHAR(50) NOT NULL,
+  `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
