@@ -58,7 +58,7 @@ class pageController extends appController
 				'title' => $data['title'],
 				'meta_description' => $data['meta_description'],
 				'meta_keywords' => $data['meta_keywords'],
-				'content' => $data['content']
+				'content' => $_POST['content']
 			);
 			
 			if ($this->page->update((int)$id, $toUpdate)) tools::setFlash($this->l('Request processed'), 'success');

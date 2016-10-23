@@ -35,6 +35,7 @@ class Database
 		if (is_null(self::$instance)) {
             self::$instance = new self();
         }   
+
         return self::$instance;
 	}
 	
@@ -50,14 +51,17 @@ class Database
 	// prepare a SQL query and execute it
 	public function PDOExecute($query, $params=array()) {
 		try { 
-			$stmt = $this->PDOInstance->prepare($query); 
+			$stmt = $this->PDOInstance->prepare($query);
+
 			if (!empty($params)) {
 				foreach ($params as $key => $value) {
 					$stmt->BindValue(':' . $key, $value, self::PDOType($value));
 				}
 			}
+
 			$stmt->execute();
-			return $stmt;
+
+            return $stmt;
 		} catch (PDOException $e) {
 			throw new Exception('PDO ERROR: '.$e->getMessage());
 		}
@@ -118,12 +122,14 @@ class Database
 		if (!empty($limit)) $cdtns .= " LIMIT {$limit}";
 		
 		$query = "SELECT {$column} FROM {$tabs}{$cdtns}";
-		return self::PDOExecute($query, $params)->$type(PDO::FETCH_ASSOC);
+
+        return self::PDOExecute($query, $params)->$type(PDO::FETCH_ASSOC);
 	}
 	
 	public function insert($table, $columns) {
 		$query = "INSERT INTO ". DB_PREFIX ."{$table} (`".implode("`, `", array_keys($columns))."`) VALUES('".implode("', '", $columns)."')";
-		return self::PDOExecute($query);
+
+        return self::PDOExecute($query);
 	}
 	
 	public function update($table, $columns, $conditions = null) {
@@ -131,6 +137,7 @@ class Database
 		$values = '';
 		$i=0;
 		$len = count($columns);
+
 		foreach ($columns as $key => $value) {
 			$values .= ($i == $len - 1) ? "{$key} = :{$key}" : "{$key} = :{$key}, ";
 			$params[$key] = $value;
@@ -150,7 +157,8 @@ class Database
 		} else $condition = '';
 		
 		$query = "UPDATE ". DB_PREFIX ."{$table} SET {$values} {$condition}";
-		return self::PDOExecute($query, $params);
+
+        return self::PDOExecute($query, $params);
 	}
 	
 	public function delete($table, $conditions = null) {
@@ -166,7 +174,8 @@ class Database
 		} else $condition .= '';
 		
 		$query = "DELETE FROM ". DB_PREFIX ."{$table} {$condition}";
-		return self::PDOExecute($query, $params);
+
+        return self::PDOExecute($query, $params);
 	}
 	
 	public function transactions($queries) {
@@ -178,7 +187,8 @@ class Database
 			$this->PDOInstance->commit();
 		} catch (PDOException $e) {
 			$this->PDOInstance->rollback();
-			throw new Exception($e->getMessage());
+
+            throw new Exception($e->getMessage());
 		}
 	}
 	
@@ -194,6 +204,7 @@ class Database
                 
             case 'double':
             case 'float':
+            case 'string':
                 return PDO::PARAM_STR;
                 
             case 'bool':
