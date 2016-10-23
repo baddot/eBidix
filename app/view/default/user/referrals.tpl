@@ -10,7 +10,7 @@
 			<div>
 				<u><b>Voici vos informations dans l'optique du parrainage</b></u>
 				<br /><br />Proposez ce lien aux personnes intéressées pour devenir leur parrain :
-				<br /><b><a href="/?pid={$user.id}">{$settings.app.site_url}/?pid={$user.id}</a></b>
+				<br /><b><a href="/?pid={$userID}">{$settings.app.site_url}/?pid={$userID}</a></b>
 				{*<br /><br />Voici des bannières à installer sur votre site :
 				<br /><br />•  Bannière format 468x60 (<a href="/themes/default/images/banner_468x60.gif" target="_blank">{$lang.View}</a>)
 				<br /><textarea cols="70" rows="3"><a href="{$settings.app.site_url}/?pid={$user.id}"><img src="{$settings.app.site_url}/themes/default/images/banner_468x60.gif" alt="" /></a></textarea>*}

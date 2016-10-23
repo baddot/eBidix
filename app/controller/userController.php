@@ -296,7 +296,8 @@ class userController extends appController
 			}
 
 			$this->smarty->assign(array(
-				'referrals' => $referrals
+				'referrals' => $referrals,
+				'userID' => $user_id
 			));
 			$this->smarty->display('user/referrals.tpl');
 		} else {
