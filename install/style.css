@@ -1,0 +1,96 @@
+body {font:13.34px helvetica,arial,freesans,clean,sans-serif;min-height:100%;background-color:#f7f7f7;}
+h2{padding-bottom:20px;font-size:16px;margin:0;padding:0;}
+h3 {font-family:Arial,Verdana,sans-serif;font-size:18px;line-height:36px;margin:0;padding:0;}
+
+#container {/*position:relative;*/display:none;margin:0 auto;padding:0;width:996px;margin-top:20px;background :#fff;}
+#loaderSpace{display:none;z-index:100;position:absolute;top:0;left:0;height:100%;width:100%;background:transparent url('images/bg_loaderSpace.png') repeat 0 0;}
+div#loader{display:none;margin:450px 0 0 440px;height:128px;width:128px;color:#fff;background-image:url('images/ajax-loader.gif');}
+.sb-box, .sb-box-inner {border-radius: 7px;-moz-border-radius: 7px;-webkit-border-radius: 7px;}
+.sb-box {float:left;margin:0;border:1px solid #e4e4e4;}
+.sb-box-inner {float:left;padding:1px;background:#f8f8f8;border:1px solid #fff;}
+.sb-box-inner .header {height: 38px;margin: 1px -1px -1px;padding: 0 15px;line-height: 38px;background: transparent url("images/bg-sb-title.png") repeat-x left top;}
+.sb-box-inner .header h3 {font-weight: 600;text-shadow: 1px 1px 0px #fff;color: #444;float:left;}
+.sb-box-inner .header ul {float:right;font-size:11px;margin:0;font-weight:bold;text-shadow:1px 1px 0 rgba(255,255,255,0.5);text-transform:uppercase;}
+.sb-box-inner .header ul li {float:left;padding:0 0 0 10px;}
+.sb-box-inner .header ul li a {display:block;padding:4px 10px;margin-top:5px;padding:3px 10px;text-decoration:none;outline:none;}
+.sb-box-inner .header ul li.active a, .sb-box-inner .header ul li a:hover {color:#535353;border-radius: 5px;-moz-border-radius: 5px;-webkit-border-radius: 5px;background: rgb(246, 246, 246);background-color:rgba(255,255,255,0.5);}
+.sb-box-inner .header ul li a:hover {color:#767676;background: rgb(242, 242, 242);background-color:rgba(255,255,255,0.2);}
+.sb-box-inner .header ul li.active a:hover {background: rgb(246, 246, 246);background-color:rgba(255,255,255,0.5);}
+.sb-box-inner .bcont {float:left;background-color:#fff;padding:14px;border-top:1px solid #f8f8f8;margin:1px 0 0;}
+
+.left-column{width:200px;float:left;}
+.right-column{width:700px;float:left;padding-left:30px;border-left:1px dotted grey;}
+.title{font-weight:bold;font-size:15px;}
+sup.required {color:red;}
+
+ul{list-style-type:none;}
+ol{margin:0;padding:0;list-style-type:none;}
+ol#tabs li{padding-left:20px;color:grey;margin-bottom:10px;}
+ol#tabs li.selected{font-weight:bold;color:black;background:url('images/bg-li-tabs.png') no-repeat left center;}
+ol#tabs li.finished{color:green;background:url('images/pict-ok.png') no-repeat left center;}
+
+.navigation{margin-top:50px; width:100%;}
+
+ul#required, ul#optional{margin:0;padding:0;}
+ul#required li, ul#optional li{padding:6px 8px 4px 8px;background:#f8f8f8;}
+ul#required li.title, ul#optional li.title{margin-top: 20px;padding:4px 8px;background:#f8f8f8 url('images/bg-li-title.png') repeat-x 0 0;}
+ul#required li.required, ul#optional li.optional{border-top:1px solid #fff;border-bottom:1px solid #ccc;}
+ul#required li.ok, ul#optional li.ok{background:#f8f8f8 url('images/pict-ok.png') no-repeat 100% 10px;}
+ul#required li.fail, ul#optional li.fail{background:#f8f8f8 url('images/pict-error.png') no-repeat 100% 8px;}
+
+/* buttons */
+button.button, a.button {display:inline-block;height:32px;color:#343434;font:bold 12px Tahoma,Helvetica,sans-serif;cursor:pointer;position:relative;left:5px;text-shadow:1px 1px 0px rgba(255,255,255,0.5);text-decoration:none;margin:0 5px 0 8px;padding-left:0px;vertical-align:middle;background:url("images/buttons.png") top right no-repeat;white-space:nowrap;border:none;overflow:visible;}
+a.button {margin-left:6px;}
+a.button span {float:left;margin:0 13px 2px -10px;padding-left:15px;line-height:32px;height:32px;position:relative;background:url("images/buttons.png") top left no-repeat;overflow:visible;}
+button.button  span {float:left;margin:-1px 13px 2px -10px;padding-left:15px;line-height:32px;height:32px;position:relative;background:url("images/buttons.png") top left no-repeat;overflow:visible;}
+button.button:hover, a.button:hover {background-position:100% -216px;}
+button.button:hover span, a.button:hover span {background-position:0 -216px;}
+button.button.small, a.button.small {height:22px;font:bold 11px Arial,Helvetica,sans-serif;background-position:100% -128px;}
+button.button.small span, a.button.small span {line-height:22px;height:22px;background-position:0 -128px;}
+button.button.small:hover, a.button.small:hover {background-position:100% -344px;}
+button.button.small:hover span, a.button.small:hover span {background-position:0 -344px;}
+button.button.green, button.button.red, button.button.blue, a.button.green, a.button.red, a.button.blue {color:#fff;text-shadow:0 1px 0px rgba(0,0,0,0.5);background-position:100% -32px;}
+button.button.green span, a.button.green span {background-position:0 -32px;}
+button.button.green:hover, a.button.green:hover {background-position:100% -248px;}
+button.button.green:hover span, a.button.green:hover span {background-position:0 -248px;}
+button.button.green.small, a.button.green.small {background-position:100% -150px;}
+button.button.green.small span, a.button.green.small span {background-position:0 -150px;}
+button.button.green.small:hover, a.button.green.small:hover {background-position:100% -366px;}
+button.button.green.small:hover span, a.button.green.small:hover span {background-position:0 -366px;}
+button.button.red, a.button.red {background-position:100% -64px;}
+button.button.red span, a.button.red span {background-position:0 -64px;}
+button.button.red:hover, a.button.red:hover {background-position:100% -280px;}
+button.button.red:hover span, a.button.red:hover span {background-position:0 -280px;}
+button.button.red.small, a.button.red.small {background-position:100% -172px;}
+button.button.red.small span, a.button.red.small span {background-position:0 -172px;}
+button.button.red.small:hover, a.button.red.small:hover {background-position:100% -388px;}
+button.button.red.small:hover span, a.button.red.small:hover span {background-position:0 -388px;}
+button.button.blue, a.button.blue {background-position:100% -96px;}
+button.button.blue span, a.button.blue span {background-position:0 -96px;}
+button.button.blue:hover, a.button.blue:hover {background-position:100% -312px;}
+button.button.blue:hover span, a.button.blue:hover span {background-position:0 -312px;}
+button.button.blue.small, a.button.blue.small {background-position:100% -194px;}
+button.button.blue.small span, a.button.blue.small span {background-position:0 -194px;}
+button.button.blue.small:hover, a.button.blue.small:hover {background-position:100% -410px;}
+button.button.blue.small:hover span, a.button.blue.small:hover span {background-position:0 -410px;}
+button.button.left {left:10px;}
+
+button.button.disabled {color:#666;text-shadow:0 1px 0 #fff;background:#ccc url('images/bt-dsbl.png') repeat-x 0 0;}
+
+.okBlock {padding:20px 20px 20px 38px;background:#b7e2a7 url('images/pict-ok.png') no-repeat 15px 21px;border:1px solid #85c10c;}
+.errorBlock {padding:20px 20px 20px 38px;background:#ffebe8 url('images/pict-error.png') no-repeat 15px 21px;border:1px solid #cc0000;}
+.infosBlock {padding:14px 25px 14px 35px;font-weight:normal;font-size:13px;line-height:18px;background:#f8f8f8 url('images/pict-h3-infos.png') no-repeat 10px 13px;border:1px solid #ccc;}
+
+#dbPart, #infosSiteBlock{margin-bottom:15px;padding:14px;width:650px;background:#f8f8f8;}
+
+div.field {padding:10px 0;border-bottom:1px solid #ccc;}
+div.field label {display:inline-block;width:190px;vertical-align: top;}
+div.field label.radiolabel {width:auto;}
+div.field span.contentinput {display:inline-block;width:245px;vertical-align: top;}
+div.field .userInfos {display:inline-block;width:200px;font-size:11px;font-style:italic;color:#999;}
+input.text {padding:0 6px;height:22px;width:218px;/* 230 */background:#fff url('images/bg-input-button.png') repeat-x 0 0;border:1px solid #ccc;}
+
+#resultInstall {margin-bottom:25px;}
+#resultInstall td {padding:7px 6px;}
+#resultInstall tr.odd {background:#f8f8f8;}
+#resultInstall td.resultEnd {color:#666;}
