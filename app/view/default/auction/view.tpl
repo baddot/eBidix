@@ -108,8 +108,8 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<h3>{$lang.History}</h3>
-					<div id="bidHistoryTable{$auction.id}" class="bid-histories">
-						<table width="100%" cellpadding="0" cellspacing="0" border="0" class="table table-hover">
+					<div id="bidHistoryTable{$auction.id}">
+						<table width="100%" cellpadding="0" cellspacing="0" border="0" class="table table-hover bid-histories">
 							<thead>
 								<tr>
 									<th>{$lang.Date}</th>
