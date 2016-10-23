@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title>{$lang.Admin_panel}</title>
-	<link rel="stylesheet" type="text/css" href="/assets/css/styles.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="/assets/admin/css/styles.css" media="screen" />
 	<link rel="stylesheet" type="text/css" media="screen" href="/assets/admin/css/datePicker.css">
 	<script type="text/javascript" src="/assets/admin/js/jquery-1.4.2.min.js"></script>
 	<script type="text/javascript" src="/assets/admin/js/jquery-ui-1.8.2.custom.min.js"></script>
