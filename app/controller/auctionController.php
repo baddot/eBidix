@@ -14,7 +14,7 @@ class auctionController extends appController
 		$auctions_data = $this->exec_all("SELECT a.id, a.product_id, p.name, p.price AS product_price, a.price, a.closed, a.label, a.status_id
 										  FROM ". DB_PREFIX ."auctions a, ". DB_PREFIX ."products p
 										  WHERE a.product_id = p.id AND a.active=1 AND a.closed=0 AND a.status_id=3
-										  ORDER BY a.end_time ".$this->settings['app']['auctions_order']." LIMIT ".$this->settings['auction']['home_limit']."");
+										  ORDER BY a.end_time ".$this->settings['app']['auctions_order']." LIMIT ".$this->settings['auction']['home_limit']);
 		$ongoing_auctions = array();
 		$i=0;
 		foreach($auctions_data as $auction) {
@@ -327,7 +327,7 @@ class auctionController extends appController
 				}
 
 				// check if the user reach the necessary number of bids to buy
-				$user = $this->exec_one("SELECT count(id) as count FROM ". DB_PREFIX ."bids WHERE user_id = ".$user_id." AND auction_id = "$auction_id." AND debit > 0");
+				$user = $this->exec_one("SELECT count(id) as count FROM ". DB_PREFIX ."bids WHERE user_id = ".$user_id." AND auction_id = ".$auction_id." AND debit > 0");
 				$user['cost'] = $user['count'] * $this->settings['app']['bid_value'];
 				$price_to_reach = $auction['product_price'] * $this->settings['app']['percent_bids_to_buy'] / 100;
 				$auction['price_to_buy'] = $auction['product_price'] + $auction['delivery_cost'] - $user['cost'];
