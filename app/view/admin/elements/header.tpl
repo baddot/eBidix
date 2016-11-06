@@ -19,7 +19,7 @@
     <![endif]-->
 	<script type="text/javascript" src="/assets/admin/js/jquery.mousewheel.min.js"></script>
 	<script type="text/javascript" src="/assets/admin/js/jquery.wysiwyg.js"></script>
-	<script type="text/javascript" src="/assets/admin/js/ckeditor/ckeditor.js"></script>
+	<script src="//cdn.ckeditor.com/4.5.11/basic/ckeditor.js"></script>
 	<script type="text/javascript" src="/assets/admin/js/date.js"></script>
 	<script type="text/javascript" src="/assets/admin/js/jquery.datePicker.js"></script>
 	{literal}
