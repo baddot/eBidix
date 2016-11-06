@@ -13,12 +13,7 @@ $tests = array(
 	'upload' => false,
 	'system' => $funcs,
 	'mysql_support' => false,
-	'cache_dir' => INSTALL_PATH.'/../cache/',
-	'config_dir' => INSTALL_PATH.'/../config/',
-	'sitemap' => INSTALL_PATH.'/../sitemap.xml',
-	'smarty_tools_dir' => INSTALL_PATH.'/../tools/smarty/compile/',
-	'smarty_cache_dir' => INSTALL_PATH.'/../tools/smarty/cache/',
-	'upload_dir' => INSTALL_PATH.'/../upload/',
+	'cache_dir' => INSTALL_PATH.'/../data/',
 );
 $tests_op = array(
 	'fopen' => false,
