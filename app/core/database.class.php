@@ -49,7 +49,7 @@ class Database
 	}
 	
 	// prepare a SQL query and execute it
-	public function PDOExecute($query, $params=array()) {
+	public function PDOExecute($query, $params = array()) {
 		try { 
 			$stmt = $this->PDOInstance->prepare($query);
 
@@ -171,7 +171,7 @@ class Database
 				$condition .= ($i == $len - 1) ? "{$key} = :{$key}" : "{$key} = :{$key} AND ";
 				$params[$key] = $value;
 			}
-		} else $condition .= '';
+		} else $condition = '';
 		
 		$query = "DELETE FROM ". DB_PREFIX ."{$table} {$condition}";
 

@@ -29,7 +29,7 @@
 										<td>{$payment.fixed_fees}</td>
 										<td>{$payment.variable_fees}</td>
 										<td>{if $payment.active ==1}{$lang.Yes}{else}{$lang.No}{/if}</td>
-										<td class="small"><a class="action" href="#"></a><div class="opmenu"><ul><li><a href="/admin/payments/edit/{$payment.id}">{$lang.Edit}</a></li></ul><div class="clear"></div><div class="foot"></div></div></td>
+										<td class="small"><a class="action" href="#"></a><div class="opmenu"><ul><li><a href="/admin/payment/edit/{$payment.id}">{$lang.Edit}</a></li></ul><div class="clear"></div><div class="foot"></div></div></td>
 									</tr>
 								{/foreach}
 							</tbody>
