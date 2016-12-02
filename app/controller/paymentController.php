@@ -281,7 +281,7 @@ class paymentController extends appController
 		$payment = $this->exec_one("SELECT * FROM ". DB_PREFIX ."payments WHERE id=".$id."");
 		$this->smarty->assign('payment', $payment);
 
-		$this->smarty->display('admin/setting/edit_payment.tpl');
+		$this->smarty->display('admin/settings/edit_payment.tpl');
 	}
 }
 ?>

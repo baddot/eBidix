@@ -1,7 +1,7 @@
 {include file='admin/elements/header.tpl'}
 
 	<div class="container_12">
-		<div class="crumb">&raquo <a href="/admin/payments">{$lang.Payment_systems}</a> &raquo {$lang.Edit}</div>
+		<div class="crumb">&raquo <a href="/admin/payment">{$lang.Payment_systems}</a> &raquo {$lang.Edit}</div>
 
 		<div class="grid_12">
 			<div class="sb-box">
@@ -10,7 +10,7 @@
 						<h3>{$lang.Payment_systems}</h3>
 					</div>
 					<div class="bcont">
-						<form method="post" action="/admin/payments/edit/{$payment.id}">
+						<form method="post" action="/admin/payment/edit/{$payment.id}">
 							<p>
 								<label>{$lang.Account} <span style="color:red;">*</span> :</label><br /> 
 								<input type="text" name="account" value="{$payment.account}" class="inputtext medium" />
